@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-	title: 'Assets Flow',
-	description: 'Aplikacja do zarządzania kapitałem',
+	title: 'Asset Flow',
+	description: 'Aplikacja do kontroli finansów',
 };
 
 export default function RootLayout({
