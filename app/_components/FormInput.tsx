@@ -6,16 +6,29 @@ interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
 	error?: string;
 	name: string;
 	label?: string;
+	required?: boolean;
+	validateFunction?: () => string | boolean;
 }
 
-function FormInput({ register, error, name, label, ...rest }: FormInputProps) {
+function FormInput({
+	register,
+	error,
+	name,
+	label,
+	required,
+	validateFunction,
+	...rest
+}: FormInputProps) {
 	return (
 		<div className='relative flex flex-col'>
 			<label htmlFor={name} className='pl-1'>
 				{label}
 			</label>
 			<input
-				{...register(name, { required: 'Pole wymagane' })}
+				{...register(name, {
+					required: required && 'Pole wymagane',
+					validate: validateFunction,
+				})}
 				type='email'
 				name={name}
 				className={`border-grayOne border-2 rounded-lg p-2 focus:outline-none focus focus:border-main ${

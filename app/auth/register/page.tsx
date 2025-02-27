@@ -1,10 +1,10 @@
-import LoginForm from '@/app/_components/auth/LoginForm';
+import RegisterForm from '@/app/_components/auth/RegisterForm';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-	title: 'Logowanie | Asset Flow',
+	title: 'Rejestracja | Asset Flow',
 	description:
-		'Zaloguj się i korzystaj z pełni możliwości aplikacji do kontroli finansów',
+		'Zarejestruj się i poznaj pełne możliwości aplikacji do kontroli finansów',
 };
 
 export default function page() {
@@ -23,7 +23,7 @@ export default function page() {
 					</div>
 					<p className='font-bold'>Asset Flow</p>
 				</div>
-				<LoginForm />
+				<RegisterForm />
 			</div>
 		</div>
 	);

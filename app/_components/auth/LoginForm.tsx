@@ -46,7 +46,7 @@ export default function LoginForm() {
 					name='password'
 					error={errors?.password?.message as string}
 					type='password'
-					autoComplete='new-password'
+					autoComplete='current-password'
 				/>
 			</div>
 			<div className='flex justify-center'>
