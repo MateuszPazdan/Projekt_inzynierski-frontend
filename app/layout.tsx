@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Roboto } from 'next/font/google';
+import CustomProvider from './_redux/Provider';
 
 export const metadata: Metadata = {
 	title: 'Asset Flow',
@@ -19,7 +20,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='pl'>
-			<body className={roboto.className}>{children}</body>
+			<CustomProvider>
+				<body className={roboto.className}>{children}</body>
+			</CustomProvider>
 		</html>
 	);
 }

@@ -9,16 +9,31 @@ import {
 	validatePassword,
 	validateRepeatPassword,
 } from '@/app/_utils/isInputCorrect';
+import { useRegisterMutation } from '@/app/_redux/features/authApiSlice';
 
 export default function RegisterForm() {
 	const {
-		register,
+		register: formRegister,
 		handleSubmit,
 		formState: { errors },
 		getValues,
 	} = useForm<FieldValues>();
+	const [register] = useRegisterMutation();
 
-	const onSubmit: SubmitHandler<FieldValues> = (data) => console.log(data);
+	const onSubmit: SubmitHandler<FieldValues> = (data) => {
+		register({
+			email: data.email,
+			username: data.username,
+			password: data.password,
+		})
+			.unwrap()
+			.then(() => {
+				console.log('zalogowano');
+			})
+			.catch(() => {
+				console.log('problemo');
+			});
+	};
 
 	return (
 		<form
@@ -40,7 +55,7 @@ export default function RegisterForm() {
 			<div className='flex flex-col gap-7 pb-10'>
 				<FormInput
 					label='Nazwa użytkownika'
-					register={register}
+					register={formRegister}
 					name='username'
 					error={errors?.username?.message as string}
 					type='text'
@@ -49,7 +64,7 @@ export default function RegisterForm() {
 				/>
 				<FormInput
 					label='E-mail'
-					register={register}
+					register={formRegister}
 					name='email'
 					error={errors?.email?.message as string}
 					type='email'
@@ -59,7 +74,7 @@ export default function RegisterForm() {
 				/>
 				<FormInput
 					label='Hasło'
-					register={register}
+					register={formRegister}
 					name='password'
 					error={errors?.password?.message as string}
 					type='password'
@@ -69,7 +84,7 @@ export default function RegisterForm() {
 				/>
 				<FormInput
 					label='Powtórz hasło'
-					register={register}
+					register={formRegister}
 					name='repeatPassword'
 					error={errors?.repeatPassword?.message as string}
 					type='password'

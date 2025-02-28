@@ -10,7 +10,7 @@ import { logout, setAuth } from '../features/authSlice';
 const mutex = new Mutex();
 
 const baseQuery = fetchBaseQuery({
-	baseUrl: `${process.env.NEXT_PUBLIC_HOST}`,
+	baseUrl: `${process.env.NEXT_PUBLIC_HOST}/api/v1`,
 	credentials: 'include',
 });
 
@@ -49,7 +49,7 @@ const baseQueryWithReauth: BaseQueryFn<
 };
 
 export const apiSlice = createApi({
-	reducerPath: 'api/v1',
+	reducerPath: 'api',
 	baseQuery: baseQueryWithReauth,
 	endpoints: () => ({}),
 });
