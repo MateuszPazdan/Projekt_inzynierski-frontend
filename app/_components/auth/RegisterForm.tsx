@@ -10,6 +10,8 @@ import {
 	validateRepeatPassword,
 } from '@/app/_utils/isInputCorrect';
 import { useRegisterMutation } from '@/app/_redux/features/authApiSlice';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 export default function RegisterForm() {
 	const {
@@ -19,6 +21,7 @@ export default function RegisterForm() {
 		getValues,
 	} = useForm<FieldValues>();
 	const [register] = useRegisterMutation();
+	const router = useRouter();
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		register({
@@ -28,10 +31,13 @@ export default function RegisterForm() {
 		})
 			.unwrap()
 			.then(() => {
-				console.log('zalogowano');
+				toast.success(
+					'Zarejestrowano pomyślnie. Sprawdź e-mail w celu potwierdzenia konta.'
+				);
+				router.push('/auth/login');
 			})
-			.catch(() => {
-				console.log('problemo');
+			.catch((err) => {
+				toast.error(err?.data?.detail ?? 'Wystąpił błąd przy tworzeniu konta.');
 			});
 	};
 

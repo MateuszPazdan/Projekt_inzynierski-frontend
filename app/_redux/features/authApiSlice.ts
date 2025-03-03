@@ -43,7 +43,6 @@ const authApiSlice = apiSlice.injectEndpoints({
 		}),
 		verifyEmail: builder.mutation<null, { token: string }>({
 			query: ({ token }) => {
-				console.log(token);
 				return {
 					url: `/users/confirm/${token}`,
 					method: 'POST',

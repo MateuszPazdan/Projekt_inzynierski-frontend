@@ -13,6 +13,26 @@ export function validateRepeatPassword(
 	else return true;
 }
 
+export function hasMinimumLength(password: string) {
+	return password.length >= 8 ? true : false;
+}
+
+export function hasUpperCase(password: string) {
+	return /[A-Z]/.test(password) ? true : false;
+}
+
+export function hasLowerCase(password: string) {
+	return /[a-z]/.test(password) ? true : false;
+}
+
+export function hasDigit(password: string) {
+	return /\d/.test(password) ? true : false;
+}
+
+export function hasSpecialChar(password: string) {
+	return /[@$!%*?&]/.test(password) ? true : false;
+}
+
 export function validateEmail(email: string) {
 	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 	if (!emailRegex.test(email)) return 'Niepoprawny E-mail';
