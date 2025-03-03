@@ -25,7 +25,7 @@ export default function LoginForm() {
 			.unwrap()
 			.then(() => {
 				toast.success('Zalogowano pomyślnie.');
-				router.push('/');
+				router.replace('/');
 			})
 			.catch((err) => {
 				toast.error(err?.data?.detail ?? 'Wystąpił błąd przy logowaniu.');
