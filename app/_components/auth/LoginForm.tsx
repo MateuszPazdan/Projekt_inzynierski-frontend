@@ -4,6 +4,9 @@ import Link from 'next/link';
 import Button from '../Button';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import FormInput from '../FormInput';
+import { useLoginMutation } from '@/app/_redux/features/authApiSlice';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 export default function LoginForm() {
 	const {
@@ -11,8 +14,23 @@ export default function LoginForm() {
 		handleSubmit,
 		formState: { errors },
 	} = useForm<FieldValues>();
+	const [login] = useLoginMutation();
+	const router = useRouter();
 
-	const onSubmit: SubmitHandler<FieldValues> = (data) => console.log(data);
+	const onSubmit: SubmitHandler<FieldValues> = (data) => {
+		login({
+			email: data.email,
+			password: data.password,
+		})
+			.unwrap()
+			.then(() => {
+				toast.success('Zalogowano pomyślnie.');
+				router.push('/');
+			})
+			.catch((err) => {
+				toast.error(err?.data?.detail ?? 'Wystąpił błąd przy logowaniu.');
+			});
+	};
 
 	return (
 		<form
