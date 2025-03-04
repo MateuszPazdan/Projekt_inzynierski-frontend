@@ -20,7 +20,7 @@ export default function RegisterForm() {
 		formState: { errors },
 		getValues,
 	} = useForm<FieldValues>();
-	const [register] = useRegisterMutation();
+	const [register, { isLoading: isRegistering }] = useRegisterMutation();
 	const router = useRouter();
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
@@ -76,7 +76,7 @@ export default function RegisterForm() {
 					type='email'
 					autoComplete='email'
 					required
-					validateFunction={() => validateEmail(getValues().email)}
+					validateFunction={() => validateEmail(getValues()?.email)}
 				/>
 				<FormInput
 					label='Hasło'
@@ -86,7 +86,7 @@ export default function RegisterForm() {
 					type='password'
 					autoComplete='new-password'
 					required
-					validateFunction={() => validatePassword(getValues().password)}
+					validateFunction={() => validatePassword(getValues()?.password)}
 				/>
 				<FormInput
 					label='Powtórz hasło'
@@ -98,14 +98,16 @@ export default function RegisterForm() {
 					required
 					validateFunction={() =>
 						validateRepeatPassword(
-							getValues().password,
-							getValues().repeatPassword
+							getValues()?.password,
+							getValues()?.repeatPassword
 						)
 					}
 				/>
 			</div>
 			<div className='flex justify-center'>
-				<Button type='submit'>Zarejestruj się</Button>
+				<Button type='submit' isLoading={isRegistering}>
+					Zarejestruj się
+				</Button>
 			</div>
 		</form>
 	);

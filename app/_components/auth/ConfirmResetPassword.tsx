@@ -2,13 +2,15 @@
 
 import { useRouter } from 'next/navigation';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { FaFingerprint, FaLock } from 'react-icons/fa';
+import { FaLock } from 'react-icons/fa';
 import FormInput from '../FormInput';
 import Button from '../Button';
 import {
 	validatePassword,
 	validateRepeatPassword,
 } from '@/app/_utils/isInputCorrect';
+import { useConfirmPasswordMutation } from '@/app/_redux/features/authApiSlice';
+import toast from 'react-hot-toast';
 
 export default function ConfirmResetPassword({ token }: { token: string }) {
 	const {
@@ -18,24 +20,27 @@ export default function ConfirmResetPassword({ token }: { token: string }) {
 		formState: { errors },
 	} = useForm<FieldValues>();
 	const router = useRouter();
+	const [confirmPassword, { isLoading: isConfirmingPassword }] =
+		useConfirmPasswordMutation();
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
-		// resetPassword({
-		// 	email: data.email,
-		// })
-		// 	.unwrap()
-		// 	.then(() => {
-		// 		toast.success(
-		// 			'Jeśli e-mail jest poprawny, wysłaliśmy Ci instrukcje resetowania hasła. Sprawdź swoją skrzynkę.',
-		// 			{ duration: 5000 }
-		// 		);
-		// 		router.replace('/auth/login');
-		// 	})
-		// 	.catch(() => {
-		// 		toast.error(
-		// 			'Coś poszło nie tak! Upewnij się, że podany e-mail jest poprawny lub spróbuj ponownie za chwilę.'
-		// 		);
-		// 	});
+		confirmPassword({
+			token,
+			password: data.newPassword,
+		})
+			.unwrap()
+			.then(() => {
+				toast.success(
+					'Twoje hasło zostało pomyślnie zmienione. Możesz teraz zalogować się na swoje konto, używając nowego hasła.',
+					{ duration: 5000 }
+				);
+				router.replace('/auth/login');
+			})
+			.catch(() => {
+				toast.error(
+					'Nie udało się zresetować hasła. Link resetujący mógł wygasnąć lub dane są nieprawidłowe. Spróbuj ponownie lub poproś o nowy link.'
+				);
+			});
 	};
 
 	return (
@@ -64,7 +69,7 @@ export default function ConfirmResetPassword({ token }: { token: string }) {
 					error={errors?.newPassword?.message as string}
 					type='password'
 					autoComplete='new-password'
-					validateFunction={() => validatePassword(getValues().password)}
+					validateFunction={() => validatePassword(getValues()?.newPassword)}
 				/>
 				<FormInput
 					label='Powtórz nowe hasło'
@@ -75,14 +80,16 @@ export default function ConfirmResetPassword({ token }: { token: string }) {
 					autoComplete='new-password'
 					validateFunction={() =>
 						validateRepeatPassword(
-							getValues().newPassword,
-							getValues().repeatPassword
+							getValues()?.newPassword,
+							getValues()?.repeatPassword
 						)
 					}
 				/>
 			</div>
 			<div className='flex justify-center'>
-				<Button type='submit'>Resetuj hasło</Button>
+				<Button type='submit' isLoading={isConfirmingPassword}>
+					Resetuj hasło
+				</Button>
 			</div>
 		</form>
 	);

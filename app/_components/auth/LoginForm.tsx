@@ -7,15 +7,20 @@ import FormInput from '../FormInput';
 import { useLoginMutation } from '@/app/_redux/features/authApiSlice';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import { useAppDispatch } from '@/app/_redux/hooks';
+import { setAuth } from '@/app/_redux/features/authSlice';
+import { validateEmail } from '@/app/_utils/isInputCorrect';
 
 export default function LoginForm() {
 	const {
 		register,
 		handleSubmit,
+		getValues,
 		formState: { errors },
 	} = useForm<FieldValues>();
-	const [login] = useLoginMutation();
+	const [login, { isLoading: isLogging }] = useLoginMutation();
 	const router = useRouter();
+	const dispatch = useAppDispatch();
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		login({
@@ -25,6 +30,7 @@ export default function LoginForm() {
 			.unwrap()
 			.then(() => {
 				toast.success('Zalogowano pomyślnie.');
+				dispatch(setAuth());
 				router.replace('/');
 			})
 			.catch((err) => {
@@ -57,6 +63,8 @@ export default function LoginForm() {
 					error={errors?.email?.message as string}
 					type='email'
 					autoComplete='email'
+					required
+					validateFunction={() => validateEmail(getValues()?.email)}
 				/>
 				<div className='relative'>
 					<FormInput
@@ -66,6 +74,7 @@ export default function LoginForm() {
 						error={errors?.password?.message as string}
 						type='password'
 						autoComplete='current-password'
+						required
 					/>
 					<Link
 						className='absolute -bottom-6 right-2 text-sm font- hover:text-second text-black transition-colors duration-300'
@@ -76,7 +85,9 @@ export default function LoginForm() {
 				</div>
 			</div>
 			<div className='flex justify-center'>
-				<Button type='submit'>Zaloguj się</Button>
+				<Button type='submit' isLoading={isLogging}>
+					Zaloguj się
+				</Button>
 			</div>
 		</form>
 	);

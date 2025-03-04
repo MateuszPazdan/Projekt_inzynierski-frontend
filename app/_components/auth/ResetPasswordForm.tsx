@@ -15,7 +15,8 @@ export default function ResetPasswordForm() {
 		formState: { errors },
 	} = useForm<FieldValues>();
 	const router = useRouter();
-	const [resetPassword] = useResetPasswordMutation();
+	const [resetPassword, { isLoading: isResetingPassword }] =
+		useResetPasswordMutation();
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		resetPassword({
@@ -66,7 +67,9 @@ export default function ResetPasswordForm() {
 				/>
 			</div>
 			<div className='flex justify-center'>
-				<Button type='submit'>Resetuj hasło</Button>
+				<Button type='submit' isLoading={isResetingPassword}>
+					Resetuj hasło
+				</Button>
 			</div>
 		</form>
 	);
