@@ -58,14 +58,22 @@ export default function LoginForm() {
 					type='email'
 					autoComplete='email'
 				/>
-				<FormInput
-					label='Hasło'
-					register={register}
-					name='password'
-					error={errors?.password?.message as string}
-					type='password'
-					autoComplete='current-password'
-				/>
+				<div className='relative'>
+					<FormInput
+						label='Hasło'
+						register={register}
+						name='password'
+						error={errors?.password?.message as string}
+						type='password'
+						autoComplete='current-password'
+					/>
+					<Link
+						className='absolute -bottom-6 right-2 text-sm font- hover:text-second text-black transition-colors duration-300'
+						href={'/auth/reset-password'}
+					>
+						Nie pamiętam hasła
+					</Link>
+				</div>
 			</div>
 			<div className='flex justify-center'>
 				<Button type='submit'>Zaloguj się</Button>
