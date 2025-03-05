@@ -8,8 +8,12 @@ export default function UserNav({ user }: { user: User | undefined }) {
 	const { logoutHookFn } = useLogout();
 	return (
 		<div className='absolute top-16 right-0  bg-white shadow-md p-1 rounded-xl min-w-[250px] flex flex-col '>
-			<UserInfo email={user?.email} username={user?.username} />
-			{/* TODO add imageUrl */}
+			<UserInfo
+				email={user?.email}
+				username={user?.username}
+				imageUrl={user?.avatar_image}
+			/>
+
 			<UserNavElement
 				href='/settings'
 				title='Ustawienia konta'

@@ -28,8 +28,10 @@ export default function LoggedIn() {
 						isAvatarClicked ? 'ring-main' : 'ring-transparent'
 					} ring-2 ring-offset-2 hover:ring-main cursor-pointer`}
 				>
-					<UserImage imageAlt={`Awatar ${user?.username}`} />
-					{/* TODO add imageUrl */}
+					<UserImage
+						imageAlt={`Awatar ${user?.username}`}
+						imageUrl={user?.avatar_image}
+					/>
 				</button>
 			)}
 			{isAvatarClicked && <UserNav user={user} />}

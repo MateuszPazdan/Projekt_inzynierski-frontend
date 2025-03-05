@@ -15,7 +15,7 @@ export default function page({ searchParams }: Props) {
 	const token = searchParams?.token;
 
 	return (
-		<div className='min-h-screen flex justify-center items-center'>
+		<div className='min-h-full flex justify-center items-center'>
 			<VerifyEmailForm token={token} />
 		</div>
 	);
