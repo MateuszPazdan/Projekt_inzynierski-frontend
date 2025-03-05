@@ -7,7 +7,7 @@ import { useLogout } from '@/app/_hook/useLogout';
 export default function UserNav({ user }: { user: User | undefined }) {
 	const { logoutHookFn } = useLogout();
 	return (
-		<div className='absolute top-16 right-0 bg-white shadow-md p-1 rounded-xl min-w-[250px] flex flex-col gap-2'>
+		<div className='absolute top-16 right-0  bg-white shadow-md p-1 rounded-xl min-w-[250px] flex flex-col '>
 			<UserInfo email={user?.email} username={user?.username} />
 			{/* TODO add imageUrl */}
 			<UserNavElement

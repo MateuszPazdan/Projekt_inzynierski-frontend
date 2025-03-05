@@ -34,7 +34,7 @@ const authApiSlice = apiSlice.injectEndpoints({
 			}),
 		}),
 		logout: builder.mutation({
-			query: () => ({ url: '/auth/logout', method: 'GET' }),
+			query: () => ({ url: '/auth/logout', method: 'DELETE' }),
 		}),
 		verifyToken: builder.mutation({
 			query: () => ({

@@ -4,15 +4,19 @@ import Spinner from '../Spinner';
 import { useState } from 'react';
 import UserImage from './UserImage';
 import UserNav from './UserNav';
+import Link from 'next/link';
 
 export default function LoggedIn() {
 	const [isAvatarClicked, setIsAvatarClicked] = useState(false);
 	const { data: user, isLoading } = useRetrieveUserQuery();
 	return (
 		<div className='relative flex flex-row items-center gap-5'>
-			<span className='text-3xl text-grayThird hover:bg-grayOne hover:text-yellow-400 p-1 rounded-lg transition-colors duration-300 cursor-pointer'>
+			<Link
+				href='/watchlist'
+				className='text-3xl text-grayThird hover:bg-grayOne hover:text-yellow-400 p-1 rounded-lg transition-colors duration-300 cursor-pointer'
+			>
 				<PiStar />
-			</span>
+			</Link>
 			{isLoading ? (
 				<Spinner size='small' />
 			) : (

@@ -8,7 +8,7 @@ interface UserInfoProps {
 
 export default function UserInfo({ username, email, ImageUrl }: UserInfoProps) {
 	return (
-		<div className='flex flex-row gap-2 items-center p-1 px-2  rounded-lg'>
+		<div className='flex flex-row gap-2 items-center p-1 px-2 pb-2  rounded-lg'>
 			<div className='relative w-10 h-10 rounded-full overflow-hidden '>
 				<UserImage imageAlt={`Awatar ${username}`} imageUrl={ImageUrl} />
 			</div>

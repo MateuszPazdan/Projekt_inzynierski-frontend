@@ -15,7 +15,7 @@ export function useLogout() {
 			.then(() => {
 				dispatch(logout());
 				router.push('/');
-				toast.success('Wylogowano');
+				toast.success('Wylogowano pomyślnie.');
 			});
 	}
 	return { logoutHookFn };
