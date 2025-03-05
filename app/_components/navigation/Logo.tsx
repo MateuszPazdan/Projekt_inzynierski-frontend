@@ -7,20 +7,28 @@ const gemunu = Gemunu_Libre({
 	weight: ['400'],
 });
 
-export default function Logo() {
+interface LogoProps {
+	isTextHidden?: boolean;
+}
+
+export default function Logo({ isTextHidden = true }: LogoProps) {
 	return (
-		<div className='flex flex-row gap-2 items-center lg:hidden'>
-			<Link href={'/'} className='relative h-12 w-12'>
+		<Link href={'/'} className='flex flex-row gap-2 items-center'>
+			<div className='relative h-12 w-12'>
 				<Image
 					src={'/logo.png'}
 					alt={'Logo aplikacji Asset Flow'}
 					fill
 					className='aspect-square '
 				/>
-			</Link>
-			<p className={`${gemunu.className} text-4xl text-main hidden`}>
+			</div>
+			<p
+				className={`${gemunu.className} text-nowrap text-4xl text-main ${
+					isTextHidden && 'hidden'
+				}`}
+			>
 				Asset Flow
 			</p>
-		</div>
+		</Link>
 	);
 }
