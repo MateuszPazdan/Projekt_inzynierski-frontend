@@ -5,6 +5,7 @@ export interface User {
 	email: string;
 	username: string;
 	created_at: string;
+	avatar_image: string;
 }
 
 const authApiSlice = apiSlice.injectEndpoints({
