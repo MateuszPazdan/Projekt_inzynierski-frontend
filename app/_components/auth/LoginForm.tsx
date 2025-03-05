@@ -4,15 +4,39 @@ import Link from 'next/link';
 import Button from '../Button';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import FormInput from '../FormInput';
+import { useLoginMutation } from '@/app/_redux/features/authApiSlice';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
+import { useAppDispatch } from '@/app/_redux/hooks';
+import { setAuth } from '@/app/_redux/features/authSlice';
+import { validateEmail } from '@/app/_utils/isInputCorrect';
 
 export default function LoginForm() {
 	const {
 		register,
 		handleSubmit,
+		getValues,
 		formState: { errors },
 	} = useForm<FieldValues>();
+	const [login, { isLoading: isLogging }] = useLoginMutation();
+	const router = useRouter();
+	const dispatch = useAppDispatch();
 
-	const onSubmit: SubmitHandler<FieldValues> = (data) => console.log(data);
+	const onSubmit: SubmitHandler<FieldValues> = (data) => {
+		login({
+			email: data.email,
+			password: data.password,
+		})
+			.unwrap()
+			.then(() => {
+				toast.success('Zalogowano pomyślnie.');
+				dispatch(setAuth());
+				router.replace('/');
+			})
+			.catch((err) => {
+				toast.error(err?.data?.detail ?? 'Wystąpił błąd przy logowaniu.');
+			});
+	};
 
 	return (
 		<form
@@ -39,18 +63,31 @@ export default function LoginForm() {
 					error={errors?.email?.message as string}
 					type='email'
 					autoComplete='email'
+					required
+					validateFunction={() => validateEmail(getValues()?.email)}
 				/>
-				<FormInput
-					label='Hasło'
-					register={register}
-					name='password'
-					error={errors?.password?.message as string}
-					type='password'
-					autoComplete='current-password'
-				/>
+				<div className='relative'>
+					<FormInput
+						label='Hasło'
+						register={register}
+						name='password'
+						error={errors?.password?.message as string}
+						type='password'
+						autoComplete='current-password'
+						required
+					/>
+					<Link
+						className='absolute -bottom-6 right-2 text-sm font- hover:text-second text-black transition-colors duration-300'
+						href={'/auth/reset-password'}
+					>
+						Nie pamiętam hasła
+					</Link>
+				</div>
 			</div>
 			<div className='flex justify-center'>
-				<Button type='submit'>Zaloguj się</Button>
+				<Button type='submit' isLoading={isLogging}>
+					Zaloguj się
+				</Button>
 			</div>
 		</form>
 	);
