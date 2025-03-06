@@ -2,19 +2,14 @@
 
 import { useState } from 'react';
 import Logo from './Logo';
-import { CiBitcoin } from 'react-icons/ci';
 import NavElement from './NavElement';
-import { PiChartLine } from 'react-icons/pi';
 import {
-	FaAlignCenter,
 	FaBitcoin,
 	FaChartArea,
 	FaEye,
 	FaNewspaper,
-	FaRedo,
 	FaWallet,
 } from 'react-icons/fa';
-import { RiExchangeLine, RiRefreshFill } from 'react-icons/ri';
 import { SiBetfair } from 'react-icons/si';
 
 export default function LeftNav() {
@@ -23,7 +18,7 @@ export default function LeftNav() {
 		<nav
 			onMouseEnter={() => setIsNavExtented(true)}
 			onMouseLeave={() => setIsNavExtented(false)}
-			className={`hidden overflow-hidden lg:flex flex-col items-center absolute left-0 top-0 h-screen transition-all duration-300  ${
+			className={`hidden overflow-hidden lg:flex flex-col items-center fixed left-0 top-0 h-screen transition-all duration-300  ${
 				isNavExtended ? 'w-64' : 'w-16 '
 			} bg-white border-r-[2px] border-grayOne`}
 		>
