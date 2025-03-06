@@ -2,8 +2,20 @@
 
 import { useState } from 'react';
 import Logo from './Logo';
-import UserNavElement from './UserNavElement';
 import { CiBitcoin } from 'react-icons/ci';
+import NavElement from './NavElement';
+import { PiChartLine } from 'react-icons/pi';
+import {
+	FaAlignCenter,
+	FaBitcoin,
+	FaChartArea,
+	FaEye,
+	FaNewspaper,
+	FaRedo,
+	FaWallet,
+} from 'react-icons/fa';
+import { RiExchangeLine, RiRefreshFill } from 'react-icons/ri';
+import { SiBetfair } from 'react-icons/si';
 
 export default function LeftNav() {
 	const [isNavExtended, setIsNavExtented] = useState(false);
@@ -18,12 +30,44 @@ export default function LeftNav() {
 			<div className='h-16 flex items-center self-start pl-2 pr-3'>
 				<Logo isTextHidden={false} />
 			</div>
-			<div className=' w-full p-2'>
-				<UserNavElement title='Kryptowaluty' icon={<CiBitcoin />} href='/' />
-				<UserNavElement title='Akcje' icon={<CiBitcoin />} href='/' />
-				<UserNavElement title='Konwerter' icon={<CiBitcoin />} href='/' />
-				<UserNavElement title='Portfel' icon={<CiBitcoin />} href='/' />
-				<UserNavElement title='Obserwowane' icon={<CiBitcoin />} href='/' />
+			<div className='w-full p-2'>
+				<NavElement
+					title='Budżet'
+					icon={<FaWallet />}
+					href='/'
+					isExtended={isNavExtended}
+				/>
+				<NavElement
+					title='Kryptowaluty'
+					icon={<FaBitcoin />}
+					href='/'
+					isExtended={isNavExtended}
+				/>
+				<NavElement
+					title='Akcje'
+					icon={<FaChartArea />}
+					href='/'
+					isExtended={isNavExtended}
+				/>
+				<NavElement
+					title='Raporty'
+					icon={<FaNewspaper />}
+					href='/'
+					isExtended={isNavExtended}
+				/>
+				<NavElement
+					title='Konwerter'
+					icon={<SiBetfair />}
+					href='/'
+					isExtended={isNavExtended}
+				/>
+
+				<NavElement
+					title='Obserwowane'
+					icon={<FaEye />}
+					href='/'
+					isExtended={isNavExtended}
+				/>
 			</div>
 		</nav>
 	);
