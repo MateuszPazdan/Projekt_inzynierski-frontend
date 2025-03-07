@@ -28,9 +28,9 @@ export default function RootLayout({
 						<TopNav />
 						<LeftNav />
 						<div className='min-h-full'>{children}</div>
-						<div className='flex justify-center items-center py-5 border-t-[2px] border-grayOne'>
+						{/* <div className='flex justify-center items-center py-5 border-t-[2px] border-grayOne'>
 							{new Date().getFullYear()} Asset Flow
-						</div>
+						</div> */}
 					</div>
 				</Setup>
 			</body>
