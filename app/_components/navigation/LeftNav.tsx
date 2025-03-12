@@ -6,6 +6,8 @@ import NavElement from './NavElement';
 import {
 	FaBitcoin,
 	FaChartArea,
+	FaChartBar,
+	FaCoins,
 	FaEye,
 	FaNewspaper,
 	FaWallet,
@@ -20,7 +22,7 @@ export default function LeftNav() {
 			onMouseLeave={() => setIsNavExtented(false)}
 			className={`hidden overflow-hidden lg:flex flex-col items-center fixed left-0 top-0 h-screen transition-all duration-300  ${
 				isNavExtended ? 'w-64' : 'w-16 '
-			} bg-white border-r-[2px] border-grayOne`}
+			} bg-white border-r-[2px] border-grayOne overflow-y-auto`}
 		>
 			<div className='h-16 flex items-center self-start pl-2 pr-3'>
 				<Logo isTextHidden={false} />
@@ -29,21 +31,47 @@ export default function LeftNav() {
 				<NavElement
 					title='Budżet'
 					icon={<FaWallet />}
-					href='/'
+					href='/app/budget'
 					isExtended={isNavExtended}
 				/>
 				<NavElement
-					title='Kryptowaluty'
-					icon={<FaBitcoin />}
-					href='/'
+					title='Inwestycje'
+					icon={<FaCoins />}
+					href='/app/invest'
 					isExtended={isNavExtended}
-				/>
+				>
+					<NavElement
+						title='Kryptowaluty'
+						icon={<FaBitcoin />}
+						href='/app/invest/crypto'
+						isExtended={isNavExtended}
+					/>
+					<NavElement
+						title='Akcje'
+						icon={<FaChartArea />}
+						href='/app/invest/stocks'
+						isExtended={isNavExtended}
+					/>
+				</NavElement>
 				<NavElement
-					title='Akcje'
-					icon={<FaChartArea />}
-					href='/'
+					title='Rynek'
+					icon={<FaChartBar />}
+					href='/app/invest'
 					isExtended={isNavExtended}
-				/>
+				>
+					<NavElement
+						title='Kryptowaluty'
+						icon={<FaBitcoin />}
+						href='/crypto'
+						isExtended={isNavExtended}
+					/>
+					<NavElement
+						title='Akcje'
+						icon={<FaChartArea />}
+						href='/stocks'
+						isExtended={isNavExtended}
+					/>
+				</NavElement>
 				<NavElement
 					title='Raporty'
 					icon={<FaNewspaper />}
