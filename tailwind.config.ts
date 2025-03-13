@@ -21,6 +21,7 @@ const config: Config = {
 			},
 			screens: {
 				sm400: '400px',
+				sm600: '600px',
 			},
 		},
 	},

@@ -14,7 +14,7 @@ export default function NavElement({
 	href,
 	icon,
 	title,
-	isExtended = false,
+	isExtended = true,
 	children,
 }: NavElementProps) {
 	const [isNavElExtended, setIsNavElExtended] = useState(false);

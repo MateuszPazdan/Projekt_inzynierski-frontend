@@ -7,6 +7,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	disabled?: boolean;
 	size?: 'small' | 'large';
 	color?: 'light' | 'dark';
+	stretch?: boolean;
 }
 
 function Button({
@@ -15,6 +16,7 @@ function Button({
 	disabled,
 	size = 'large',
 	color = 'dark',
+	stretch = false,
 	...rest
 }: ButtonProps) {
 	return (
@@ -29,7 +31,7 @@ function Button({
 				size === 'small'
 					? 'px-5 py-2 text-base font-normal'
 					: 'px-7 py-3 font-medium '
-			} rounded-lg`}
+			} rounded-lg text-nowrap ${stretch && 'w-full'}`}
 			disabled={disabled || isLoading}
 			{...rest}
 		>
