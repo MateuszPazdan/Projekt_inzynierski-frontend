@@ -13,9 +13,12 @@ import {
 	FaWallet,
 } from 'react-icons/fa';
 import { SiBetfair } from 'react-icons/si';
+import { usePathname } from 'next/navigation';
 
 export default function LeftNav() {
 	const [isNavExtended, setIsNavExtented] = useState(false);
+	const pathname = usePathname();
+
 	return (
 		<nav
 			onMouseEnter={() => setIsNavExtented(true)}
@@ -33,24 +36,28 @@ export default function LeftNav() {
 					icon={<FaWallet />}
 					href='/app/budget'
 					isExtended={isNavExtended}
+					isFocused={pathname.includes('/app/budget')}
 				/>
 				<NavElement
 					title='Inwestycje'
 					icon={<FaCoins />}
 					href='/app/invest'
 					isExtended={isNavExtended}
+					isFocused={pathname.includes('/app/invest')}
 				>
 					<NavElement
 						title='Kryptowaluty'
 						icon={<FaBitcoin />}
 						href='/app/invest/crypto'
 						isExtended={isNavExtended}
+						isFocused={pathname.includes('/app/invest/crypto')}
 					/>
 					<NavElement
 						title='Akcje'
 						icon={<FaChartArea />}
 						href='/app/invest/stocks'
 						isExtended={isNavExtended}
+						isFocused={pathname.includes('/app/invest/stocks')}
 					/>
 				</NavElement>
 				<NavElement
@@ -58,18 +65,21 @@ export default function LeftNav() {
 					icon={<FaChartBar />}
 					href='/market'
 					isExtended={isNavExtended}
+					isFocused={pathname.includes('/market')}
 				>
 					<NavElement
 						title='Kryptowaluty'
 						icon={<FaBitcoin />}
 						href='/market/crypto'
 						isExtended={isNavExtended}
+						isFocused={pathname.includes('/market/crypto')}
 					/>
 					<NavElement
 						title='Akcje'
 						icon={<FaChartArea />}
 						href='/market/stocks'
 						isExtended={isNavExtended}
+						isFocused={pathname.includes('/market/stocks')}
 					/>
 				</NavElement>
 				<NavElement
@@ -77,12 +87,14 @@ export default function LeftNav() {
 					icon={<FaNewspaper />}
 					href='/app/raport'
 					isExtended={isNavExtended}
+					isFocused={pathname.includes('/app/raport')}
 				/>
 				<NavElement
 					title='Konwerter'
 					icon={<SiBetfair />}
 					href='/convert'
 					isExtended={isNavExtended}
+					isFocused={pathname.includes('/convert')}
 				/>
 
 				<NavElement
@@ -90,6 +102,7 @@ export default function LeftNav() {
 					icon={<FaEye />}
 					href='/watchlist'
 					isExtended={isNavExtended}
+					isFocused={pathname.includes('/watchlist')}
 				/>
 			</div>
 		</nav>

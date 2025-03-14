@@ -9,6 +9,7 @@ interface NavElementProps {
 	isExtended?: boolean;
 	children?: React.ReactNode;
 	onClick?: () => void;
+	isFocused?: boolean;
 }
 
 export default function NavElement({
@@ -18,6 +19,7 @@ export default function NavElement({
 	isExtended = true,
 	children,
 	onClick,
+	isFocused,
 }: NavElementProps) {
 	const [isNavElExtended, setIsNavElExtended] = useState(false);
 	function extendNavElOnClick() {
@@ -28,17 +30,23 @@ export default function NavElement({
 	}, [isExtended]);
 	return (
 		<div>
-			<div className='flex flex-row justify-between p-2 min-w-16 hover:bg-grayOne rounded-lg duration-300 transition-colors'>
+			<div className='flex  flex-row justify-between p-2 min-w-16 hover:bg-grayOne rounded-lg duration-300 transition-colors'>
 				<Link
 					href={href}
 					className='w-full grid grid-cols-[auto_1fr_auto] items-center gap-2 '
 					onClick={onClick}
 				>
-					<span className='block pl-[5.5px] text-xl text-gray-700'>{icon}</span>
+					<span
+						className={`block pl-[5.5px] pb-[2px] text-xl ${
+							isFocused ? 'text-main' : 'text-gray-700'
+						}`}
+					>
+						{icon}
+					</span>
 					<p
 						className={`text-base transition-opacity duration-300 ${
 							isExtended ? 'opacity-100' : 'opacity-0'
-						}`}
+						} ${isFocused ? 'text-main' : 'text-gray-700'}`}
 					>
 						{title}
 					</p>
