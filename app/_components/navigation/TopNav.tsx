@@ -34,7 +34,11 @@ export default function TopNav() {
 					{isAuthenticated ? <LoggedIn /> : <NotLoggedIn />}
 				</div>
 			</div>
-			<MobileNav isMobileNavOpen={isOpen} isAuthenticated={isAuthenticated} />
+			<MobileNav
+				isMobileNavOpen={isOpen}
+				setIsMobileNavOpen={setIsOpen}
+				isAuthenticated={isAuthenticated}
+			/>
 		</div>
 	);
 }

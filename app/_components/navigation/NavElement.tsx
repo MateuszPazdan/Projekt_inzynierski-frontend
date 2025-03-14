@@ -8,6 +8,7 @@ interface NavElementProps {
 	title: string;
 	isExtended?: boolean;
 	children?: React.ReactNode;
+	onClick?: () => void;
 }
 
 export default function NavElement({
@@ -16,6 +17,7 @@ export default function NavElement({
 	title,
 	isExtended = true,
 	children,
+	onClick,
 }: NavElementProps) {
 	const [isNavElExtended, setIsNavElExtended] = useState(false);
 	function extendNavElOnClick() {
@@ -30,6 +32,7 @@ export default function NavElement({
 				<Link
 					href={href}
 					className='w-full grid grid-cols-[auto_1fr_auto] items-center gap-2 '
+					onClick={onClick}
 				>
 					<span className='block pl-[5.5px] text-xl text-gray-700'>{icon}</span>
 					<p
