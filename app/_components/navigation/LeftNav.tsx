@@ -56,39 +56,39 @@ export default function LeftNav() {
 				<NavElement
 					title='Rynek'
 					icon={<FaChartBar />}
-					href='/app/invest'
+					href='/market'
 					isExtended={isNavExtended}
 				>
 					<NavElement
 						title='Kryptowaluty'
 						icon={<FaBitcoin />}
-						href='/crypto'
+						href='/market/crypto'
 						isExtended={isNavExtended}
 					/>
 					<NavElement
 						title='Akcje'
 						icon={<FaChartArea />}
-						href='/stocks'
+						href='/market/stocks'
 						isExtended={isNavExtended}
 					/>
 				</NavElement>
 				<NavElement
 					title='Raporty'
 					icon={<FaNewspaper />}
-					href='/'
+					href='/app/raport'
 					isExtended={isNavExtended}
 				/>
 				<NavElement
 					title='Konwerter'
 					icon={<SiBetfair />}
-					href='/'
+					href='/convert'
 					isExtended={isNavExtended}
 				/>
 
 				<NavElement
 					title='Obserwowane'
 					icon={<FaEye />}
-					href='/'
+					href='/watchlist'
 					isExtended={isNavExtended}
 				/>
 			</div>

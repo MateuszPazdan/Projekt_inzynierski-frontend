@@ -72,6 +72,7 @@ export default function MobileNav({
 				/>
 				<NavElement
 					onClick={handleCloseNav}
+					isExtended={isMobileNavOpen}
 					title='Inwestycje'
 					icon={<FaCoins />}
 					href='/app/invest'
@@ -91,6 +92,7 @@ export default function MobileNav({
 				</NavElement>
 				<NavElement
 					onClick={handleCloseNav}
+					isExtended={isMobileNavOpen}
 					title='Rynek'
 					icon={<FaChartBar />}
 					href='/market'
