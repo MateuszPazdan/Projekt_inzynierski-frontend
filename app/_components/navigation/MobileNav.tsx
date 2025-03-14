@@ -93,19 +93,19 @@ export default function MobileNav({
 					onClick={handleCloseNav}
 					title='Rynek'
 					icon={<FaChartBar />}
-					href='/app/market'
+					href='/market'
 				>
 					<NavElement
 						onClick={handleCloseNav}
 						title='Kryptowaluty'
 						icon={<FaBitcoin />}
-						href='/app/market/crypto'
+						href='/market/crypto'
 					/>
 					<NavElement
 						onClick={handleCloseNav}
 						title='Akcje'
 						icon={<FaChartArea />}
-						href='/app/market/stocks'
+						href='/market/stocks'
 					/>
 				</NavElement>
 				<NavElement
