@@ -34,7 +34,9 @@ export default function LoggedIn() {
 					/>
 				</button>
 			)}
-			{isAvatarClicked && <UserNav user={user} />}
+			{isAvatarClicked && (
+				<UserNav user={user} setIsAvatarClicked={setIsAvatarClicked} />
+			)}
 		</div>
 	);
 }
