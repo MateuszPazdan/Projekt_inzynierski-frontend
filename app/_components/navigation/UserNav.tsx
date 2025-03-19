@@ -4,15 +4,20 @@ import UserNavElement from './UserNavElement';
 import { CiLogout, CiSettings } from 'react-icons/ci';
 import { useLogout } from '@/app/_hook/useLogout';
 import { motion } from 'framer-motion';
-import { useRef } from 'react';
+import { RefObject, useRef } from 'react';
 import { useClickOutside } from '@/app/_hook/useClickOutside';
 
 interface UserNavProps {
 	user?: User;
 	setIsAvatarClicked: (isOpen: boolean) => void;
+	buttonRef: RefObject<HTMLButtonElement>;
 }
 
-export default function UserNav({ user, setIsAvatarClicked }: UserNavProps) {
+export default function UserNav({
+	user,
+	setIsAvatarClicked,
+	buttonRef,
+}: UserNavProps) {
 	const { logoutHookFn } = useLogout();
 	const navRef = useRef<HTMLDivElement>(null);
 
@@ -20,7 +25,7 @@ export default function UserNav({ user, setIsAvatarClicked }: UserNavProps) {
 		setIsAvatarClicked(false);
 	};
 
-	useClickOutside(navRef, closeModal);
+	useClickOutside(navRef, closeModal, buttonRef);
 
 	return (
 		<motion.div
