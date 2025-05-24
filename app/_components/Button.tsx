@@ -30,8 +30,10 @@ function Button({
 			} transition-colors duration-300  ${
 				size === 'small'
 					? 'px-5 py-2 text-base font-normal'
-					: 'px-7 py-3 font-medium '
-			} rounded-lg text-nowrap ${stretch && 'w-full'}`}
+					: 'px-7 py-3 font-medium text-lg '
+			} rounded-lg text-nowrap flex flex-row items-center justify-center ${
+				stretch && 'w-full'
+			}`}
 			disabled={disabled || isLoading}
 			{...rest}
 		>

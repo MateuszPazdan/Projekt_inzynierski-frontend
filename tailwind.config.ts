@@ -21,7 +21,11 @@ const config: Config = {
 			},
 			screens: {
 				sm400: '400px',
+				sm500: '500px',
 				sm600: '600px',
+			},
+			boxShadow: {
+				myShadow: ' 0px 0px 50px -20px rgba(10, 10, 10, 0.2)',
 			},
 		},
 	},

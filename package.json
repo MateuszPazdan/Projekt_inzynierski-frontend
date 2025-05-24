@@ -12,6 +12,7 @@
 		"@reduxjs/toolkit": "^2.6.0",
 		"async-mutex": "^0.5.0",
 		"bootstrap-icons": "^1.13.1",
+		"clsx": "^2.1.1",
 		"framer-motion": "^12.4.10",
 		"next": "14.2.24",
 		"projekt_inzynierski-frontend": "file:",
