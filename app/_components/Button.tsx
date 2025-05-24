@@ -5,12 +5,33 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	children: React.ReactNode;
 	isLoading?: boolean;
 	disabled?: boolean;
+	size?: 'small' | 'large';
+	color?: 'light' | 'dark';
+	stretch?: boolean;
 }
 
-function Button({ children, isLoading, disabled, ...rest }: ButtonProps) {
+function Button({
+	children,
+	isLoading,
+	disabled,
+	size = 'large',
+	color = 'dark',
+	stretch = false,
+	...rest
+}: ButtonProps) {
 	return (
 		<button
-			className={`bg-main hover:bg-second transition-colors duration-300 text-white font-medium px-7 py-3 rounded-lg`}
+			className={`${
+				color === 'light'
+					? '	bg-grayOne hover:bg-graySecond '
+					: color === 'dark'
+					? 'bg-main hover:bg-second text-white'
+					: ' '
+			} transition-colors duration-300  ${
+				size === 'small'
+					? 'px-5 py-2 text-base font-normal'
+					: 'px-7 py-3 font-medium '
+			} rounded-lg text-nowrap ${stretch && 'w-full'}`}
 			disabled={disabled || isLoading}
 			{...rest}
 		>

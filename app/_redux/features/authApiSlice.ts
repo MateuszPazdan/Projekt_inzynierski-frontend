@@ -5,6 +5,7 @@ export interface User {
 	email: string;
 	username: string;
 	created_at: string;
+	avatar_image: string;
 }
 
 const authApiSlice = apiSlice.injectEndpoints({
@@ -33,7 +34,7 @@ const authApiSlice = apiSlice.injectEndpoints({
 			}),
 		}),
 		logout: builder.mutation({
-			query: () => ({ url: '/auth/logout', method: 'GET' }),
+			query: () => ({ url: '/auth/logout', method: 'DELETE' }),
 		}),
 		verifyToken: builder.mutation({
 			query: () => ({
