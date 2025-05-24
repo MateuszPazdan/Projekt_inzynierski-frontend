@@ -25,7 +25,7 @@ const config: Config = {
 				sm600: '600px',
 			},
 			boxShadow: {
-				myShadow: ' 0px 0px 50px -20px rgba(10, 10, 10, 0.2)',
+				myShadow: ' 0px 0px 50px -10px rgba(10, 10, 10, 0.2)',
 			},
 		},
 	},
