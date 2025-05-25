@@ -18,7 +18,7 @@ export default function BudgetElement({
 					className={`flex items-center justify-center w-12 h-12 md:w-14 md:h-14 text-xl aspect-square text-white rounded-full`}
 					style={{ backgroundColor: color }}
 				>
-					{title.charAt(0)}
+					{title.charAt(0).toUpperCase()}
 				</p>
 				<div>
 					<p className='text-xl md:text-2xl'>{title}</p>

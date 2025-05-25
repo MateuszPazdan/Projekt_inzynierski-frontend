@@ -1,21 +1,61 @@
+'use client';
+
+import { useRetrieveBudgetsQuery } from '@/app/_redux/features/budgetApiSlice';
 import BudgetElement from '../../_components/budget/BudgetElement';
+import Spinner from '../Spinner';
+import EmptyList from '../EmptyList';
+import Pagination from '../Pagination';
+import { useState } from 'react';
 
 export default function BudgetList() {
+	const [currPage, setCurrPage] = useState(1);
+	const {
+		data,
+		isLoading: isBudgetsLoading,
+		isFetching: isBudgetFetching,
+	} = useRetrieveBudgetsQuery({
+		size: 30,
+		page: currPage,
+	});
+	const budgets = data?.items;
+
+	if (isBudgetsLoading || isBudgetFetching) {
+		return (
+			<div className='py-10'>
+				<Spinner
+					size='large'
+					description='Ładowanie budżetów...'
+					color='text-main'
+				/>
+			</div>
+		);
+	}
+
 	return (
 		<div className='grid grid-cols-1 gap-2 sm:gap-5 lg:gap-6 items-stretch'>
-			<BudgetElement
-				title='Na życie'
-				description='Lorem ipsum dolor sit, amet consectetur adipisicing elit.'
-				color='#22C55E'
-				balance={49000}
-			/>
-			<BudgetElement title='Coś odłożę' color='#b5c522' balance={2500} />
-			<BudgetElement
-				title='Nie ruszać!'
-				description='Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem modi inventore, exercitationem nam vero, neque dolor sequi consequatur veritatis ipsam.'
-				color='#2d22c5'
-				balance={2500}
-			/>
+			{budgets && budgets?.length > 0 ? (
+				<>
+					{budgets?.map((budget) => (
+						<BudgetElement
+							key={budget.id}
+							balance={0}
+							color={budget.color}
+							title={budget.title}
+							description={budget.description}
+						/>
+					))}
+					<Pagination
+						currPage={currPage}
+						setCurrPage={setCurrPage}
+						pages={data?.pages}
+					/>
+				</>
+			) : (
+				<EmptyList
+					title='Lista jest pusta'
+					description='Dodaj nowy budżet, aby pojawił się na liście.'
+				/>
+			)}
 		</div>
 	);
 }
