@@ -30,8 +30,8 @@ export interface PaginatedList<T> {
 }
 
 export interface PaginationRequestBody {
-	page: number;
-	size: number;
+	page?: number;
+	size?: number;
 }
 
 const budgetApiSlice = apiSlice.injectEndpoints({
@@ -44,8 +44,21 @@ const budgetApiSlice = apiSlice.injectEndpoints({
 				url: `/budgets?size=${size}&page=${page}`,
 				method: 'GET',
 			}),
+			providesTags: ['Budgets'],
+		}),
+		createBudget: builder.mutation<Budget, BudgetRequestBody>({
+			query: (body) => ({
+				url: '/budgets',
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body,
+			}),
+			invalidatesTags: ['Budgets'],
 		}),
 	}),
 });
 
-export const { useRetrieveBudgetsQuery } = budgetApiSlice;
+export const { useRetrieveBudgetsQuery, useCreateBudgetMutation } =
+	budgetApiSlice;
