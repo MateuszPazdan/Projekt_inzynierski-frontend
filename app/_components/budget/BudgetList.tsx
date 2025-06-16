@@ -36,13 +36,7 @@ export default function BudgetList() {
 			{budgets && budgets?.length > 0 ? (
 				<>
 					{budgets?.map((budget) => (
-						<BudgetElement
-							key={budget.id}
-							balance={0}
-							color={budget.color}
-							title={budget.title}
-							description={budget.description}
-						/>
+						<BudgetElement key={budget.id} budget={budget} />
 					))}
 					<Pagination
 						currPage={currPage}

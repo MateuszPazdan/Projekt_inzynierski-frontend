@@ -19,6 +19,23 @@ export interface Budget {
 	};
 	description: string;
 	color: string;
+	total_amount: number;
+}
+
+export interface Transaction {
+	id: string;
+	title: string;
+	transaction_type: string;
+	amount: number;
+	description: string;
+	created_at: string;
+	updated_at: string;
+	budget_id: string;
+	category: {
+		id: number;
+		name: string;
+		icon: string;
+	};
 }
 
 export interface PaginatedList<T> {
@@ -57,8 +74,27 @@ const budgetApiSlice = apiSlice.injectEndpoints({
 			}),
 			invalidatesTags: ['Budgets'],
 		}),
+		retrieveBudget: builder.query<Budget, string>({
+			query: (budgetId) => ({
+				url: `/budgets/${budgetId}`,
+				method: 'GET',
+			}),
+		}),
+		retrieveTransactions: builder.query<
+			PaginatedList<Transaction>,
+			{ budgetId: string; size?: number; page?: number }
+		>({
+			query: ({ budgetId, size = 30, page = 1 }) => ({
+				url: `/budgets/budgets/${budgetId}/transactions?size=${size}&page=${page}`,
+				method: 'GET',
+			}),
+		}),
 	}),
 });
 
-export const { useRetrieveBudgetsQuery, useCreateBudgetMutation } =
-	budgetApiSlice;
+export const {
+	useRetrieveBudgetsQuery,
+	useCreateBudgetMutation,
+	useRetrieveBudgetQuery,
+	useRetrieveTransactionsQuery,
+} = budgetApiSlice;

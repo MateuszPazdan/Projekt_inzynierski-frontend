@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function page() {
 	return (
-		<div className='bg-white rounded-xl p-2 sm400:p-5 lg:p-2 grid grid-cols-1 lg:grid-cols-[2fr_3fr] w-full sm:w-2/3 lg:w-auto'>
+		<div className='bg-white rounded-lg border border-grayThird p-2 sm400:p-5 lg:p-2 grid grid-cols-1 lg:grid-cols-[2fr_3fr] w-full sm:w-2/3 lg:w-auto'>
 			<div className='hidden lg:flex flex-col justify-between text-white bg-main rounded-lg lg:px-10 lg:py-12 max-w-[300px]'>
 				<div>
 					<p className='text-3xl font-medium text-pretty pb-5'>

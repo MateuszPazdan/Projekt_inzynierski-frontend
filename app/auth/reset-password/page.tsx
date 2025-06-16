@@ -15,7 +15,7 @@ interface Props {
 export default function page({ searchParams }: Props) {
 	const token = searchParams?.token;
 	return (
-		<div className='bg-white rounded-xl p-2 sm400:p-5 grid grid-cols-1  w-full sm:w-2/3 lg:w-auto'>
+		<div className='bg-white rounded-lg border border-grayThird p-2 sm400:p-5 grid grid-cols-1  w-full sm:w-2/3 lg:w-auto'>
 			{token ? <ConfirmResetPassword token={token} /> : <ResetPasswordForm />}
 		</div>
 	);

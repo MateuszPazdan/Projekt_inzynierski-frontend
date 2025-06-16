@@ -23,7 +23,7 @@ function Button({
 		<button
 			className={`${
 				color === 'light'
-					? '	bg-grayOne hover:bg-graySecond '
+					? '	bg-white hover:bg-grayThird border border-grayThird  '
 					: color === 'dark'
 					? 'bg-main hover:bg-second text-white'
 					: ' '

@@ -42,7 +42,7 @@ export default function MobileNav({
 	};
 	return (
 		<div
-			className={`lg:hidden absolute right-0 top-16 h-[calc(100vh-64px)] sm600:w-96 w-full overflow-y-auto p-2 grid grid-rows-[auto_1fr_auto] grid-cols-1 justify-between bg-white border-l-[2px] border-grayOne transition-transform duration-300 z-50  ${
+			className={`lg:hidden absolute right-0 top-16 h-[calc(100vh-64px)] sm600:w-96 w-full overflow-y-auto p-2 grid grid-rows-[auto_1fr_auto] grid-cols-1 justify-between bg-white border-l border-grayThird transition-transform duration-300 z-50  ${
 				isMobileNavOpen ? 'translate-x-0' : 'translate-x-full'
 			}`}
 		>
