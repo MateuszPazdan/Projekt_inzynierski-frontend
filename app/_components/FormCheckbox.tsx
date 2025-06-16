@@ -31,7 +31,7 @@ export default function FormCheckbox({
 				{options.map((option, index) => (
 					<div key={index} className='w-full flex items-center gap-2 '>
 						<input
-							className='peer relative appearance-none shrink-0 w-5 h-5 mt-1 border-blackOne/70 border-[2px] rounded-[4px] bg-white checked:bg-second checked:border-0 focus:outline-none focus:ring-offset-0 focus:ring-2 focus:ring-third cursor-pointer'
+							className='peer relative appearance-none shrink-0 w-5 h-5 mt-1 border-grayThird border rounded-[4px] bg-white checked:bg-second checked:border-0 focus:outline-none focus:ring-offset-0 focus:ring-2 focus:ring-third cursor-pointer'
 							type='checkbox'
 							{...rest}
 							id={String(index)}

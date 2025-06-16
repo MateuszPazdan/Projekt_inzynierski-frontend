@@ -4,6 +4,8 @@ import { useRetrieveBudgetQuery } from '@/app/_redux/features/budgetApiSlice';
 import Spinner from '../Spinner';
 import Button from '../Button';
 import TransactionsList from './TransactionsList';
+import Modal from '../Modal';
+import CreateTransactionModal from './CreateTransactionMotal';
 
 interface BudgetInfoProps {
 	budgetId: string;
@@ -40,7 +42,17 @@ export default function BudgetInfo({ budgetId }: BudgetInfoProps) {
 					<Button size='small' color='light'>
 						Zarządzaj budżetem
 					</Button>
-					<Button size='small'>Dodaj transakcję</Button>
+					<Modal>
+						<Modal.Open opens='addTransaction'>
+							<Button size='small'>Dodaj transakcję</Button>
+						</Modal.Open>
+						<Modal.Window name='addTransaction'>
+							<CreateTransactionModal
+								onCloseModal={() => undefined}
+								budgetId={budgetId}
+							/>
+						</Modal.Window>
+					</Modal>
 				</div>
 			</div>
 			<div className='rounded-lg border border-grayThird bg-white p-3 px-5'>
@@ -52,7 +64,7 @@ export default function BudgetInfo({ budgetId }: BudgetInfoProps) {
 					<p className='text-xl font-medium mb-2'>Balans</p>
 					<p className='text-2xl'>{budget?.total_amount.toFixed(2)} PLN</p>
 				</div>
-				<div className='rounded-lg border border-grayThird bg-white  p-3 px-5 grow '>
+				<div className='rounded-lg border border-grayThird bg-white p-3 px-5 grow '>
 					<TransactionsList budgetId={budgetId} />
 				</div>
 			</div>

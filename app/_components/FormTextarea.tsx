@@ -33,7 +33,7 @@ function FormTextarea({
 					validate: validateFunction,
 				})}
 				name={name}
-				className={`resize-none border-grayOne border-2 rounded-lg p-2 focus:outline-none focus:border-main min-h-[120px] ${
+				className={`resize-none border-grayThird border rounded-lg p-2 focus:outline-none focus:border-main min-h-[120px] ${
 					error ? 'border-redAccent focus:border-redAccent/50' : ''
 				}`}
 				{...rest}

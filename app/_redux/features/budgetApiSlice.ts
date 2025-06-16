@@ -22,6 +22,14 @@ export interface Budget {
 	total_amount: number;
 }
 
+export interface TransactionRequestBody {
+	title: string;
+	transaction_type: '+' | '-';
+	amount: number;
+	description: string;
+	category_id: number;
+}
+
 export interface Transaction {
 	id: string;
 	title: string;
@@ -36,6 +44,12 @@ export interface Transaction {
 		name: string;
 		icon: string;
 	};
+}
+
+export interface TransactionCategory {
+	id: number;
+	name: string;
+	icon: string;
 }
 
 export interface PaginatedList<T> {
@@ -79,6 +93,37 @@ const budgetApiSlice = apiSlice.injectEndpoints({
 				url: `/budgets/${budgetId}`,
 				method: 'GET',
 			}),
+			providesTags: (result, error, budgetId) => [
+				{ type: 'Budget', id: budgetId },
+			],
+		}),
+
+		retrieveTransactionCategories: builder.query<
+			PaginatedList<TransactionCategory>,
+			{ size?: number; page?: number }
+		>({
+			query: ({ size = 100, page = 1 }) => ({
+				url: `/budgets/categories?size=${size}&page=${page}`,
+				method: 'GET',
+			}),
+		}),
+		createTransaction: builder.mutation<
+			Transaction,
+			{ budgetId: string; transaction: TransactionRequestBody }
+		>({
+			query: ({ budgetId, transaction }) => ({
+				url: `/budgets/budgets/${budgetId}/transactions`,
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: transaction,
+			}),
+			invalidatesTags: (result, error, { budgetId }) => [
+				{ type: 'Transactions', id: budgetId },
+				{ type: 'Budget', id: budgetId },
+				{ type: 'Budgets' },
+			],
 		}),
 		retrieveTransactions: builder.query<
 			PaginatedList<Transaction>,
@@ -88,6 +133,9 @@ const budgetApiSlice = apiSlice.injectEndpoints({
 				url: `/budgets/budgets/${budgetId}/transactions?size=${size}&page=${page}`,
 				method: 'GET',
 			}),
+			providesTags: (result, error, { budgetId }) => [
+				{ type: 'Transactions', id: budgetId },
+			],
 		}),
 	}),
 });
@@ -96,5 +144,7 @@ export const {
 	useRetrieveBudgetsQuery,
 	useCreateBudgetMutation,
 	useRetrieveBudgetQuery,
+	useRetrieveTransactionCategoriesQuery,
+	useCreateTransactionMutation,
 	useRetrieveTransactionsQuery,
 } = budgetApiSlice;

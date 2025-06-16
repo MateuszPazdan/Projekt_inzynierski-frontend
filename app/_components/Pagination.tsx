@@ -7,21 +7,27 @@ interface PaginationProps {
 	currPage: number;
 	setCurrPage: (currPage: number) => void;
 	pages: number;
+	size?: 'lg' | 'sm';
 }
 
 export default function Pagination({
 	currPage,
 	setCurrPage,
 	pages,
+	size = 'lg',
 }: PaginationProps) {
 	function handleChangePage(page: number) {
 		setCurrPage(page);
 	}
 
-	if (pages < 1) return null;
+	if (pages <= 1) return null;
 
 	return (
-		<div className='relative flex justify-center items-center gap-2 self-end text-lg w-fit mx-auto'>
+		<div
+			className={`relative flex justify-center items-center gap-2 self-end ${
+				size === 'lg' && 'text-lg'
+			} ${size === 'sm' && 'text-sm'} w-fit mx-auto`}
+		>
 			<button
 				disabled={currPage <= 1}
 				onClick={() => handleChangePage(currPage - 1)}
