@@ -67,6 +67,7 @@ export default function RegisterForm() {
 					type='text'
 					autoComplete='username'
 					required
+					maxLength={32}
 				/>
 				<FormInput
 					label='E-mail'

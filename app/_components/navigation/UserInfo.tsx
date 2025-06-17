@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import UserImage from './UserImage';
 
 interface UserInfoProps {
 	username?: string;
