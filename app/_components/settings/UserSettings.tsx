@@ -75,21 +75,28 @@ export default function UserSettings() {
 					</label>
 				</div>
 			</div>
-			<div className='flex flex-col gap-5 '>
-				<div className='flex flex-col gap-3'>
+			<div className='flex flex-col gap-5'>
+				<div className='flex flex-col gap-3 max-w-full'>
 					<span className='font-medium text-gray-700'>Nazwa użytkownika</span>
-					<div className='p-2 px-2 border-grayThird border rounded-lg bg-white w-full max-w-[300px] flex flex-row justify-between items-center'>
-						<p>{user?.username}</p>
+					<div className='relative w-full max-w-[300px]'>
+						<input
+							type='text'
+							readOnly
+							value={user?.username || ''}
+							className='w-full bg-white border border-grayThird rounded-lg px-3 py-2 pr-9 text-gray-800 focus:outline-none cursor-default truncate'
+						/>
 						<Modal>
 							<Modal.Open opens='changeUsername'>
-								<button>
+								<button
+									type='button'
+									className='absolute right-2 top-1/2 -translate-y-1/2 text-gray-700 hover:text-grayThird transition-colors duration-300'
+								>
 									<svg
 										xmlns='http://www.w3.org/2000/svg'
 										width='16'
 										height='16'
 										fill='currentColor'
 										viewBox='0 0 16 16'
-										className='text-gray-700 hover:text-grayThird transition-colors duration-300 cursor-pointer'
 									>
 										<path d='M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z' />
 										<path
@@ -108,11 +115,15 @@ export default function UserSettings() {
 						</Modal>
 					</div>
 				</div>
-				<div className='flex flex-col gap-3'>
+
+				<div className='flex flex-col gap-3 max-w-[300px]'>
 					<span className='font-medium text-gray-700'>E-mail</span>
-					<div className='p-2 px-2 border-grayThird border rounded-lg bg-white w-full max-w-[300px] '>
-						<p>{user?.email}</p>
-					</div>
+					<input
+						type='text'
+						readOnly
+						value={user?.email || ''}
+						className='w-full bg-white border border-grayThird rounded-lg px-3 py-2 text-gray-800 truncate focus:outline-none cursor-default'
+					/>
 				</div>
 			</div>
 		</div>

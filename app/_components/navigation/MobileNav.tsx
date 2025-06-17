@@ -58,7 +58,7 @@ export default function MobileNav({
 							username={user?.username}
 							imageUrl={user?.avatar_image}
 						/>
-						<CiSettings className='text-3xl mr-5 group-hover:text-main transition-colors duration-300' />
+						<CiSettings className='text-3xl mr-5 group-hover:text-main transition-colors duration-300 min-w-[30px]' />
 					</>
 				)}
 			</Link>

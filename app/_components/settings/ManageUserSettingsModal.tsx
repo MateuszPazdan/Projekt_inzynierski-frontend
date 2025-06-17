@@ -37,7 +37,9 @@ export default function ManageUserSettingsModal({
 				onCloseModal();
 			})
 			.catch((error) => {
-				toast.error(error.meassege || 'Wystąpił błąd przy zmianie danych użytkownika.');
+				toast.error(
+					error.meassege || 'Wystąpił błąd przy zmianie danych użytkownika.'
+				);
 			});
 	};
 
@@ -55,7 +57,7 @@ export default function ManageUserSettingsModal({
 					error={errors?.username?.message as string}
 					type='text'
 					required
-					maxLength={64}
+					maxLength={32}
 				/>
 
 				<div className='flex justify-center pt-5'>
