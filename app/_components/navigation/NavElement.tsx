@@ -54,7 +54,7 @@ export default function NavElement({
 				{children && (
 					<button
 						onClick={extendNavElOnClick}
-						className='p-2 bg-transparent hover:bg-graySecond/50 transition-colors duration-300 z-10 rounded-md'
+						className='p-2 bg-transparent hover:bg-graySecond transition-colors duration-300 z-10 rounded-md'
 						type='button'
 					>
 						<FaAngleDown />

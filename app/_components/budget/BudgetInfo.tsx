@@ -5,8 +5,8 @@ import Spinner from '../Spinner';
 import Button from '../Button';
 import TransactionsList from './TransactionsList';
 import Modal from '../Modal';
-import CreateTransactionModal from './CreateTransactionMotal';
 import ManageBudgetModal from './ManageBudgetModal';
+import ManageTransactionModal from './ManageTransactionModal';
 
 interface BudgetInfoProps {
 	budgetId: string;
@@ -75,7 +75,7 @@ export default function BudgetInfo({ budgetId }: BudgetInfoProps) {
 							</Button>
 						</Modal.Open>
 						<Modal.Window name='addTransaction'>
-							<CreateTransactionModal
+							<ManageTransactionModal
 								onCloseModal={() => undefined}
 								budgetId={budgetId}
 							/>
@@ -92,7 +92,7 @@ export default function BudgetInfo({ budgetId }: BudgetInfoProps) {
 					<p className='text-xl font-medium mb-2'>Balans</p>
 					<p className='text-2xl'>{budget?.total_amount.toFixed(2)} PLN</p>
 				</div>
-				<div className='rounded-lg border border-grayThird shadow-md bg-white p-3 px-5 grow '>
+				<div className='rounded-lg border border-grayThird shadow-md bg-white p-3 grow '>
 					<TransactionsList budgetId={budgetId} />
 				</div>
 			</div>

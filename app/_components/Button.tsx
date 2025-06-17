@@ -5,7 +5,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	children: React.ReactNode;
 	isLoading?: boolean;
 	disabled?: boolean;
-	size?: 'small' | 'large';
+	size?: 'xs' | 'small' | 'large';
 	color?: 'light' | 'dark' | 'danger';
 	stretch?: boolean;
 }
@@ -25,14 +25,16 @@ function Button({
 				color === 'light'
 					? '	bg-white hover:bg-grayThird border border-grayThird  '
 					: color === 'dark'
-					? 'bg-main hover:bg-second text-white '
+					? ' bg-main hover:bg-second text-white '
 					: color === 'danger'
-					? 'bg-red-500 hover:bg-red-600 text-white '
+					? ' bg-red-500 hover:bg-red-600 text-white '
 					: ' '
 			} transition-colors duration-300  ${
 				size === 'small'
-					? 'px-5 py-2 text-base font-normal'
-					: 'px-7 py-3 font-medium text-lg '
+					? ' px-5 py-2 text-base font-normal '
+					: size === 'xs'
+					? ' px-3 py-2 font-medium '
+					: ' px-7 py-3 font-medium text-lg '
 			} rounded-lg text-nowrap flex flex-row items-center justify-center ${
 				stretch && ' w-full '
 			}`}
