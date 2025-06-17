@@ -38,11 +38,11 @@ export default function TransactionsList({ budgetId }: TransactionListProps) {
 			) : (
 				<>
 					<table className='w-full text-[0.9rem] mb-4'>
-						<thead className='text-left '>
+						<thead className='text-left'>
 							<tr className='border-b'>
 								<th className='py-2'>Data</th>
 								<th className='py-2'>Tytuł</th>
-								<th className='py-2'>Kategoria</th>
+								<th className='hidden md:block py-2'>Kategoria</th>
 								<th className='py-2 text-right'>Kwota</th>
 							</tr>
 						</thead>
@@ -55,7 +55,9 @@ export default function TransactionsList({ budgetId }: TransactionListProps) {
 											{new Date(transaction.created_at).toLocaleDateString()}
 										</td>
 										<td className='py-2'>{transaction.title}</td>
-										<td className='py-2'>{transaction.category.name}</td>
+										<td className='hidden md:block py-2'>
+											{transaction.category.name}
+										</td>
 
 										<td className='py-2 text-right'>
 											{transaction.transaction_type === '-' && '-'}

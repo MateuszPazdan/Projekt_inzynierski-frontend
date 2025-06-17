@@ -88,6 +88,23 @@ const budgetApiSlice = apiSlice.injectEndpoints({
 			}),
 			invalidatesTags: ['Budgets'],
 		}),
+		modifyBudget: builder.mutation<
+			Budget,
+			{ budgetId: string; budget: BudgetRequestBody }
+		>({
+			query: ({ budgetId, budget }) => ({
+				url: `/budgets/${budgetId}`,
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: budget,
+			}),
+			invalidatesTags: (result, error, { budgetId }) => [
+				{ type: 'Budget', id: budgetId },
+				{ type: 'Budgets' },
+			],
+		}),
 		retrieveBudget: builder.query<Budget, string>({
 			query: (budgetId) => ({
 				url: `/budgets/${budgetId}`,
@@ -112,7 +129,7 @@ const budgetApiSlice = apiSlice.injectEndpoints({
 			{ budgetId: string; transaction: TransactionRequestBody }
 		>({
 			query: ({ budgetId, transaction }) => ({
-				url: `/budgets/budgets/${budgetId}/transactions`,
+				url: `/budgets/${budgetId}/transactions`,
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -130,7 +147,7 @@ const budgetApiSlice = apiSlice.injectEndpoints({
 			{ budgetId: string; size?: number; page?: number }
 		>({
 			query: ({ budgetId, size = 30, page = 1 }) => ({
-				url: `/budgets/budgets/${budgetId}/transactions?size=${size}&page=${page}`,
+				url: `/budgets/${budgetId}/transactions?size=${size}&page=${page}`,
 				method: 'GET',
 			}),
 			providesTags: (result, error, { budgetId }) => [
@@ -143,6 +160,7 @@ const budgetApiSlice = apiSlice.injectEndpoints({
 export const {
 	useRetrieveBudgetsQuery,
 	useCreateBudgetMutation,
+	useModifyBudgetMutation,
 	useRetrieveBudgetQuery,
 	useRetrieveTransactionCategoriesQuery,
 	useCreateTransactionMutation,

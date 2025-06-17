@@ -9,7 +9,12 @@ export default function UserImage({ imageUrl, imageAlt }: UserImageProps) {
 	return (
 		<div>
 			<div>
-				<Image src={imageUrl ?? '/user.png'} alt={imageAlt ?? ''} fill />
+				<Image
+					className='object-cover'
+					src={imageUrl ?? '/user.png'}
+					alt={imageAlt ?? ''}
+					fill
+				/>
 			</div>
 		</div>
 	);

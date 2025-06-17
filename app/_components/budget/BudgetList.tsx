@@ -32,7 +32,7 @@ export default function BudgetList() {
 	}
 
 	return (
-		<div className='grid grid-cols-1 gap-2 sm:gap-5 lg:gap-6 items-stretch'>
+		<div className='grid grid-cols-1 gap-2 sm:gap-5 items-stretch'>
 			{budgets && budgets?.length > 0 ? (
 				<>
 					{budgets?.map((budget) => (

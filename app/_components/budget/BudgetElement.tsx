@@ -8,7 +8,7 @@ interface BudgetElementProps {
 export default function BudgetElement({ budget }: BudgetElementProps) {
 	return (
 		<Link
-			className='relative overflow-hidden flex flex-col md:flex-row justify-between gap-2 items-center px-2 sm:px-5 lg:px-10 py-4 sm:py-6 lg:py-10 border border-grayThird bg-white hover:border-second hover:text-second rounded-lg transition-colors duration-300 cursor-pointer'
+			className='relative overflow-hidden flex flex-col md:flex-row justify-between gap-2 items-center px-2 sm:px-5 lg:px-10 py-4 sm:py-6 lg:py-10 border border-grayThird shadow-md bg-white hover:border-second hover:text-second rounded-lg transition-colors duration-300 cursor-pointer'
 			href={`budget/${budget?.id}`}
 		>
 			<div className='flex flex-row gap-5 items-center w-full'>
