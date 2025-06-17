@@ -63,7 +63,7 @@ export default function TransactionsList({ budgetId }: TransactionListProps) {
 
 	return (
 		<div className='pb-2'>
-			<p className='text-xl font-medium mb-3 px-2'>Lista Transakcji</p>
+			<p className='text-xl font-medium mb-3 px-2'>Historia transakcji</p>
 
 			{transactions?.items.length === 0 ? (
 				<EmptyList

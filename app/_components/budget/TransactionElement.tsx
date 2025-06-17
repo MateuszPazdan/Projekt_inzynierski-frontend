@@ -20,7 +20,7 @@ export default function TransactionElement({
 
 	return (
 		<div
-			className={`border-b border-grayThird py-4 last:border-b-0 transition-all duration-500 px-5 ${
+			className={`border-b border-grayThird py-4 last:border-b-0 transition-all duration-500 px-2 md:px-5 ${
 				isExpanded ? 'bg-grayOne ' : ''
 			}`}
 		>
@@ -66,6 +66,7 @@ export default function TransactionElement({
 						className='overflow-hidden'
 					>
 						<div className='mt-2 text-sm flex flex-col gap-2 py-2'>
+							<p className='md:hidden py-2'>{transaction.category.name}</p>
 							<p className='text-gray-700 py-2'>
 								{transaction.description || 'Brak opisu'}
 							</p>

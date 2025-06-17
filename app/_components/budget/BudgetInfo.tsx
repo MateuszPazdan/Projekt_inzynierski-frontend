@@ -15,6 +15,15 @@ interface BudgetInfoProps {
 export default function BudgetInfo({ budgetId }: BudgetInfoProps) {
 	const { data: budget, isLoading } = useRetrieveBudgetQuery(budgetId);
 
+	function formatFullAmount(amount: number): string {
+		const formatter = new Intl.NumberFormat('pl-PL', {
+			minimumFractionDigits: 2,
+			maximumFractionDigits: 2,
+		});
+
+		return `${formatter.format(amount)} PLN`;
+	}
+
 	if (isLoading) {
 		return (
 			<div className='py-10'>
@@ -83,18 +92,20 @@ export default function BudgetInfo({ budgetId }: BudgetInfoProps) {
 					</Modal>
 				</div>
 			</div>
-			<div className='rounded-lg border border-grayThird shadow-md bg-white p-3 px-5'>
-				<p className='text-xl font-medium mb-2'>Opis</p>
-				<p> {budget?.description}</p>
+			<div className='grid grid-cols-1  md:grid-cols-[1fr_auto] gap-3'>
+				<div className='rounded-lg border border-grayThird shadow-md bg-white p-3 px-5'>
+					<p className='text-xl font-medium mb-2'>Opis</p>
+					<p> {budget?.description}</p>
+				</div>
+				<div className='min-w-[250px] md:w-fit rounded-lg border shadow-md border-grayThird bg-white p-3 px-5'>
+					<p className='text-xl font-medium mb-2 '>Balans</p>
+					<p className='text-xl md:text-2xl truncate overflow-hidden whitespace-nowrap'>
+						{formatFullAmount(budget?.total_amount || 0)}
+					</p>
+				</div>
 			</div>
-			<div className='flex flex-col md:flex-row justify-between gap-3'>
-				<div className='min-w-[250px] rounded-lg border shadow-md border-grayThird bg-white p-3 px-5 h-fit'>
-					<p className='text-xl font-medium mb-2'>Balans</p>
-					<p className='text-2xl'>{budget?.total_amount.toFixed(2)} PLN</p>
-				</div>
-				<div className='rounded-lg border border-grayThird shadow-md bg-white p-3 grow '>
-					<TransactionsList budgetId={budgetId} />
-				</div>
+			<div className='rounded-lg border border-grayThird shadow-md bg-white p-3 grow '>
+				<TransactionsList budgetId={budgetId} />
 			</div>
 		</div>
 	);
