@@ -7,6 +7,7 @@ import TransactionsList from './TransactionsList';
 import Modal from '../Modal';
 import ManageBudgetModal from './ManageBudgetModal';
 import ManageTransactionModal from './ManageTransactionModal';
+import { formatFullAmount } from '@/app/_utils/formatAmountOfMoney';
 
 interface BudgetInfoProps {
 	budgetId: string;
@@ -14,15 +15,6 @@ interface BudgetInfoProps {
 
 export default function BudgetInfo({ budgetId }: BudgetInfoProps) {
 	const { data: budget, isLoading } = useRetrieveBudgetQuery(budgetId);
-
-	function formatFullAmount(amount: number): string {
-		const formatter = new Intl.NumberFormat('pl-PL', {
-			minimumFractionDigits: 2,
-			maximumFractionDigits: 2,
-		});
-
-		return `${formatter.format(amount)} PLN`;
-	}
 
 	if (isLoading) {
 		return (
