@@ -1,5 +1,6 @@
 'use client';
 
+import { formatShortAmount } from '@/app/_utils/formatAmountOfMoney';
 import {
 	Area,
 	AreaChart,
@@ -26,7 +27,7 @@ const data = [
 export default function HoldingsChangeChart() {
 	return (
 		<div className='flex flex-col rounded-lg border border-grayThird shadow-md  bg-white p-3 px-5 overflow-hidden'>
-			<p className='text-xl font-medium mb-2'>Całkowita zmiana</p>
+			<p className='text-lg xl:text-xl font-medium mb-2'>Całkowita zmiana</p>
 			<ResponsiveContainer width='100%' height={400}>
 				<AreaChart
 					data={data}
@@ -54,21 +55,7 @@ export default function HoldingsChangeChart() {
 						scale={'auto'}
 						orientation={'right'}
 						tickFormatter={(value) => {
-							if (value >= 1_000_000) {
-								const mln = value / 1_000_000;
-								const mlnLabel = Number.isInteger(mln)
-									? `${mln}`
-									: `${mln.toPrecision(3)}`;
-								return `${mlnLabel}\u00A0mln\u00A0zł`;
-							}
-
-							return Number(value).toLocaleString('pl-PL', {
-								style: 'currency',
-								currency: 'PLN',
-								currencySign: 'standard',
-								minimumFractionDigits: 0,
-								useGrouping: true,
-							});
+							return formatShortAmount(value);
 						}}
 					/>
 
