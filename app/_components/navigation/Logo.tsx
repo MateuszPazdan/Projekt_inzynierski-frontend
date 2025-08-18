@@ -14,7 +14,7 @@ interface LogoProps {
 export default function Logo({ isTextHidden = true }: LogoProps) {
 	return (
 		<Link href={'/'} className='flex flex-row gap-2 items-center'>
-			<div className='relative h-12 w-12'>
+			<div className='relative h-[36px] w-10 ml-1 mr-1'>
 				<Image
 					src={'/logo.png'}
 					alt={'Logo aplikacji Asset Flow'}
