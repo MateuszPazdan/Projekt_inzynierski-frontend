@@ -8,6 +8,8 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	size?: 'xs' | 'small' | 'large';
 	color?: 'light' | 'dark' | 'danger';
 	stretch?: boolean;
+	additionalClasses?: string;
+	ref?: React.Ref<HTMLButtonElement>;
 }
 
 function Button({
@@ -17,6 +19,8 @@ function Button({
 	size = 'large',
 	color = 'dark',
 	stretch = false,
+	additionalClasses = '',
+	ref,
 	...rest
 }: ButtonProps) {
 	return (
@@ -34,12 +38,13 @@ function Button({
 					? ' px-5 py-2 text-base font-normal '
 					: size === 'xs'
 					? ' px-3 py-2 font-medium '
-					: ' px-7 py-3 font-medium text-lg '
+					: ' px-5 py-3 font-medium text-base '
 			} rounded-lg text-nowrap flex flex-row items-center justify-center ${
 				stretch && ' w-full '
-			}`}
+			} ${additionalClasses}`}
 			disabled={disabled || isLoading}
 			{...rest}
+			ref={ref}
 		>
 			{isLoading ? <Spinner size='small' /> : children}
 		</button>

@@ -12,15 +12,15 @@ import {
 } from '@/app/_redux/features/budgetApiSlice';
 import toast from 'react-hot-toast';
 
-interface ManageBudgetModalProps {
+interface ModifyBudgetModalProps {
 	onCloseModal: () => void;
 	budget?: Budget;
 }
 
-export default function ManageBudgetModal({
+export default function ModifyBudgetModal({
 	onCloseModal,
 	budget,
-}: ManageBudgetModalProps) {
+}: ModifyBudgetModalProps) {
 	const {
 		register,
 		handleSubmit,
@@ -84,7 +84,7 @@ export default function ManageBudgetModal({
 	return (
 		<div>
 			<ModalHeader
-				title={`${budget ? 'Edycja budżetu' : 'Tworzenie budżetu'}`}
+				title={`${budget ? 'Mofyfikacja budżetu' : 'Tworzenie budżetu'}`}
 				onCloseModal={onCloseModal}
 			/>
 			<form
@@ -129,7 +129,7 @@ export default function ManageBudgetModal({
 						type='submit'
 						isLoading={isBudgetCreating || isBudgetModifying}
 					>
-						{budget ? 'Edytuj budżet' : 'Stwórz budżet'}
+						{budget ? 'Modyfikuj budżet' : 'Stwórz budżet'}
 					</Button>
 				</div>
 			</form>

@@ -1,7 +1,6 @@
 'use client';
 
 import { BsArrowDownUp } from 'react-icons/bs';
-import Button from '../Button';
 import { useState } from 'react';
 import CoinAndValueInput from './CoinAndValueInput';
 

@@ -37,8 +37,7 @@ export default function DeleteTransactionModal({
 			<ModalHeader title={'Usuwanie transakcji'} onCloseModal={onCloseModal} />
 			<div className='flex flex-col gap-6 py-5'>
 				<p className='text-gray-700 md:text-center md:flex flex-col md:mx-auto text-lg'>
-					<span> Czy na pewno chcesz usunąć tę transakcję? </span>
-					<span>Tej operacji nie będzie można cofnąć.</span>
+					Na pewno chcesz usunąć tę transakcję? Tego nie da się cofnąć.
 				</p>
 				<div className='flex justify-center pt-5'>
 					<Button

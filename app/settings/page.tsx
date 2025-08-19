@@ -24,8 +24,8 @@ export default function page() {
 			<div className='md:p-5 md:rounded-lg md:bg-white md:shadow-md md:border border-grayThird pt-6'>
 				<p className='text-xl font-medium'>Usuwanie konta</p>
 				<span className='text-gray-700'>
-					Trwale usuń swoje konto i wszystkie powiązane dane. Tej operacji nie
-					można cofnąć.
+					Trwale usuń swoje konto i wszystkie powiązane dane. Tego nie da się
+					cofnąć.
 				</span>
 				<DeleteAccount />
 			</div>

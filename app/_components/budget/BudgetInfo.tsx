@@ -5,9 +5,9 @@ import Spinner from '../Spinner';
 import Button from '../Button';
 import TransactionsList from './TransactionsList';
 import Modal from '../Modal';
-import ManageBudgetModal from './ManageBudgetModal';
 import ManageTransactionModal from './ManageTransactionModal';
 import { formatFullAmount } from '@/app/_utils/formatAmountOfMoney';
+import ManageBudgetBtn from './ManageBudgetBtn';
 
 interface BudgetInfoProps {
 	budgetId: string;
@@ -28,6 +28,14 @@ export default function BudgetInfo({ budgetId }: BudgetInfoProps) {
 		);
 	}
 
+	if (!budget) {
+		return (
+			<div className='py-10'>
+				<p className='text-center text-gray-600'>Nie znaleziono budżetu.</p>
+			</div>
+		);
+	}
+
 	return (
 		<div className='flex flex-col gap-3'>
 			<div className='flex flex-col md:flex-row justify-between gap-5 items-center pb-5'>
@@ -40,34 +48,8 @@ export default function BudgetInfo({ budgetId }: BudgetInfoProps) {
 					</p>
 					<p className='text-2xl md:text-3xl'>{budget?.title}</p>
 				</div>
-				<div className='flex flex-row gap-3 w-full md:w-fit'>
-					<Modal>
-						<Modal.Open opens='modifyBudget'>
-							<Button size='small' color='light'>
-								<span className='md:hidden'>
-									<svg
-										xmlns='http://www.w3.org/2000/svg'
-										width='16'
-										height='16'
-										fill='currentColor'
-										viewBox='0 0 16 16'
-									>
-										<path
-											fillRule='evenodd'
-											d='M10.5 1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4H1.5a.5.5 0 0 1 0-1H10V1.5a.5.5 0 0 1 .5-.5M12 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m-6.5 2A.5.5 0 0 1 6 6v1.5h8.5a.5.5 0 0 1 0 1H6V10a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5M1 8a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 1 8m9.5 2a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V13H1.5a.5.5 0 0 1 0-1H10v-1.5a.5.5 0 0 1 .5-.5m1.5 2.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5'
-										/>
-									</svg>
-								</span>
-								<span className='hidden md:inline'>Zarządzaj budżetem</span>
-							</Button>
-						</Modal.Open>
-						<Modal.Window name='modifyBudget'>
-							<ManageBudgetModal
-								onCloseModal={() => undefined}
-								budget={budget}
-							/>
-						</Modal.Window>
-					</Modal>
+				<div className='flex flex-row gap-1 md:gap-2 w-full md:w-fit'>
+					<ManageBudgetBtn budget={budget} />
 
 					<Modal>
 						<Modal.Open opens='addTransaction'>

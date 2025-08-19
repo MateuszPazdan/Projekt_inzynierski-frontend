@@ -152,7 +152,7 @@ export default function ManageTransactionModal({
 						type='submit'
 						isLoading={isTransactionCreating || isTransactionModifying}
 					>
-						{transaction ? 'Edytuj budżet' : 'Stwórz budżet'}
+						{transaction ? 'Edytuj transakcję' : 'Dodaj transakcję'}
 					</Button>
 				</div>
 			</form>

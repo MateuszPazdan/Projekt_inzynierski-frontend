@@ -105,6 +105,13 @@ const budgetApiSlice = apiSlice.injectEndpoints({
 				{ type: 'Budgets' },
 			],
 		}),
+		deleteBudget: builder.mutation<void, Budget>({
+			query: (budget) => ({
+				url: `/budgets/${budget.id}`,
+				method: 'DELETE',
+			}),
+			invalidatesTags: ['Budgets'],
+		}),
 		retrieveBudget: builder.query<Budget, string>({
 			query: (budgetId) => ({
 				url: `/budgets/${budgetId}`,
@@ -175,6 +182,17 @@ const budgetApiSlice = apiSlice.injectEndpoints({
 				{ type: 'Budgets' },
 			],
 		}),
+		deleteAllTransactions: builder.mutation<void, Budget>({
+			query: (budget) => ({
+				url: `/budgets/${budget.id}/transactions`,
+				method: 'DELETE',
+			}),
+			invalidatesTags: (result, error, budget) => [
+				{ type: 'Transactions', id: budget.id },
+				{ type: 'Budget', id: budget.id },
+				{ type: 'Budgets' },
+			],
+		}),
 
 		retrieveTransactions: builder.query<
 			PaginatedList<Transaction>,
@@ -195,10 +213,12 @@ export const {
 	useRetrieveBudgetsQuery,
 	useCreateBudgetMutation,
 	useModifyBudgetMutation,
+	useDeleteBudgetMutation,
 	useRetrieveBudgetQuery,
 	useRetrieveTransactionCategoriesQuery,
 	useCreateTransactionMutation,
 	useModifyTransactionMutation,
 	useDeleteTransactionMutation,
+	useDeleteAllTransactionsMutation,
 	useRetrieveTransactionsQuery,
 } = budgetApiSlice;

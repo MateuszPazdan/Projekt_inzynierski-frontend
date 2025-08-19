@@ -50,8 +50,12 @@ export default function Modal({ children }: ModalProps) {
 
 function Open({ children, opens }: OpenProps) {
 	const { open } = useContext(ModalContext)!;
+	if (!React.isValidElement(children)) return null;
 	return cloneElement(children as React.ReactElement, {
 		onClick: (e: React.MouseEvent<HTMLButtonElement>) => {
+			if (children.props.onClick) {
+				children.props.onClick(e);
+			}
 			open(opens);
 		},
 	});
