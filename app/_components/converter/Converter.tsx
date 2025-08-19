@@ -1,77 +1,97 @@
 'use client';
 
-import Image from 'next/image';
 import { BsArrowDownUp } from 'react-icons/bs';
 import Button from '../Button';
 import { useState } from 'react';
+import CoinAndValueInput from './CoinAndValueInput';
 
 const cryptoList = [
 	{
 		name: 'Bitcoin',
 		symbol: 'BTC',
 		logo: '/bitcoin-logo-svgrepo-com.svg',
+		price: 67000,
 	},
 	{
 		name: 'Ethereum',
 		symbol: 'ETH',
-		logo: '/ethereum-logo-svgrepo-com.svg',
+		logo: '/eth-svgrepo-com.svg',
+		price: 3500,
+	},
+	{
+		name: 'Chainlink',
+		symbol: 'LINK',
+		logo: '/chainlink-svgrepo-com.svg',
+		price: 14,
+	},
+	{
+		name: 'Litecoin',
+		symbol: 'LTC',
+		logo: '/litecoin-svgrepo-com.svg',
+		price: 80,
+	},
+	{
+		name: 'Ripple',
+		symbol: 'XRP',
+		logo: '/ripple-svgrepo-com.svg',
+		price: 0.5,
+	},
+	{
+		name: 'Dogecoin',
+		symbol: 'DOGE',
+		logo: '/doge-svgrepo-com.svg',
+		price: 0.15,
 	},
 ];
 
+export interface CryptoElement {
+	name: string;
+	symbol: string;
+	logo: string;
+	price: number;
+}
+
 export default function Converter() {
-	const [selectedCrytpo, setSelectedCrypto] = useState(cryptoList[0]);
-	const [SecondSelectedCrytpo, setSecondSelectedCrypto] = useState(
+	const [selectedCrypto, setSelectedCrypto] = useState(cryptoList[0]);
+	const [secondSelectedCrytpo, setSecondSelectedCrypto] = useState(
 		cryptoList[1]
 	);
 	return (
-		<div className=' flex flex-col gap-8 rounded-lg border border-grayThird shadow-md bg-white p-8 px-5  max-w-[500px] w-full'>
+		<div className=' flex flex-col gap-4 rounded-lg border border-grayThird shadow-md bg-white p-5 px-5  max-w-[500px] w-full'>
 			<div className='relative flex flex-col gap-4'>
-				<div className=' flex flex-row gap-1 items-center p-2 bg-grayOne border-grayThird border rounded-md'>
-					<div className='flex flex-row items-center gap-2'>
-						<Image
-							src={selectedCrytpo.logo}
-							alt={selectedCrytpo.name}
-							width={24}
-							height={24}
-						/>
-						<p className='flex flex-col justify-center'>
-							<span className='text-sm font-semibold'>
-								{selectedCrytpo.symbol}
-							</span>
-							<span className='text-xs text-gray-500'>
-								{selectedCrytpo.name}
-							</span>
-						</p>
-					</div>
-					<input
-						placeholder='0.00'
-						min={0}
-						step={0.000001}
-						type='number'
-						className='p-2 text-right bg-transparent outline-none appearance-none m-0 ml-5 w-full'
-					/>
-				</div>
-				<div className='flex items-center justify-center absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 bg-main border-[5px] border-white rounded-full p-2'>
+				<CoinAndValueInput
+					cryptoList={cryptoList}
+					selectedCrypto={selectedCrypto}
+					setSelectedCrypto={setSelectedCrypto}
+				/>
+				<button
+					type='button'
+					className='flex items-center justify-center absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 bg-main border-[5px] border-white rounded-full p-2 hover:cursor-pointer hover:bg-second transition-colors duration-300 z-[5]'
+					onClick={() => {
+						const temp = selectedCrypto;
+						setSelectedCrypto(secondSelectedCrytpo);
+						setSecondSelectedCrypto(temp);
+					}}
+				>
 					<BsArrowDownUp className='text-white font-bold text-xl' />
-				</div>
-				<div className='flex flex-row gap-1 items-center p-2 bg-grayOne border-grayThird border rounded-md'>
-					<Image
-						src={SecondSelectedCrytpo.logo}
-						alt={SecondSelectedCrytpo.name}
-						width={24}
-						height={24}
-					/>
-					<input
-						defaultValue={0.000001}
-						placeholder='0.00'
-						min={0}
-						step={0.000001}
-						type='number'
-						className='w-full p-2 text-right bg-transparent outline-none appearance-none m-0'
-					/>
-				</div>
+				</button>
+				<CoinAndValueInput
+					cryptoList={cryptoList}
+					selectedCrypto={secondSelectedCrytpo}
+					setSelectedCrypto={setSecondSelectedCrypto}
+					disabled
+				/>
 			</div>
-			<Button size='small'>Uzyskaj wycenę</Button>
+			<p className='text-center text-sm text-gray-600'>
+				1 {selectedCrypto.symbol} ≈{' '}
+				{selectedCrypto.price / secondSelectedCrytpo.price > 0
+					? parseFloat(
+							(selectedCrypto.price / secondSelectedCrytpo.price).toFixed(10)
+					  ).toString()
+					: '0'}{' '}
+				{secondSelectedCrytpo.symbol}
+			</p>
+			{/* <Button size='small'>Uzyskaj wycenę</Button> */}
 		</div>
 	);
 }
