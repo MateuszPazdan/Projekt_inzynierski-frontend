@@ -3,17 +3,14 @@
 import { BsPlus } from 'react-icons/bs';
 import Button from '../Button';
 import Modal from '../Modal';
-import CreateBudgetModal from './CreateBudgetModal';
+import ManageBudgetModal from './ManageBudgetModal';
 import { useEffect, useState } from 'react';
 
-export default function BudgetHeader() {
+export default function BudgetsHeader() {
 	const [windowWidth, setWindowWidth] = useState<number | null>(null);
 
 	useEffect(() => {
-		// Ustawiamy szerokość tylko po stronie klienta
 		setWindowWidth(window.innerWidth);
-
-		// (opcjonalnie) aktualizacja przy zmianie rozmiaru
 		const handleResize = () => setWindowWidth(window.innerWidth);
 		window.addEventListener('resize', handleResize);
 
@@ -21,7 +18,7 @@ export default function BudgetHeader() {
 	}, []);
 
 	return (
-		<div className='flex flex-col justify-between items-left sm500:flex-row sm500:items-center gap-2 pb-10'>
+		<div className='flex flex-col justify-between items-start sm500:flex-row sm500:items-center gap-4 pb-10'>
 			<p className='text-blackOne text-center text-3xl md:text-3xl lg:text-4xl'>
 				Przegląd budżetów
 			</p>
@@ -39,7 +36,7 @@ export default function BudgetHeader() {
 					</Button>
 				</Modal.Open>
 				<Modal.Window name='createBudget'>
-					<CreateBudgetModal onCloseModal={() => undefined} />
+					<ManageBudgetModal onCloseModal={() => undefined} />
 				</Modal.Window>
 			</Modal>
 		</div>

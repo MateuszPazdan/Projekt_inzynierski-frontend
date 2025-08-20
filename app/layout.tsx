@@ -24,13 +24,10 @@ export default function RootLayout({
 		<html lang='pl'>
 			<body className={roboto.className}>
 				<Setup>
-					<div className='min-h-screen relative grid grid-rows-[auto_1fr] lg:ml-16'>
+					<div className='min-h-screen bg-grayOne relative lg:grid lg:grid-rows-[auto_1fr] lg:ml-16'>
 						<TopNav />
 						<LeftNav />
 						<div className='min-h-full'>{children}</div>
-						{/* <div className='flex justify-center items-center py-5 border-t-[2px] border-grayOne'>
-							{new Date().getFullYear()} Asset Flow
-						</div> */}
 					</div>
 				</Setup>
 			</body>

@@ -31,7 +31,7 @@ function FormInput({
 				})}
 				type='email'
 				name={name}
-				className={`border-grayOne border-2 rounded-lg p-2 focus:outline-none focus focus:border-main ${
+				className={`border-grayThird border rounded-lg p-2 focus:outline-none focus focus:border-main ${
 					error && 'border-redAccent focus:border-redAccent/50'
 				}`}
 				{...rest}

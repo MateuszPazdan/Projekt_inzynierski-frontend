@@ -54,10 +54,14 @@ export default function NavElement({
 				{children && (
 					<button
 						onClick={extendNavElOnClick}
-						className='p-2 bg-transparent hover:bg-graySecond/50 transition-colors duration-300 z-10 rounded-md'
+						className={`p-2 bg-transparent hover:bg-graySecond transition-colors duration-300 z-10 rounded-lg `}
 						type='button'
 					>
-						<FaAngleDown />
+						<FaAngleDown
+							className={`${
+								isNavElExtended && 'rotate-180'
+							} transition-transform duration-300`}
+						/>
 					</button>
 				)}
 			</div>

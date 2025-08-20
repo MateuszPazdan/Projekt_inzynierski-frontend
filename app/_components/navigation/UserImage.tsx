@@ -8,9 +8,12 @@ interface UserImageProps {
 export default function UserImage({ imageUrl, imageAlt }: UserImageProps) {
 	return (
 		<div>
-			<div>
-				<Image src={imageUrl ?? '/user.png'} alt={imageAlt ?? ''} fill />
-			</div>
+			<Image
+				className='object-cover aspect-square'
+				src={imageUrl ?? '/user.png'}
+				alt={imageAlt ?? ''}
+				fill
+			/>
 		</div>
 	);
 }

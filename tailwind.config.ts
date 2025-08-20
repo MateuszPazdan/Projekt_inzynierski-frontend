@@ -13,7 +13,7 @@ const config: Config = {
 				second: '#2520e3',
 				third: '#add7f6',
 				blackOne: '#0a0a0a',
-				grayOne: '#edeff3',
+				grayOne: '#F6F8FA',
 				graySecond: '#D7DDE6',
 				grayThird: '#C9CFD9',
 				greenAccent: '#22C55E',
@@ -25,7 +25,7 @@ const config: Config = {
 				sm600: '600px',
 			},
 			boxShadow: {
-				myShadow: ' 0px 0px 50px -20px rgba(10, 10, 10, 0.2)',
+				myShadow: ' 0px 0px 10px 0px rgba(10, 10, 10, 0.2)',
 			},
 		},
 	},
