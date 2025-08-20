@@ -28,7 +28,7 @@ export default function TopGainer({ topGainer }: TopGainerProps) {
 					>
 						{amount > 0 && '+'}
 						{/* {amount < 0 && '-'} */}
-						{formatFullAmount(amount)}
+						{formatFullAmount(amount)} PLN
 					</span>
 				</p>
 			</div>

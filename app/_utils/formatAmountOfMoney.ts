@@ -4,7 +4,7 @@ export function formatFullAmount(amount: number): string {
 		maximumFractionDigits: 2,
 	});
 
-	return `${formatter.format(amount)} PLN`;
+	return `${formatter.format(amount)}`;
 }
 
 export function formatShortAmount(amount: number): string {

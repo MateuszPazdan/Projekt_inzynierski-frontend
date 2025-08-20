@@ -15,7 +15,7 @@ export default function StockListElement({ stock }: StockListElementProps) {
 	const router = useRouter();
 
 	function handleNavigate() {
-		router.push('/market/stock/asset');
+		router.push(`/market/stocks/${stock.symbol}`);
 	}
 
 	function hadnleClick(e: React.MouseEvent) {
@@ -37,17 +37,9 @@ export default function StockListElement({ stock }: StockListElementProps) {
 				</button>
 			</td>
 			<td className={`${thStyles} text-center`}>1</td>
-			<td className={`${thStyles} flex flex-row items-center gap-2`}>
-				{/* <Image
-					alt='crypto-logo'
-					src={'/bitcoin-logo-svgrepo-com.svg'}
-					width={28}
-					height={28}
-				/> */}
-				<p className='flex flex-col items-start'>
-					<span>{stock.name}</span>
-					<span className='text-sm text-gray-700'>{stock.symbol}</span>
-				</p>
+			<td className={`${thStyles} flex flex-col items-start`}>
+				<span>{stock.name}</span>
+				<span className='text-sm text-gray-700'>{stock.symbol}</span>
 			</td>
 			<td className={`${thStyles}`}>{stock.price} PLN</td>
 			<td className={`${thStyles}`}>
@@ -107,9 +99,11 @@ export default function StockListElement({ stock }: StockListElementProps) {
 					{stock.price_change_percentage_7d}%
 				</span>
 			</td>
-			<td className={`${thStyles}`}>{formatFullAmount(stock.volume_24h)}</td>
+			<td className={`${thStyles}`}>
+				{formatFullAmount(stock.volume_24h)} {stock.currency}
+			</td>
 			<td className={`${thStyles} pr-2 md:pr-5`}>
-				{formatFullAmount(stock.market_cap)}
+				{formatFullAmount(stock.market_cap)} {stock.currency}
 			</td>
 		</tr>
 	);

@@ -38,7 +38,7 @@ export default function TotalPortfolioChange({
 			>
 				{amount > 0 && '+'}
 				{/* {amount < 0 && '-'} */}
-				{formatFullAmount(amount)}
+				{formatFullAmount(amount)} PLN
 			</p>
 		</div>
 	);
