@@ -26,7 +26,7 @@ export default function ManageBudgetBtn({ budget }: ManageBudgetBtnProps) {
 	return (
 		<div className='relative flex' ref={buttonRef}>
 			<Button
-				size='small'
+				size='icon'
 				color='light'
 				onClick={() => setIsExtended((isExtended) => !isExtended)}
 			>

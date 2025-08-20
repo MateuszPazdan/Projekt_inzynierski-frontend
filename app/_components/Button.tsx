@@ -5,7 +5,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	children: React.ReactNode;
 	isLoading?: boolean;
 	disabled?: boolean;
-	size?: 'xs' | 'small' | 'large';
+	size?: 'xs' | 'small' | 'large' | 'icon';
 	color?: 'light' | 'dark' | 'danger';
 	stretch?: boolean;
 	additionalClasses?: string;
@@ -38,7 +38,11 @@ function Button({
 					? ' px-5 py-2 text-base font-normal '
 					: size === 'xs'
 					? ' px-3 py-2 font-medium '
-					: ' px-5 py-3 font-medium text-base '
+					: size === 'large'
+					? ' px-5 py-3 font-medium text-base '
+					: size === 'icon'
+					? ' w-12 aspect-square '
+					: ''
 			} rounded-lg text-nowrap flex flex-row items-center justify-center ${
 				stretch && ' w-full '
 			} ${additionalClasses}`}

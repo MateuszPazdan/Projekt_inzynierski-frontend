@@ -3,8 +3,6 @@ import SectionHeader from '@/app/_components/SectionHeader';
 import Spinner from '@/app/_components/Spinner';
 import { Suspense } from 'react';
 
-export const revalidate = 0;
-
 export default function page() {
 	return (
 		<div className='min-h-full px-2 sm:px-5 lg:px-12 py-10 max-w-[1800px] w-full mx-auto flex flex-col '>

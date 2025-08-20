@@ -1,12 +1,13 @@
 import { getStocks } from '@/app/_actions/stockActions';
 import StockListElement from './StockListElement';
 
+export const revalidate = 0;
+
 export const thStyles = 'px-1 py-2';
 
 export default async function StockList() {
 	const stocks = await getStocks();
 
-	console.log(stocks);
 	return (
 		<div className='overflow-x-auto w-full rounded-lg border border-grayThird shadow-md bg-white p-3 px-5'>
 			<table className='text-right divide-y divide-grayThird text-xs md:text-sm w-full min-w-[700px] bg-white'>
