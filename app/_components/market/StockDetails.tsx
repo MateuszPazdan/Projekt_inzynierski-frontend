@@ -5,7 +5,7 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 import Button from '../Button';
 import { PiStar } from 'react-icons/pi';
 import { FaPlus } from 'react-icons/fa6';
-import ChangeChart from '../ChangeChart';
+import StockPriceSection from './StockPriceSection';
 
 interface StockDetailsProps {
 	stockDetails: StockDetails;
@@ -56,9 +56,7 @@ export default function StockDetailsCard({
 					</div>
 				</>
 			</div>
-			<div>
-				<ChangeChart chartData={chartData} stockDetails={stockDetails} />
-			</div>
+			<StockPriceSection chartData={chartData} stockDetails={stockDetails} />
 		</div>
 	);
 }

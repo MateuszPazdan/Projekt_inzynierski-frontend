@@ -1,12 +1,14 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
-export default function PeriodSelect() {
+interface PeriodSelectProps {
+	range: string;
+	setRange: (val: string) => void;
+}
+
+export default function PeriodSelect({ range, setRange }: PeriodSelectProps) {
 	const router = useRouter();
-	const searchParams = useSearchParams();
-	const [range, setRange] = useState(searchParams.get('range') || '1w');
 
 	const options = [
 		{ value: '1w', label: '7d' },
