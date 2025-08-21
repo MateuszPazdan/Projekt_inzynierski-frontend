@@ -1,16 +1,21 @@
 'use client';
 
-import { StockDetails } from '@/app/_actions/stockActions';
+import { StockDetails, StockHistoricalData } from '@/app/_actions/stockActions';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import Button from '../Button';
 import { PiStar } from 'react-icons/pi';
 import { FaPlus } from 'react-icons/fa6';
+import ChangeChart from '../ChangeChart';
 
 interface StockDetailsProps {
 	stockDetails: StockDetails;
+	chartData: StockHistoricalData[];
 }
 
-export default function StockDetailsCard({ stockDetails }: StockDetailsProps) {
+export default function StockDetailsCard({
+	stockDetails,
+	chartData,
+}: StockDetailsProps) {
 	return (
 		<div className='flex flex-col gap-3'>
 			<div className='flex flex-row justify-between gap-5 items-center pb-5'>
@@ -39,12 +44,20 @@ export default function StockDetailsCard({ stockDetails }: StockDetailsProps) {
 						<Button size='icon' color='light' onClick={() => {}}>
 							<PiStar className='text-yellow-500 text-2xl' />
 						</Button>
-						<Button size='large' additionalClasses='h-12' color='light' onClick={() => {}}>
+						<Button
+							size='large'
+							additionalClasses='h-12'
+							color='light'
+							onClick={() => {}}
+						>
 							<FaPlus className='mr-2 text-gray-500 font-semibold' />
 							<span>Dodaj do inwestycji</span>
 						</Button>
 					</div>
 				</>
+			</div>
+			<div>
+				<ChangeChart chartData={chartData} stockDetails={stockDetails} />
 			</div>
 		</div>
 	);
