@@ -31,7 +31,10 @@ export default function ChangeChart({ chartData }: ChangeChartProps) {
 			if (diffInDays > 365) {
 				return date.getFullYear() !== prev.getFullYear();
 			} else if (diffInDays <= 7) {
-				return true;
+				return (
+					date.getDate() !== prev.getDate() ||
+					date.getMonth() !== prev.getMonth()
+				);
 			} else {
 				return (
 					date.getMonth() !== prev.getMonth() ||
@@ -51,6 +54,7 @@ export default function ChangeChart({ chartData }: ChangeChartProps) {
 					axisLine={false}
 					tickLine={false}
 					tickMargin={10}
+					minTickGap={40}
 					tickFormatter={(dateStr) => {
 						const date = new Date(dateStr);
 

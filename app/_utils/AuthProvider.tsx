@@ -25,7 +25,7 @@ export default function AuthProvider({
 
 	if (isLoading || !isAuthenticated) {
 		return (
-			<div className='min-h-screen flex items-center justify-center'>
+			<div className='min-h-full flex-1 flex items-center justify-center'>
 				<Spinner size='large' color='text-main' />
 			</div>
 		);

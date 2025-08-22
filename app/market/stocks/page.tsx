@@ -5,7 +5,7 @@ import { Suspense } from 'react';
 
 export default function page() {
 	return (
-		<div className='min-h-full px-2 sm:px-5 lg:px-12 py-10 max-w-[1800px] w-full mx-auto flex flex-col '>
+		<div className='flex-1 min-h-full px-2 sm:px-5 lg:px-12 py-10 max-w-[1800px] w-full mx-auto flex flex-col'>
 			<div className='pb-10'>
 				<SectionHeader
 					title='Rynek akcji'
@@ -15,13 +15,11 @@ export default function page() {
 			</div>
 			<Suspense
 				fallback={
-					<div className='h-full flex-1 flex items-center justify-center'>
-						<Spinner
-							description='Wczytywanie akcji...'
-							size='large'
-							color='text-main'
-						/>
-					</div>
+					<Spinner
+						description='Wczytywanie akcji...'
+						size='large'
+						color='text-main'
+					/>
 				}
 			>
 				<StockList />

@@ -14,7 +14,7 @@ interface SpinnerProps {
 
 function Spinner({ size, color, description }: SpinnerProps) {
 	return (
-		<span className='flex flex-col justify-center items-center gap-2 h-full w-full '>
+		<span className='flex flex-1 flex-col justify-center items-center gap-2 w-full '>
 			<ImSpinner2 className={`animate-spin ${spinnerSize[size]} ${color}`} />
 			<p className={`	text-sm ${!description && ' hidden '}`}>{description}</p>
 		</span>

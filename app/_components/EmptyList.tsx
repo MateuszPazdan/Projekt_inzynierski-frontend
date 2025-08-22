@@ -2,11 +2,11 @@ export default function EmptyList({
 	title,
 	description,
 }: {
-	title: string;
-	description: string;
+	title?: string;
+	description?: string;
 }) {
 	return (
-		<div className='flex flex-col items-center justify-center gap-2 py-10 text-center'>
+		<div className='flex flex-col items-center justify-center gap-2 py-10 lg:py-20 text-center'>
 			<svg
 				xmlns='http://www.w3.org/2000/svg'
 				fill='currentColor'

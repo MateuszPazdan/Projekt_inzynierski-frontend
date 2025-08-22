@@ -24,10 +24,10 @@ export default function RootLayout({
 		<html lang='pl'>
 			<body className={roboto.className}>
 				<Setup>
-					<div className='min-h-screen bg-grayOne relative lg:grid lg:grid-rows-[auto_1fr] lg:ml-16'>
+					<div className='min-h-screen bg-grayOne flex flex-col relative lg:grid lg:grid-rows-[auto_1fr] lg:ml-16'>
 						<TopNav />
 						<LeftNav />
-						<div className='min-h-full'>{children}</div>
+						<>{children}</>
 					</div>
 				</Setup>
 			</body>

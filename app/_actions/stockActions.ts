@@ -2,6 +2,14 @@
 
 const API_URL = `${process.env.NEXT_PUBLIC_HOST}/api/v1`;
 
+export interface PaginatedResponse<T> {
+	items: T[];
+	total: number;
+	page: number;
+	size: number;
+	pages: number;
+}
+
 export interface Stock {
 	symbol: string;
 	name: string;
@@ -65,13 +73,13 @@ export async function getStocks() {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
-				next: 'no-cache',
 			},
 		});
 		if (!response.ok) {
 			throw new Error(`Błąd serwera: ${response.status}`);
 		}
-		const data: Stock[] = await response.json();
+		const data: PaginatedResponse<Stock> = await response.json();
+		await new Promise((resolve) => setTimeout(resolve, 15000));
 		return data;
 	} catch (error) {
 		console.error('Nie udało się pobrać danych akcji.', error);

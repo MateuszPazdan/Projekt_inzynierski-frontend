@@ -45,10 +45,7 @@ export default function BudgetList() {
 					/>
 				</>
 			) : (
-				<EmptyList
-					title='Lista jest pusta'
-					description='Dodaj nowy budżet, aby pojawił się na liście.'
-				/>
+				<EmptyList description='Nie odnaleziono żadnych budżetów.' />
 			)}
 		</div>
 	);

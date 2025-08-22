@@ -34,7 +34,7 @@ export default function StockPriceSection({
 			<p className='text-2xl sm:text-3xl font-medium'>
 				<span>{stockDetails?.currency}</span> {stockDetails?.price.toFixed(2)}{' '}
 			</p>
-			<div className='grid grid-rows-2 grid-cols-2 sm:grid-rows-1 sm:grid-cols-[auto_1fr_auto] gap-1 sm:gap-2 md:gap-3 items-center text-xs '>
+			<div className='grid grid-rows-2 grid-cols-2 sm:grid-rows-1 sm:grid-cols-[auto_1fr_auto] gap-1 sm:gap-2 md:gap-3 items-center text-xs lg:text-sm '>
 				<p className='sm:order-1 '>
 					<span className='hidden sm:inline text-gray-500'>Minimum</span>{' '}
 					<span className='font-medium text-gray-500 sm:text-black'>
