@@ -3,7 +3,12 @@ import SectionHeader from '@/app/_components/SectionHeader';
 import Spinner from '@/app/_components/Spinner';
 import { Suspense } from 'react';
 
-export default function page() {
+export default function page({
+	searchParams,
+}: {
+	searchParams: { page?: string };
+}) {
+	const page = Number(searchParams?.page) || 1;
 	return (
 		<div className='flex-1 min-h-full px-2 sm:px-5 lg:px-12 py-10 max-w-[1800px] w-full mx-auto flex flex-col'>
 			<div className='pb-10'>
@@ -22,7 +27,7 @@ export default function page() {
 					/>
 				}
 			>
-				<StockList />
+				<StockList page={page} />
 			</Suspense>
 		</div>
 	);

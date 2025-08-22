@@ -54,19 +54,36 @@ export interface StockDetails {
 
 // await new Promise((resolve) => setTimeout(resolve, 1500));
 
-export async function getStocks() {
+export async function getStocks({
+	search = '',
+	page = 1,
+	size = 50,
+}: {
+	search?: string;
+	page?: number;
+	size?: number;
+}) {
+	console.log(
+		`${API_URL}/portfolio/assets/stocks?search=${search}&page=${Number(
+			page
+		)}&size=${Number(size)}`
+	);
 	try {
-		const response = await fetch(`${API_URL}/portfolio/assets/stocks`, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
+		const response = await fetch(
+			`${API_URL}/portfolio/assets/stocks?search=${search}&page=${Number(
+				page
+			)}&size=${Number(size)}`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		);
 		if (!response.ok) {
 			throw new Error(`Błąd serwera: ${response.status}`);
 		}
 		const data: PaginatedResponse<Stock> = await response.json();
-		console.log('getting stocks');
 
 		return data;
 	} catch (error) {
@@ -88,7 +105,6 @@ export async function getStockDetailsBySymbol(stockSymbol: string) {
 		if (!response.ok) {
 			throw new Error(`Błąd serwera: ${response.status}`);
 		}
-		console.log(`getting details of stock${stockSymbol}`);
 		const data: StockDetails = await response.json();
 		return data;
 	} catch (error) {
