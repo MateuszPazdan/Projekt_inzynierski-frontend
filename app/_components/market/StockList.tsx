@@ -2,8 +2,6 @@ import { getStocks } from '@/app/_actions/stockActions';
 import StockListElement from './StockListElement';
 import EmptyList from '../EmptyList';
 
-export const revalidate = 0;
-
 export const thStyles = 'px-1 py-2';
 
 export default async function StockList() {

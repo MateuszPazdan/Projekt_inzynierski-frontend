@@ -1,24 +1,40 @@
-import { StockDetails, StockHistoricalData } from '@/app/_actions/stockActions';
+import { StockDetails } from '@/app/_actions/stockActions';
 import PeriodSelect from '../PeriodSelect';
 import ChangeChart from '../ChangeChart';
 import { useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useRetrieveStockHistoricalPriceQuery } from '@/app/_redux/features/marketApiSlice';
+import Spinner from '../Spinner';
+import EmptyList from '../EmptyList';
 
 interface StockPriceSectionProps {
-	chartData: StockHistoricalData[];
 	stockDetails: StockDetails;
 }
 
 export default function StockPriceSection({
-	chartData,
 	stockDetails,
 }: StockPriceSectionProps) {
-	const searchParams = useSearchParams();
-	const [range, setRange] = useState(searchParams.get('range') || '1w');
+	const [period, setPeriod] = useState<string>('1w');
+	const {
+		data: chartData,
+		isFetching: isChartDataFetching,
+		isLoading: isChartDataLoading,
+	} = useRetrieveStockHistoricalPriceQuery(
+		{
+			stock_symbol: stockDetails.symbol,
+			period,
+		},
+		{
+			pollingInterval: 900000,
+		}
+	);
 
-	const minPrice = Math.min(...chartData.map((data) => data.low_price));
-	const maxPrice = Math.max(...chartData.map((data) => data.high_price));
+	const minPrice =
+		chartData && Math.min(...chartData.map((data) => data.low_price));
+	const maxPrice =
+		chartData && Math.max(...chartData.map((data) => data.high_price));
 	const pricePercent =
+		minPrice &&
+		maxPrice &&
 		((stockDetails.price - minPrice) / (maxPrice - minPrice)) * 100;
 
 	return (
@@ -38,13 +54,13 @@ export default function StockPriceSection({
 				<p className='sm:order-1 '>
 					<span className='hidden sm:inline text-gray-500'>Minimum</span>{' '}
 					<span className='font-medium text-gray-500 sm:text-black'>
-						{minPrice.toFixed(2)} {stockDetails?.currency}
+						{minPrice?.toFixed(2)} {stockDetails?.currency}
 					</span>
 				</p>
 				<p className='sm:order-3 text-right'>
 					<span className='hidden sm:inline text-gray-500'>Maksimum</span>{' '}
 					<span className='font-medium text-gray-500 sm:text-black'>
-						{maxPrice.toFixed(2)} {stockDetails?.currency}
+						{maxPrice?.toFixed(2)} {stockDetails?.currency}
 					</span>
 				</p>
 				<div className='sm:order-2 col-span-2 sm:col-span-1 w-full relative bg-grayOne border border-grayThird h-2 rounded-lg overflow-hidden'>
@@ -58,8 +74,22 @@ export default function StockPriceSection({
 					></div>
 				</div>
 			</div>
-			<PeriodSelect range={range} setRange={setRange} />
-			<ChangeChart chartData={chartData} />
+			<PeriodSelect range={period} setRange={setPeriod} />
+			{isChartDataLoading ? (
+				<span className='flex h-full min-h-[300px]'>
+					<Spinner
+						size='large'
+						color='text-main'
+						description='Ładowanie wykresu...'
+					/>
+				</span>
+			) : !chartData || chartData.length === 0 ? (
+				<EmptyList description='Brak danych do wyświetlenia wykresu' />
+			) : (
+				<div className={`${isChartDataFetching && 'opacity-50'}`}>
+					<ChangeChart chartData={chartData} />
+				</div>
+			)}
 		</div>
 	);
 }

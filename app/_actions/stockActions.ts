@@ -52,19 +52,6 @@ export interface StockDetails {
 	circulating_supply: number;
 }
 
-export interface StockHistoricalData {
-	date: string;
-	stock_id: number;
-	close_price: number;
-	low_price: number;
-	interval: string;
-	open_price: number;
-	id: number;
-	high_price: number;
-	volume: number;
-	period: string;
-}
-
 // await new Promise((resolve) => setTimeout(resolve, 1500));
 
 export async function getStocks() {
@@ -79,7 +66,8 @@ export async function getStocks() {
 			throw new Error(`Błąd serwera: ${response.status}`);
 		}
 		const data: PaginatedResponse<Stock> = await response.json();
-		await new Promise((resolve) => setTimeout(resolve, 15000));
+		console.log('getting stocks');
+
 		return data;
 	} catch (error) {
 		console.error('Nie udało się pobrać danych akcji.', error);
@@ -94,43 +82,16 @@ export async function getStockDetailsBySymbol(stockSymbol: string) {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
-					next: 'no-cache',
 				},
 			}
 		);
 		if (!response.ok) {
 			throw new Error(`Błąd serwera: ${response.status}`);
 		}
+		console.log(`getting details of stock${stockSymbol}`);
 		const data: StockDetails = await response.json();
 		return data;
 	} catch (error) {
 		console.error('Nie udało się pobrać szczegółów akcji.', error);
-	}
-}
-
-export async function getStockHistoricalData(
-	stockSymbol: string,
-	period?: string
-) {
-	try {
-		const response = await fetch(
-			`${API_URL}/portfolio/assets/stocks/${stockSymbol}/historical?period=${
-				period || 'max'
-			}`,
-			{
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json',
-					next: 'no-cache',
-				},
-			}
-		);
-		if (!response.ok) {
-			throw new Error(`Błąd serwera: ${response.status}`);
-		}
-		const data: StockHistoricalData[] = await response.json();
-		return data;
-	} catch (error) {
-		console.error('Nie udało się pobrać danych historycznych akcji.', error);
 	}
 }

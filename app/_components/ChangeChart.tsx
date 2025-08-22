@@ -10,7 +10,7 @@ import {
 	XAxis,
 	YAxis,
 } from 'recharts';
-import { StockHistoricalData } from '../_actions/stockActions';
+import { StockHistoricalData } from '../_redux/features/marketApiSlice';
 
 interface ChangeChartProps {
 	chartData: StockHistoricalData[];
@@ -45,7 +45,7 @@ export default function ChangeChart({ chartData }: ChangeChartProps) {
 		.map((item) => item.date);
 
 	return (
-		<ResponsiveContainer width='100%' height={400}>
+		<ResponsiveContainer width='100%' className={'min-h-[300px]'} >
 			<AreaChart data={chartData} margin={{ right: 25, left: 30 }}>
 				<CartesianGrid vertical={false} />
 				<XAxis

@@ -1,15 +1,11 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-
 interface PeriodSelectProps {
 	range: string;
 	setRange: (val: string) => void;
 }
 
 export default function PeriodSelect({ range, setRange }: PeriodSelectProps) {
-	const router = useRouter();
-
 	const options = [
 		{ value: '1w', label: '7d' },
 		{ value: '1m', label: '1m' },
@@ -19,9 +15,6 @@ export default function PeriodSelect({ range, setRange }: PeriodSelectProps) {
 
 	const handleChange = (val: string) => {
 		setRange(val);
-		const params = new URLSearchParams(window.location.search);
-		params.set('range', val);
-		router.push(`?${params.toString()}`, { scroll: false });
 	};
 
 	return (
