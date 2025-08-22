@@ -62,7 +62,6 @@ export default function TotalHoldingsChart() {
 						isAnimationActive={false}
 						content={({ payload, active }) => {
 							if (active && payload && payload.length) {
-								console.log(payload);
 								return (
 									<div className='rounded-lg border border-grayThird shadow-md  bg-white px-4 py-2 text-sm'>
 										<p className='font-medium'>{payload[0]?.name}</p>{' '}

@@ -36,12 +36,12 @@ export default function StockListElement({ stock }: StockListElementProps) {
 					<PiStar />
 				</button>
 			</td>
-			<td className={`${thStyles} text-center`}>1</td>
+			<td className={`${thStyles} text-center`}>{stock.market_cap_rank}</td>
 			<td className={`${thStyles} flex flex-col items-start`}>
 				<span>{stock.name}</span>
 				<span className='text-sm text-gray-700'>{stock.symbol}</span>
 			</td>
-			<td className={`${thStyles}`}>{stock.price} PLN</td>
+			<td className={`${thStyles}`}>{stock.price.toFixed(2)} PLN</td>
 			<td className={`${thStyles}`}>
 				<span
 					className={`flex items-center justify-end ${
@@ -100,7 +100,8 @@ export default function StockListElement({ stock }: StockListElementProps) {
 				</span>
 			</td>
 			<td className={`${thStyles}`}>
-				{formatFullAmount(stock.volume_24h)} {stock.currency}
+				{formatFullAmount(Number(stock.volume_24h * stock.price))}{' '}
+				{stock.currency}
 			</td>
 			<td className={`${thStyles} pr-2 md:pr-5`}>
 				{formatFullAmount(stock.market_cap)} {stock.currency}

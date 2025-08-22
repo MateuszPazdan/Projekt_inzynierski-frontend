@@ -1,45 +1,183 @@
-import { getStocks } from '@/app/_actions/stockActions';
+'use client';
+
+import { PaginatedResponse, Stock } from '@/app/_actions/stockActions';
 import StockListElement from './StockListElement';
-import EmptyList from '../EmptyList';
 import ServerPagination from '../ServerPagination';
+import { useState } from 'react';
+import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
+import { sortStocks } from '@/app/_utils/sortAssets';
 
-export const revalidate = 600;
+export const thStyles = 'group px-3 py-2 ';
 
-export const thStyles = 'px-1 py-2';
+export default function StockList({
+	stocks,
+}: {
+	stocks: PaginatedResponse<Stock>;
+}) {
+	const [sort, setSort] = useState({ by: 'rank', order: 'asc' });
+	const stockList = stocks.items;
 
-export default async function StockList({ page }: { page: number }) {
-	const stocks = await getStocks({ page: Number(page) ?? 1 });
+	const handleSort = (by: string) => {
+		setSort((prev) => ({
+			by,
+			order: prev.by === by && prev.order === 'desc' ? 'asc' : 'desc',
+		}));
+	};
+	sortStocks(sort, stockList);
 
-	if (!stocks || stocks.items.length === 0) {
-		return <EmptyList description='Nie odnaleziono żadnych akcji.' />;
-	}
+	if (stocks?.items.length === 0) return <div>Brak danych</div>;
 
-	if (stocks?.items.length > 0)
-		return (
-			<>
-				<div className='overflow-x-auto rounded-lg border border-grayThird shadow-md bg-white p-3 px-5'>
-					<table className='text-right divide-y divide-grayThird text-xs md:text-sm w-full min-w-[700px] bg-white'>
-						<thead>
-							<tr>
-								<th className={`${thStyles} w-0 pl-2 md:pl-5`}></th>
-								<th className={`${thStyles} text-center`}>#</th>
-								<th className={`${thStyles} text-left`}>Waluta</th>
-								<th className={`${thStyles}`}>Kurs</th>
-								<th className={`${thStyles}`}>1h</th>
-								<th className={`${thStyles}`}>24h</th>
-								<th className={`${thStyles}`}>7d</th>
-								<th className={`${thStyles}`}>Wolumen 24h</th>
-								<th className={`${thStyles} pr-2 md:pr-5`}>Kapitalizacja</th>
-							</tr>
-						</thead>
-						<tbody className='divide-y divide-grayThird'>
-							{stocks?.items?.map((stock) => (
-								<StockListElement stock={stock} key={stock.name} />
-							))}
-						</tbody>
-					</table>
-					<ServerPagination currPage={page} pages={stocks.pages} />
-				</div>
-			</>
-		);
+	return (
+		<div className='overflow-x-auto rounded-lg border border-grayThird shadow-md bg-white p-3 px-5'>
+			<table className='text-right divide-y divide-grayThird text-xs md:text-sm w-full min-w-[700px] bg-white'>
+				<thead>
+					<tr>
+						<th className={`w-0 pl-2 md:pl-5`}></th>
+						<th
+							className={`px-2 py-2 text-center group cursor-pointer`}
+							onClick={() => handleSort('rank')}
+						>
+							<span className='flex flex-row items-center '>
+								{sort.by === 'rank' ? (
+									sort.order === 'asc' ? (
+										<FaAngleUp />
+									) : (
+										<FaAngleDown />
+									)
+								) : (
+									<FaAngleDown className='group-hover:opacity-100 opacity-0 transition-opacity duration-300' />
+								)}
+								#
+							</span>
+						</th>
+						<th
+							className={`${thStyles} text-left cursor-pointer`}
+							onClick={() => handleSort('currency')}
+						>
+							<span className='flex flex-row items-center'>
+								Waluta
+								{sort.by === 'currency' ? (
+									sort.order === 'asc' ? (
+										<FaAngleUp />
+									) : (
+										<FaAngleDown />
+									)
+								) : (
+									<FaAngleDown className='group-hover:opacity-100 opacity-0 transition-opacity duration-300' />
+								)}
+							</span>
+						</th>
+						<th
+							className={`${thStyles} cursor-pointer`}
+							onClick={() => handleSort('price')}
+						>
+							<span className='flex flex-row justify-end items-center '>
+								{sort.by === 'price' ? (
+									sort.order === 'asc' ? (
+										<FaAngleUp />
+									) : (
+										<FaAngleDown />
+									)
+								) : (
+									<FaAngleDown className='group-hover:opacity-100 opacity-0 transition-opacity duration-300' />
+								)}
+								Kurs
+							</span>
+						</th>
+						<th
+							className={`${thStyles} cursor-pointer`}
+							onClick={() => handleSort('change1h')}
+						>
+							<span className='flex flex-row justify-end items-center '>
+								{sort.by === 'change1h' ? (
+									sort.order === 'asc' ? (
+										<FaAngleUp />
+									) : (
+										<FaAngleDown />
+									)
+								) : (
+									<FaAngleDown className='group-hover:opacity-100 opacity-0 transition-opacity duration-300' />
+								)}
+								1h
+							</span>
+						</th>
+						<th
+							className={`${thStyles} cursor-pointer`}
+							onClick={() => handleSort('change24h')}
+						>
+							<span className='flex flex-row justify-end items-center '>
+								{sort.by === 'change24h' ? (
+									sort.order === 'asc' ? (
+										<FaAngleUp />
+									) : (
+										<FaAngleDown />
+									)
+								) : (
+									<FaAngleDown className='group-hover:opacity-100 opacity-0 transition-opacity duration-300' />
+								)}
+								24h
+							</span>
+						</th>
+						<th
+							className={`${thStyles} cursor-pointer`}
+							onClick={() => handleSort('change7d')}
+						>
+							<span className='flex flex-row justify-end items-center '>
+								{sort.by === 'change7d' ? (
+									sort.order === 'asc' ? (
+										<FaAngleUp />
+									) : (
+										<FaAngleDown />
+									)
+								) : (
+									<FaAngleDown className='group-hover:opacity-100 opacity-0 transition-opacity duration-300' />
+								)}
+								7d
+							</span>
+						</th>
+						<th
+							className={`${thStyles} pr-2 md:pr-5 cursor-pointer`}
+							onClick={() => handleSort('volume_24h')}
+						>
+							<span className='flex flex-row justify-end items-center '>
+								{sort.by === 'volume_24h' ? (
+									sort.order === 'asc' ? (
+										<FaAngleUp />
+									) : (
+										<FaAngleDown />
+									)
+								) : (
+									<FaAngleDown className='group-hover:opacity-100 opacity-0 transition-opacity duration-300' />
+								)}
+								Wolumen 24h
+							</span>
+						</th>
+						<th
+							className={`${thStyles} pr-2 md:pr-5 cursor-pointer`}
+							onClick={() => handleSort('market_cap')}
+						>
+							<span className='flex flex-row justify-end items-center '>
+								{sort.by === 'market_cap' ? (
+									sort.order === 'asc' ? (
+										<FaAngleUp />
+									) : (
+										<FaAngleDown />
+									)
+								) : (
+									<FaAngleDown className='group-hover:opacity-100 opacity-0 transition-opacity duration-300' />
+								)}
+								Kapitalizacja
+							</span>
+						</th>
+					</tr>
+				</thead>
+				<tbody className='divide-y divide-grayThird'>
+					{stocks.items.map((stock) => (
+						<StockListElement stock={stock} key={stock.name} />
+					))}
+				</tbody>
+			</table>
+			<ServerPagination currPage={stocks.page} pages={stocks.pages} />
+		</div>
+	);
 }

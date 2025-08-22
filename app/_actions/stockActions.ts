@@ -22,6 +22,7 @@ export interface Stock {
 	price_change_percentage_24h: number;
 	price_change_percentage_7d: number;
 	circulating_supply: number;
+	market_cap_rank: number;
 }
 
 export interface StockDetails {
@@ -63,11 +64,6 @@ export async function getStocks({
 	page?: number;
 	size?: number;
 }) {
-	console.log(
-		`${API_URL}/portfolio/assets/stocks?search=${search}&page=${Number(
-			page
-		)}&size=${Number(size)}`
-	);
 	try {
 		const response = await fetch(
 			`${API_URL}/portfolio/assets/stocks?search=${search}&page=${Number(
