@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	images: {
-		domains: ['localhost'],
+		domains: ['localhost', 'coin-images.coingecko.com'],
 	},
 	async redirects() {
 		return [

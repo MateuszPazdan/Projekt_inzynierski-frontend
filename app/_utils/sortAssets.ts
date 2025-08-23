@@ -1,8 +1,9 @@
+import { Crypto } from '../_actions/cryptoActions';
 import { Stock } from '../_actions/stockActions';
 
 export function sortStocks(
 	sort: { by: string; order: string },
-	stockList: Stock[]
+	stockList: Stock[] | Crypto[]
 ) {
 	if (sort.by === 'rank' && sort.order === 'asc') {
 		stockList.sort((a, b) => a.market_cap_rank - b.market_cap_rank);
