@@ -3,11 +3,21 @@ import StockDetailsCard from '@/app/_components/market/StockDetails';
 
 export const revalidate = 600;
 
+export async function generateMetadata({
+	params,
+}: {
+	params: Promise<{ stockSymbol: string }>;
+}) {
+	const { stockSymbol } = await params;
+	const stock = await getStockDetailsBySymbol(stockSymbol);
+
+	return { title: `${stock?.name} | Asset Flow` };
+}
+
 export default async function page({
 	params,
 }: {
 	params: Promise<{ stockSymbol: string }>;
-	searchParams: Promise<{ range?: string }>;
 }) {
 	const { stockSymbol } = await params;
 	const stockDetails = await getStockDetailsBySymbol(stockSymbol);

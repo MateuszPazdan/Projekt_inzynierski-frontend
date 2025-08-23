@@ -3,9 +3,9 @@
 import { PiStar } from 'react-icons/pi';
 import { thStyles } from './StockList';
 import { useRouter } from 'next/navigation';
-import { Stock } from '@/app/_actions/stockActions';
 import { BsArrowDownShort, BsArrowUpShort } from 'react-icons/bs';
 import { formatFullAmount } from '@/app/_utils/formatAmountOfMoney';
+import { Stock } from '@/app/_redux/features/marketApiSlice';
 
 interface StockListElementProps {
 	stock: Stock;

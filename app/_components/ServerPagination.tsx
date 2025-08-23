@@ -5,14 +5,14 @@ import React from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 interface PaginationProps {
-	currPage: number;
-	pages: number;
+	currPage?: number;
+	pages?: number;
 	size?: 'lg' | 'sm';
 }
 
 export default function ServerPagination({
-	currPage,
-	pages,
+	currPage = 1,
+	pages = 1,
 	size = 'lg',
 }: PaginationProps) {
 	const searchParams = useSearchParams();

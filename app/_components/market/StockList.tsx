@@ -1,21 +1,32 @@
 'use client';
 
-import { PaginatedResponse, Stock } from '@/app/_actions/stockActions';
 import StockListElement from './StockListElement';
-import ServerPagination from '../ServerPagination';
 import { useState } from 'react';
 import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
 import { sortStocks } from '@/app/_utils/sortAssets';
+import EmptyList from '../EmptyList';
+import { useRetrieveStocksQuery } from '@/app/_redux/features/marketApiSlice';
+import Pagination from '../Pagination';
+import AssetListSkeleton from './AssetListSkeleton';
 
 export const thStyles = 'group px-3 py-2 ';
 
-export default function StockList({
-	stocks,
-}: {
-	stocks: PaginatedResponse<Stock>;
-}) {
+export default function StockList() {
+	const [currPage, setCurrPage] = useState(1);
 	const [sort, setSort] = useState({ by: 'rank', order: 'asc' });
-	const stockList = stocks.items;
+	const {
+		data: stocks,
+		isLoading: isStocksLoading,
+		isFetching,
+	} = useRetrieveStocksQuery(
+		{
+			page: currPage,
+		},
+		{
+			pollingInterval: 60000,
+		}
+	);
+	const stockList = sortStocks(sort, stocks?.items);
 
 	const handleSort = (by: string) => {
 		setSort((prev) => ({
@@ -23,12 +34,18 @@ export default function StockList({
 			order: prev.by === by && prev.order === 'desc' ? 'asc' : 'desc',
 		}));
 	};
-	sortStocks(sort, stockList);
 
-	if (stocks?.items.length === 0) return <div>Brak danych</div>;
+	if (isStocksLoading || isFetching) {
+		return <AssetListSkeleton />;
+	}
+
+	if (!stockList || stockList?.length === 0)
+		return <EmptyList description='Nie odnaleziono żadnych akcji.' />;
 
 	return (
-		<div className='overflow-x-auto rounded-lg border border-grayThird shadow-md bg-white p-3 px-4'>
+		<div
+			className={`overflow-x-auto rounded-lg border border-grayThird shadow-md bg-white p-3 px-4`}
+		>
 			<table className='text-right divide-y divide-grayThird text-xs md:text-sm w-full min-w-[700px] bg-white'>
 				<thead>
 					<tr>
@@ -172,12 +189,16 @@ export default function StockList({
 					</tr>
 				</thead>
 				<tbody className='divide-y divide-grayThird'>
-					{stocks.items.map((stock) => (
+					{stockList?.map((stock) => (
 						<StockListElement stock={stock} key={stock.name} />
 					))}
 				</tbody>
 			</table>
-			<ServerPagination currPage={stocks.page} pages={stocks.pages} />
+			<Pagination
+				currPage={currPage}
+				pages={stocks?.pages}
+				setCurrPage={setCurrPage}
+			/>
 		</div>
 	);
 }

@@ -6,25 +6,29 @@ import React from 'react';
 interface PaginationProps {
 	currPage: number;
 	setCurrPage: (currPage: number) => void;
-	pages: number;
+	pages: number | undefined;
 	size?: 'lg' | 'sm';
 }
 
 export default function Pagination({
 	currPage,
 	setCurrPage,
-	pages,
+	pages = 1,
 	size = 'lg',
 }: PaginationProps) {
 	function handleChangePage(page: number) {
 		setCurrPage(page);
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth',
+		});
 	}
 
 	if (pages <= 1) return null;
 
 	return (
 		<div
-			className={`relative flex justify-center items-center gap-2 self-end ${
+			className={`relative flex justify-center items-center gap-2 py-3 self-end ${
 				size === 'lg' && 'text-lg'
 			} ${size === 'sm' && 'text-sm'} w-fit mx-auto`}
 		>

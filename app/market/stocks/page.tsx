@@ -1,18 +1,14 @@
-import { getStocks } from '@/app/_actions/stockActions';
-import EmptyList from '@/app/_components/EmptyList';
 import StockList from '@/app/_components/market/StockList';
 import SectionHeader from '@/app/_components/SectionHeader';
-import Spinner from '@/app/_components/Spinner';
-import { Suspense } from 'react';
+import { Metadata } from 'next';
 
-export default async function page({
-	searchParams,
-}: {
-	searchParams: { page?: string };
-}) {
-	const page = Number(searchParams?.page) || 1;
-	const stocks = await getStocks({ page: Number(page) ?? 1 });
+export const metadata: Metadata = {
+	title: 'Akcje | Asset Flow',
+	description:
+		'Śledź aktualne dane giełdowe i podstawowe informacje o notowanych spółkach na rynku akcji.',
+};
 
+export default async function page() {
 	return (
 		<div className='flex-1 min-h-full px-2 sm:px-5 lg:px-12 py-10 max-w-[1800px] w-full mx-auto flex flex-col'>
 			<div className='pb-10'>
@@ -22,21 +18,8 @@ export default async function page({
 				spółkach.'
 				/>
 			</div>
-			<Suspense
-				fallback={
-					<Spinner
-						description='Wczytywanie akcji...'
-						size='large'
-						color='text-main'
-					/>
-				}
-			>
-				{!stocks || stocks.items.length === 0 ? (
-					<EmptyList description='Nie odnaleziono żadnych akcji.' />
-				) : (
-					<StockList stocks={stocks} />
-				)}
-			</Suspense>
+
+			<StockList />
 		</div>
 	);
 }

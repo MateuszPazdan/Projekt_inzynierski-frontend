@@ -1,22 +1,32 @@
 'use client';
 
-import { PaginatedResponse } from '@/app/_actions/stockActions';
-import ServerPagination from '../ServerPagination';
 import { useState } from 'react';
 import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
-import { sortStocks } from '@/app/_utils/sortAssets';
+import { sortCryptos } from '@/app/_utils/sortAssets';
 import CryptoListElement from './CryptoListElement';
-import { Crypto } from '@/app/_actions/cryptoActions';
+import { useRetrieveCryptosQuery } from '@/app/_redux/features/marketApiSlice';
+import AssetListSkeleton from './AssetListSkeleton';
+import Pagination from '../Pagination';
+import EmptyList from '../EmptyList';
 
 export const thStyles = 'group px-3 py-2 ';
 
-export default function CryptoList({
-	crypto,
-}: {
-	crypto: PaginatedResponse<Crypto>;
-}) {
+export default function CryptoList() {
+	const [currPage, setCurrPage] = useState(1);
 	const [sort, setSort] = useState({ by: 'rank', order: 'asc' });
-	const cryptoList = crypto.items;
+	const {
+		data: cryptos,
+		isLoading: isCryptosLoading,
+		isFetching: isCryptosFetching,
+	} = useRetrieveCryptosQuery(
+		{
+			page: currPage,
+		},
+		{
+			pollingInterval: 60000,
+		}
+	);
+	const cryptoList = sortCryptos(sort, cryptos?.items);
 
 	const handleSort = (by: string) => {
 		setSort((prev) => ({
@@ -24,7 +34,13 @@ export default function CryptoList({
 			order: prev.by === by && prev.order === 'desc' ? 'asc' : 'desc',
 		}));
 	};
-	sortStocks(sort, cryptoList);
+
+	if (isCryptosLoading || isCryptosFetching) {
+		return <AssetListSkeleton />;
+	}
+
+	if (!cryptoList || cryptoList?.length === 0)
+		return <EmptyList description='Nie odnaleziono żadnych kryptowalut.' />;
 
 	return (
 		<div className='overflow-x-auto rounded-lg border border-grayThird shadow-md bg-white p-3 px-4 '>
@@ -171,12 +187,16 @@ export default function CryptoList({
 					</tr>
 				</thead>
 				<tbody className='divide-y divide-grayThird'>
-					{crypto.items.map((crypto) => (
+					{cryptoList.map((crypto) => (
 						<CryptoListElement key={crypto.name} crypto={crypto} />
 					))}
 				</tbody>
 			</table>
-			<ServerPagination currPage={crypto.page} pages={crypto.pages} />
+			<Pagination
+				currPage={currPage}
+				pages={cryptos?.pages}
+				setCurrPage={setCurrPage}
+			/>
 		</div>
 	);
 }

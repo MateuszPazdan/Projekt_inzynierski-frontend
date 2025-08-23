@@ -2,29 +2,6 @@
 
 const API_URL = `${process.env.NEXT_PUBLIC_HOST}/api/v1`;
 
-export interface PaginatedResponse<T> {
-	items: T[];
-	total: number;
-	page: number;
-	size: number;
-	pages: number;
-}
-
-export interface Stock {
-	symbol: string;
-	name: string;
-	price: number;
-	currency: string;
-	volume_24h: number;
-	market_cap: number;
-	market_state: string;
-	price_change_percentage_1h: number;
-	price_change_percentage_24h: number;
-	price_change_percentage_7d: number;
-	circulating_supply: number;
-	market_cap_rank: number;
-}
-
 export interface StockDetails {
 	symbol: string;
 	name: string;
@@ -54,38 +31,6 @@ export interface StockDetails {
 }
 
 // await new Promise((resolve) => setTimeout(resolve, 1500));
-
-export async function getStocks({
-	search = '',
-	page = 1,
-	size = 50,
-}: {
-	search?: string;
-	page?: number;
-	size?: number;
-}) {
-	try {
-		const response = await fetch(
-			`${API_URL}/portfolio/assets/stocks?search=${search}&page=${Number(
-				page
-			)}&size=${Number(size)}`,
-			{
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			}
-		);
-		if (!response.ok) {
-			throw new Error(`Błąd serwera: ${response.status}`);
-		}
-		const data: PaginatedResponse<Stock> = await response.json();
-
-		return data;
-	} catch (error) {
-		console.error('Nie udało się pobrać danych akcji.', error);
-	}
-}
 
 export async function getStockDetailsBySymbol(stockSymbol: string) {
 	try {
