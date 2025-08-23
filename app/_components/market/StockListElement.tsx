@@ -28,7 +28,7 @@ export default function StockListElement({ stock }: StockListElementProps) {
 			onClick={() => handleNavigate()}
 			className='hover:bg-grayOne transition-colors duration-300 hover:cursor-pointer'
 		>
-			<td className={`${thStyles} pl-2 md:pl-5`}>
+			<td className={`${thStyles} `}>
 				<button
 					onClick={hadnleClick}
 					className='text-xl p-2 hover:bg-graySecond transition-colors duration-300  rounded-lg'
@@ -41,7 +41,9 @@ export default function StockListElement({ stock }: StockListElementProps) {
 				<span>{stock.name}</span>
 				<span className='text-sm text-gray-700'>{stock.symbol}</span>
 			</td>
-			<td className={`${thStyles}`}>{stock.price.toFixed(2)} PLN</td>
+			<td className={`${thStyles} text-nowrap`}>
+				{stock.price.toFixed(2)} PLN
+			</td>
 			<td className={`${thStyles}`}>
 				<span
 					className={`flex items-center justify-end ${
@@ -99,11 +101,11 @@ export default function StockListElement({ stock }: StockListElementProps) {
 					{stock.price_change_percentage_7d}%
 				</span>
 			</td>
-			<td className={`${thStyles}`}>
+			<td className={`${thStyles} text-nowrap`}>
 				{formatFullAmount(Number(stock.volume_24h * stock.price))}{' '}
 				{stock.currency}
 			</td>
-			<td className={`${thStyles} pr-2 md:pr-5`}>
+			<td className={`${thStyles} pr-2 md:pr-3 text-nowrap`}>
 				{formatFullAmount(stock.market_cap)} {stock.currency}
 			</td>
 		</tr>

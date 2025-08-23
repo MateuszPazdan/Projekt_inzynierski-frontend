@@ -13,7 +13,7 @@ export default async function page({
 	const page = Number(searchParams?.page) || 1;
 	const crypto = await getCryptos({ page: Number(page) ?? 1 });
 	return (
-		<div className='px-2 sm:px-5 lg:px-12 py-10 max-w-[1800px] w-full mx-auto '>
+		<div className='flex-1 min-h-full px-2 sm:px-5 lg:px-12 py-10 max-w-[1800px] w-full mx-auto flex flex-col'>
 			<div className='pb-10'>
 				<SectionHeader
 					title='Rynek kryptowalut'

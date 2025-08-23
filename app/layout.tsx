@@ -24,7 +24,7 @@ export default function RootLayout({
 		<html lang='pl'>
 			<body className={roboto.className}>
 				<Setup>
-					<div className='min-h-screen bg-grayOne flex flex-col relative lg:grid lg:grid-rows-[auto_1fr] lg:ml-16'>
+					<div className='min-h-screen bg-grayOne flex flex-col relative lg:grid lg:grid-rows-[auto_1fr] lg:grid-cols-1 lg:ml-16'>
 						<TopNav />
 						<LeftNav />
 						<>{children}</>

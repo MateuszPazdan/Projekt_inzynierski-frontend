@@ -28,11 +28,11 @@ export default function StockList({
 	if (stocks?.items.length === 0) return <div>Brak danych</div>;
 
 	return (
-		<div className='overflow-x-auto rounded-lg border border-grayThird shadow-md bg-white p-3 px-5'>
+		<div className='overflow-x-auto rounded-lg border border-grayThird shadow-md bg-white p-3 px-4'>
 			<table className='text-right divide-y divide-grayThird text-xs md:text-sm w-full min-w-[700px] bg-white'>
 				<thead>
 					<tr>
-						<th className={`w-0 pl-2 md:pl-5`}></th>
+						<th className={`w-0`}></th>
 						<th
 							className={`px-2 py-2 text-center group cursor-pointer`}
 							onClick={() => handleSort('rank')}
@@ -153,7 +153,7 @@ export default function StockList({
 							</span>
 						</th>
 						<th
-							className={`${thStyles} pr-2 md:pr-5 cursor-pointer`}
+							className={`${thStyles} pr-2 md:pr-3 cursor-pointer`}
 							onClick={() => handleSort('market_cap')}
 						>
 							<span className='flex flex-row justify-end items-center '>
