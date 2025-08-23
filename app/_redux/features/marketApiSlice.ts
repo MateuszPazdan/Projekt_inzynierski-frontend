@@ -1,22 +1,30 @@
 import { apiSlice } from '../services/apiSlice';
 
 export interface StockHistoricalData {
-	date: string;
-	stock_id: number;
-	close_price: number;
-	low_price: number;
-	interval: string;
-	open_price: number;
-	id: number;
-	high_price: number;
-	volume: number;
-	period: string;
+	historical_data: {
+		date: string;
+		open_price: number;
+		close_price: number;
+		low_price: number;
+		high_price: number;
+		volume: number;
+		interval: string;
+		period: string;
+	}[];
+	additional_info: {
+		price_change_percentage_24h: number;
+		price_change_percentage_7d: number;
+		price_change_percentage_30d: number;
+		price_change_percentage_1y: number;
+		price_change_percentage_max: number;
+		current_price: number;
+	};
 }
 
 const marketApiSlice = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
 		retrieveStockHistoricalPrice: builder.query<
-			StockHistoricalData[],
+			StockHistoricalData,
 			{ stock_symbol: string; period: string }
 		>({
 			query: ({ stock_symbol, period }) => ({

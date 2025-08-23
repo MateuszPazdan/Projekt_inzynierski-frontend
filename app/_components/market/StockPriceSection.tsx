@@ -15,9 +15,9 @@ export default function StockPriceSection({
 }: StockPriceSectionProps) {
 	const [period, setPeriod] = useState<string>('1w');
 	const {
-		data: chartData,
-		isFetching: isChartDataFetching,
-		isLoading: isChartDataLoading,
+		data: historicalData,
+		isFetching: isHistoricalDataFetching,
+		isLoading: isHistoricalDataLoading,
 	} = useRetrieveStockHistoricalPriceQuery(
 		{
 			stock_symbol: stockDetails.symbol,
@@ -29,9 +29,11 @@ export default function StockPriceSection({
 	);
 
 	const minPrice =
-		chartData && Math.min(...chartData.map((data) => data.low_price));
+		historicalData &&
+		Math.min(...historicalData.historical_data.map((data) => data.low_price));
 	const maxPrice =
-		chartData && Math.max(...chartData.map((data) => data.high_price));
+		historicalData &&
+		Math.max(...historicalData.historical_data.map((data) => data.high_price));
 	const pricePercent =
 		minPrice &&
 		maxPrice &&
@@ -48,7 +50,7 @@ export default function StockPriceSection({
 				<span className='text-gray-600 text-sm'>{stockDetails?.name} Cena</span>
 			</p>
 			<p className='text-2xl sm:text-3xl font-medium'>
-				<span>{stockDetails?.currency}</span> {stockDetails?.price.toFixed(2)}{' '}
+				<span>{stockDetails?.currency}</span> {historicalData?.additional_info?.current_price.toFixed(2)}{' '}
 			</p>
 			<div className='grid grid-rows-2 grid-cols-2 sm:grid-rows-1 sm:grid-cols-[auto_1fr_auto] gap-1 sm:gap-2 md:gap-3 items-center text-xs lg:text-sm '>
 				<p className='sm:order-1 '>
@@ -75,7 +77,7 @@ export default function StockPriceSection({
 				</div>
 			</div>
 			<PeriodSelect range={period} setRange={setPeriod} />
-			{isChartDataLoading ? (
+			{isHistoricalDataLoading ? (
 				<span className='flex h-full min-h-[300px]'>
 					<Spinner
 						size='large'
@@ -83,11 +85,11 @@ export default function StockPriceSection({
 						description='Ładowanie wykresu...'
 					/>
 				</span>
-			) : !chartData || chartData.length === 0 ? (
+			) : !historicalData || historicalData.historical_data.length === 0 ? (
 				<EmptyList description='Brak danych do wyświetlenia wykresu' />
 			) : (
-				<div className={`${isChartDataFetching && 'opacity-50'}`}>
-					<ChangeChart chartData={chartData} />
+				<div className={`${isHistoricalDataFetching && 'opacity-50'}`}>
+					<ChangeChart historicalData={historicalData} />
 				</div>
 			)}
 		</div>

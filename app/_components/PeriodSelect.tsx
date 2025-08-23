@@ -7,6 +7,7 @@ interface PeriodSelectProps {
 
 export default function PeriodSelect({ range, setRange }: PeriodSelectProps) {
 	const options = [
+		{ value: '1d', label: '24h' },
 		{ value: '1w', label: '7d' },
 		{ value: '1m', label: '1m' },
 		{ value: '1y', label: '1y' },
@@ -32,7 +33,7 @@ export default function PeriodSelect({ range, setRange }: PeriodSelectProps) {
 						onChange={() => handleChange(opt.value)}
 						className='hidden peer'
 					/>
-					<span className='px-3 sm:px-5 py-1 rounded-lg font-medium w-full text-center hover:bg-graySecond peer-checked:bg-white peer-checked:text-main peer-checked:shadow cursor-pointer transition-colors duration-300 truncate '>
+					<span className='px-2 sm:px-5 py-1 rounded-lg font-medium w-full text-center hover:bg-graySecond peer-checked:bg-white peer-checked:text-main peer-checked:shadow cursor-pointer transition-colors duration-300 truncate '>
 						{opt.label}
 					</span>
 				</label>

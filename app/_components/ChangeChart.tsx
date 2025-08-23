@@ -13,10 +13,11 @@ import {
 import { StockHistoricalData } from '../_redux/features/marketApiSlice';
 
 interface ChangeChartProps {
-	chartData: StockHistoricalData[];
+	historicalData: StockHistoricalData;
 }
 
-export default function ChangeChart({ chartData }: ChangeChartProps) {
+export default function ChangeChart({ historicalData }: ChangeChartProps) {
+	const chartData = historicalData.historical_data;
 	const firstDate = new Date(chartData[0].date);
 	const lastDate = new Date(chartData[chartData.length - 1].date);
 	const diffInDays =
@@ -30,11 +31,13 @@ export default function ChangeChart({ chartData }: ChangeChartProps) {
 
 			if (diffInDays > 365) {
 				return date.getFullYear() !== prev.getFullYear();
-			} else if (diffInDays <= 7) {
+			} else if (diffInDays <= 7 && diffInDays >= 1) {
 				return (
 					date.getDate() !== prev.getDate() ||
 					date.getMonth() !== prev.getMonth()
 				);
+			} else if (diffInDays < 1) {
+				return date.getHours() !== prev.getHours();
 			} else {
 				return (
 					date.getMonth() !== prev.getMonth() ||
@@ -45,7 +48,7 @@ export default function ChangeChart({ chartData }: ChangeChartProps) {
 		.map((item) => item.date);
 
 	return (
-		<ResponsiveContainer width='100%' className={'min-h-[300px]'} >
+		<ResponsiveContainer width='100%' className={'min-h-[300px]'}>
 			<AreaChart data={chartData} margin={{ right: 25, left: 30 }}>
 				<CartesianGrid vertical={false} />
 				<XAxis
@@ -60,6 +63,11 @@ export default function ChangeChart({ chartData }: ChangeChartProps) {
 
 						if (diffInDays > 365) {
 							return date.getFullYear().toString();
+						} else if (diffInDays < 1) {
+							return date.toLocaleTimeString('pl-PL', {
+								hour: '2-digit',
+								minute: '2-digit',
+							});
 						} else if (diffInDays <= 7) {
 							return date.toLocaleDateString('pl-PL', {
 								day: '2-digit',
