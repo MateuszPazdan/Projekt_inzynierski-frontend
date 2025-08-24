@@ -51,7 +51,7 @@ export default function CryptoListElement({ crypto }: CryptoListElementProps) {
 				</p>
 			</td>
 			<td className={`${thStyles} text-nowrap`}>
-				{crypto.price.toFixed(2)} PLN
+				{crypto?.price?.toFixed(2)} PLN
 			</td>
 			<td className={`${thStyles}`}>
 				<span
@@ -111,7 +111,7 @@ export default function CryptoListElement({ crypto }: CryptoListElementProps) {
 				</span>
 			</td>
 			<td className={`${thStyles} text-nowrap`}>
-				{formatShortPrice(Number(crypto.volume_24h * crypto.price))}{' '}
+				{formatShortPrice(Number(crypto.volume_24h * crypto?.price))}{' '}
 				{crypto.currency}
 			</td>
 			<td className={`${thStyles} pr-2 md:pr-5 text-nowrap`}>

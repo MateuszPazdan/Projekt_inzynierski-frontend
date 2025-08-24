@@ -10,20 +10,22 @@ import {
 	XAxis,
 	YAxis,
 } from 'recharts';
-import { StockHistoricalData } from '../_redux/features/marketApiSlice';
+import {
+	CryptoHistoricalData,
+	StockHistoricalData,
+} from '../_redux/features/marketApiSlice';
 
 interface ChangeChartProps {
-	historicalData: StockHistoricalData;
+	historicalData: StockHistoricalData[] | CryptoHistoricalData[];
 }
 
 export default function ChangeChart({ historicalData }: ChangeChartProps) {
-	const chartData = historicalData.historical_data;
-	const firstDate = new Date(chartData[0].date);
-	const lastDate = new Date(chartData[chartData.length - 1].date);
+	const firstDate = new Date(historicalData[0].date);
+	const lastDate = new Date(historicalData[historicalData.length - 1].date);
 	const diffInDays =
 		(lastDate.getTime() - firstDate.getTime()) / (1000 * 60 * 60 * 24);
 
-	const ticks = chartData
+	const ticks = historicalData
 		.filter((item, index, arr) => {
 			const date = new Date(item.date);
 			const prev = arr[index - 1] ? new Date(arr[index - 1].date) : null;
@@ -49,7 +51,7 @@ export default function ChangeChart({ historicalData }: ChangeChartProps) {
 
 	return (
 		<ResponsiveContainer width='100%' className={'min-h-[300px]'}>
-			<AreaChart data={chartData} margin={{ right: 25, left: 30 }}>
+			<AreaChart data={historicalData} margin={{ right: 25, left: 30 }}>
 				<CartesianGrid vertical={false} />
 				<XAxis
 					dataKey='date'

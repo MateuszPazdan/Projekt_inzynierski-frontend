@@ -10,7 +10,7 @@ export default function PriceChange({ change }: { change: number }) {
 					change < 0 ? ' text-red-500 ' : change > 0 ? 'text-green-500' : ''
 				}`}
 			>
-				{change.toFixed(1)}%
+				{change?.toFixed(1)}%
 			</span>
 		</span>
 	);

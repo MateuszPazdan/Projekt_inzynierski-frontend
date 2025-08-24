@@ -3,12 +3,21 @@
 import { StockDetails } from '@/app/_actions/stockActions';
 import StockPriceSection from './StockPriceSection';
 import StockDetailsHeader from './StockDetailsHeader';
+import { useRetrieveStockPricePerformanceQuery } from '@/app/_redux/features/marketApiSlice';
 
 interface StockDetailsProps {
 	stockDetails: StockDetails;
 }
 
 export default function StockDetailsCard({ stockDetails }: StockDetailsProps) {
+	const { data: stockPricePerformance } = useRetrieveStockPricePerformanceQuery(
+		{
+			stock_symbol: stockDetails.symbol,
+		}
+	);
+
+	if (!stockPricePerformance) return;
+
 	return (
 		<div className='flex flex-col gap-3'>
 			<StockDetailsHeader stockDetails={stockDetails} />
@@ -24,42 +33,42 @@ export default function StockDetailsCard({ stockDetails }: StockDetailsProps) {
 								<p className='text-sm text-gray-500'>1h</p>
 								<p
 									className={`font-medium ${
-										stockDetails.price_change_percentage_1h < 0
+										stockPricePerformance?.price_change_percentage_1h < 0
 											? ' text-red-500 '
-											: stockDetails.price_change_percentage_1h === 0
+											: stockPricePerformance.price_change_percentage_1h === 0
 											? ''
 											: ' text-green-500 '
 									}`}
 								>
-									{stockDetails.price_change_percentage_1h ?? '-'}%
+									{stockPricePerformance.price_change_percentage_1h ?? '-'}%
 								</p>
 							</div>
 							<div className='flex flex-col gap-1 bg-grayOne rounded-md p-3  border border-grayThird'>
 								<p className='text-sm text-gray-500'>24h</p>
 								<p
 									className={`font-medium ${
-										stockDetails.price_change_percentage_24h < 0
+										stockPricePerformance.price_change_percentage_24h < 0
 											? ' text-red-500 '
-											: stockDetails.price_change_percentage_24h === 0
+											: stockPricePerformance.price_change_percentage_24h === 0
 											? ''
 											: ' text-green-500 '
 									}`}
 								>
-									{stockDetails.price_change_percentage_24h ?? '-'}%
+									{stockPricePerformance.price_change_percentage_24h ?? '-'}%
 								</p>
 							</div>
 							<div className='flex flex-col gap-1 bg-grayOne rounded-md p-3  border border-grayThird'>
 								<p className='text-sm text-gray-500'>7 dni</p>
 								<p
 									className={`font-medium ${
-										stockDetails.price_change_percentage_7d < 0
+										stockPricePerformance.price_change_percentage_7d < 0
 											? ' text-red-500 '
-											: stockDetails.price_change_percentage_7d === 0
+											: stockPricePerformance.price_change_percentage_7d === 0
 											? ''
 											: ' text-green-500 '
 									}`}
 								>
-									{stockDetails.price_change_percentage_7d ?? '-'}%
+									{stockPricePerformance.price_change_percentage_7d ?? '-'}%
 								</p>
 							</div>
 						</div>

@@ -1,6 +1,9 @@
 'use client';
 
-import { StockHistoricalData } from '@/app/_redux/features/marketApiSlice';
+import {
+	CryptoHistoricalData,
+	StockHistoricalData,
+} from '@/app/_redux/features/marketApiSlice';
 import { formatFullPrice } from '@/app/_utils/formatAmountOfMoney';
 import {
 	Area,
@@ -12,17 +15,16 @@ import {
 } from 'recharts';
 
 interface SimpleChartProps {
-	historicalData: StockHistoricalData;
+	historicalData: StockHistoricalData[] | CryptoHistoricalData[];
 }
 
 export default function SimpleChart({ historicalData }: SimpleChartProps) {
-	const chartData = historicalData.historical_data;
-	const firstDate = new Date(chartData[0].date);
-	const lastDate = new Date(chartData[chartData.length - 1].date);
+	const firstDate = new Date(historicalData[0].date);
+	const lastDate = new Date(historicalData[historicalData.length - 1].date);
 	const diffInDays =
 		(lastDate.getTime() - firstDate.getTime()) / (1000 * 60 * 60 * 24);
 
-	const ticks = chartData
+	const ticks = historicalData
 		.filter((item, index, arr) => {
 			const date = new Date(item.date);
 			const prev = arr[index - 1] ? new Date(arr[index - 1].date) : null;
@@ -47,7 +49,7 @@ export default function SimpleChart({ historicalData }: SimpleChartProps) {
 		.map((item) => item.date);
 	return (
 		<ResponsiveContainer width='100%' className={'min-h-[300px]'}>
-			<AreaChart data={chartData} margin={{ right: 0, left: 0 }}>
+			<AreaChart data={historicalData} margin={{ right: 0, left: 0 }}>
 				<XAxis
 					dataKey='date'
 					ticks={ticks}

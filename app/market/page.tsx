@@ -3,7 +3,8 @@ import SectionHeader from '../_components/SectionHeader';
 import CryptoOverview from '../_components/market/CryptoOverview';
 import { FaAngleRight } from 'react-icons/fa6';
 import StockOverview from '../_components/market/StockOverview';
-import CryptoOverviewChart from '../_components/market/CryptoOverviewChart';
+import CryptoOverviewChart from '../_components/market/crypto/CryptoOverviewChart';
+import StockOverviewChart from '../_components/market/stock/StockOverviewChart';
 
 export default function page() {
 	return (
@@ -35,6 +36,7 @@ export default function page() {
 					<FaAngleRight className='text-xl' />
 				</Link>
 				<StockOverview />
+				<StockOverviewChart />
 			</div>
 		</div>
 	);

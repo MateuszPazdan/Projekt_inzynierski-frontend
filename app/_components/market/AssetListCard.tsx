@@ -1,4 +1,4 @@
-import { Crypto, Stock } from '@/app/_redux/features/marketApiSlice';
+import { CryptoBase, StockBase } from '@/app/_redux/features/marketApiSlice';
 import { formatFullPrice } from '@/app/_utils/formatAmountOfMoney';
 import Image from 'next/image';
 import PriceChange from './PriceChange';
@@ -12,7 +12,7 @@ export default function AssetListCard({
 	assetType,
 }: {
 	title: string;
-	assetList?: Crypto[] | Stock[];
+	assetList?: CryptoBase[] | StockBase[];
 	limit: number;
 	isLoading?: boolean;
 	assetType: 'crypto' | 'stock';
@@ -54,7 +54,12 @@ export default function AssetListCard({
 				>
 					<div className='flex flex-row items-center gap-2'>
 						{'icon' in asset && asset.icon ? (
-							<Image src={asset.icon} alt={asset.name} width={24} height={24} />
+							<Image
+								src={`${asset.icon}`}
+								alt={asset.name}
+								width={24}
+								height={24}
+							/>
 						) : (
 							<p
 								className={`flex items-center justify-center w-6 h-6 text-xs aspect-square bg-main text-white rounded-full`}

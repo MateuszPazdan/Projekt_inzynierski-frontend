@@ -24,24 +24,25 @@ export interface Stock {
 }
 
 export interface StockHistoricalData {
-	historical_data: {
-		date: string;
-		open_price: number;
-		close_price: number;
-		low_price: number;
-		high_price: number;
-		volume: number;
-		interval: string;
-		period: string;
-	}[];
-	additional_info: {
-		price_change_percentage_24h: number;
-		price_change_percentage_7d: number;
-		price_change_percentage_30d: number;
-		price_change_percentage_1y: number;
-		price_change_percentage_max: number;
-		current_price: number;
-	};
+	date: string;
+	open_price: number;
+	close_price: number;
+	low_price: number;
+	high_price: number;
+	volume: number;
+	interval: string;
+	period: string;
+}
+
+export interface StockPricePerformance {
+	price: number;
+	price_change_percentage_1h: number;
+	price_change_percentage_24h: number;
+	price_change_percentage_7d: number;
+	price_change_percentage_30d: number;
+	price_change_percentage_1y: number;
+	price_change_percentage_max: number;
+	updated_at: string;
 }
 
 export interface Crypto {
@@ -59,6 +60,67 @@ export interface Crypto {
 	icon: string;
 }
 
+export interface CryptoHistoricalData {
+	date: string;
+	open_price: number;
+	close_price: number;
+	low_price: number;
+	high_price: number;
+	volume: number;
+	interval: string;
+	period: string;
+}
+
+export interface StockBase {
+	symbol: string;
+	name: string;
+	currency: string;
+	price: number;
+	price_change_percentage_24h: number;
+}
+
+export interface CryptoBase extends StockBase {
+	icon: string;
+}
+
+export interface AssetsPerformance {
+	global_crypto_data: {
+		total_volume_24h: number;
+		total_market_cap: number;
+		top_gainers_24h: CryptoBase[];
+		top_losers_24h: CryptoBase[];
+		top_market_cap_rank: {
+			symbol: string;
+			name: string;
+			currency: string;
+			icon: string;
+			price: number;
+			price_change_percentage_24h: number;
+			price_change_percentage_7d: number;
+			price_change_percentage_30d: number;
+			price_change_percentage_1y: number;
+			price_change_percentage_max: number;
+		}[];
+	};
+	global_stock_data: {
+		total_volume_24h: number;
+		total_market_cap: number;
+		top_gainers_24h: StockBase[];
+		top_losers_24h: StockBase[];
+		top_market_cap_rank: {
+			symbol: string;
+			name: string;
+			currency: string;
+			price: number;
+			price_change_percentage_24h: number;
+			price_change_percentage_7d: number;
+			price_change_percentage_30d: number;
+			price_change_percentage_1y: number;
+			price_change_percentage_max: number;
+		}[];
+	};
+}
+
 const marketApiSlice = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
 		retrieveStocks: builder.query<
@@ -72,12 +134,21 @@ const marketApiSlice = apiSlice.injectEndpoints({
 			keepUnusedDataFor: 600,
 		}),
 		retrieveStockHistoricalPrice: builder.query<
-			StockHistoricalData,
+			StockHistoricalData[],
 			{ stock_symbol: string; period: string }
 		>({
 			query: ({ stock_symbol, period }) => ({
 				url: `/portfolio/assets/stocks/${stock_symbol}/historical?period=${period}`,
 				method: 'GET',
+			}),
+			keepUnusedDataFor: 600,
+		}),
+		retrieveStockPricePerformance: builder.query<
+			StockPricePerformance,
+			{ stock_symbol: string }
+		>({
+			query: ({ stock_symbol }) => ({
+				url: `/portfolio/assets/stocks/${stock_symbol}/price-performance`,
 			}),
 			keepUnusedDataFor: 600,
 		}),
@@ -91,11 +162,31 @@ const marketApiSlice = apiSlice.injectEndpoints({
 			}),
 			keepUnusedDataFor: 600,
 		}),
+		retrieveCryptoHistoricalPrice: builder.query<
+			CryptoHistoricalData[],
+			{ crypto_symbol: string; period: string }
+		>({
+			query: ({ crypto_symbol, period }) => ({
+				url: `/portfolio/assets/cryptos/${crypto_symbol}/historical?period=${period}`,
+				method: 'GET',
+			}),
+			keepUnusedDataFor: 600,
+		}),
+		retrieveAssetsPerformance: builder.query<AssetsPerformance, void>({
+			query: () => ({
+				url: `/portfolio/assets/global-performance`,
+				method: 'GET',
+			}),
+			keepUnusedDataFor: 600,
+		}),
 	}),
 });
 
 export const {
 	useRetrieveStocksQuery,
 	useRetrieveStockHistoricalPriceQuery,
+	useRetrieveStockPricePerformanceQuery,
 	useRetrieveCryptosQuery,
+	useRetrieveCryptoHistoricalPriceQuery,
+	useRetrieveAssetsPerformanceQuery,
 } = marketApiSlice;

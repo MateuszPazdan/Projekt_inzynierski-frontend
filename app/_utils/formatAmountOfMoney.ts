@@ -9,9 +9,10 @@ export function formatShortPrice(amount: number): string {
 }
 
 export function formatFullPrice(
-	amount: number,
+	amount: number | undefined,
 	maximumFractionDigits?: number
 ): string {
+	if (!amount) return '';
 	const formatter = new Intl.NumberFormat('pl-PL', {
 		maximumFractionDigits: maximumFractionDigits || 0,
 		minimumSignificantDigits: 4,

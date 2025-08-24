@@ -6,7 +6,6 @@ export interface StockDetails {
 	symbol: string;
 	name: string;
 	sector: string;
-	price: number;
 	currency: string;
 	volume_24h: number;
 	market_cap: number;
@@ -24,10 +23,8 @@ export interface StockDetails {
 	pe_ratio: number;
 	average_volume_10d: number;
 	employees: number;
-	price_change_percentage_1h: number;
-	price_change_percentage_24h: number;
-	price_change_percentage_7d: number;
 	circulating_supply: number;
+	updated_at: string;
 }
 
 // await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -35,7 +32,7 @@ export interface StockDetails {
 export async function getStockDetailsBySymbol(stockSymbol: string) {
 	try {
 		const response = await fetch(
-			`${API_URL}/portfolio/assets/stocks/${stockSymbol}`,
+			`${API_URL}/portfolio/assets/stocks/${stockSymbol}/general`,
 			{
 				method: 'GET',
 				headers: {
