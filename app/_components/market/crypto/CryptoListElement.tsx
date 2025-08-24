@@ -4,9 +4,9 @@ import Image from 'next/image';
 import { PiStar } from 'react-icons/pi';
 import { thStyles } from './CryptoList';
 import { useRouter } from 'next/navigation';
-import { Crypto } from '@/app/_actions/cryptoActions';
 import { BsArrowDownShort, BsArrowUpShort } from 'react-icons/bs';
-import { formatFullAmount } from '@/app/_utils/formatAmountOfMoney';
+import { formatShortPrice } from '@/app/_utils/formatAmountOfMoney';
+import { Crypto } from '@/app/_redux/features/marketApiSlice';
 
 interface CryptoListElementProps {
 	crypto: Crypto;
@@ -42,15 +42,17 @@ export default function CryptoListElement({ crypto }: CryptoListElementProps) {
 				<Image
 					alt='crypto-logo'
 					src={`${crypto.icon}`}
-					width={28}
-					height={28}
+					width={24}
+					height={24}
 				/>
 				<p className='flex flex-col items-start text-left'>
 					<span>{crypto.name}</span>
 					<span className='text-sm text-gray-700'>{crypto.symbol}</span>
 				</p>
 			</td>
-			<td className={`${thStyles} text-nowrap`}>{crypto.price.toFixed(2)} PLN</td>
+			<td className={`${thStyles} text-nowrap`}>
+				{crypto.price.toFixed(2)} PLN
+			</td>
 			<td className={`${thStyles}`}>
 				<span
 					className={`flex items-center justify-end ${
@@ -109,11 +111,11 @@ export default function CryptoListElement({ crypto }: CryptoListElementProps) {
 				</span>
 			</td>
 			<td className={`${thStyles} text-nowrap`}>
-				{formatFullAmount(Number(crypto.volume_24h * crypto.price))}{' '}
+				{formatShortPrice(Number(crypto.volume_24h * crypto.price))}{' '}
 				{crypto.currency}
 			</td>
 			<td className={`${thStyles} pr-2 md:pr-5 text-nowrap`}>
-				{formatFullAmount(crypto.market_cap)} {crypto.currency}
+				{formatShortPrice(crypto.market_cap)} {crypto.currency}
 			</td>
 		</tr>
 	);

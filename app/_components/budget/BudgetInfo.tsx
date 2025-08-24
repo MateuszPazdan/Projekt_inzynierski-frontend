@@ -6,7 +6,7 @@ import Button from '../Button';
 import TransactionsList from './TransactionsList';
 import Modal from '../Modal';
 import ManageTransactionModal from './ManageTransactionModal';
-import { formatFullAmount } from '@/app/_utils/formatAmountOfMoney';
+import { formatShortPrice } from '@/app/_utils/formatAmountOfMoney';
 import ManageBudgetBtn from './ManageBudgetBtn';
 
 interface BudgetInfoProps {
@@ -74,7 +74,7 @@ export default function BudgetInfo({ budgetId }: BudgetInfoProps) {
 				<div className='min-w-[250px] md:w-fit rounded-lg border shadow-md border-grayThird bg-white p-3 px-5'>
 					<p className='text-xl font-medium mb-2 '>Balans</p>
 					<p className='text-xl md:text-2xl truncate overflow-hidden whitespace-nowrap'>
-						{formatFullAmount(budget?.total_amount || 0)} PLN
+						{formatShortPrice(budget?.total_amount || 0)} PLN
 					</p>
 				</div>
 			</div>

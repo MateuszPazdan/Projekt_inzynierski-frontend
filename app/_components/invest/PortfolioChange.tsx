@@ -1,4 +1,4 @@
-import { formatFullAmount } from '@/app/_utils/formatAmountOfMoney';
+import { formatShortPrice } from '@/app/_utils/formatAmountOfMoney';
 import { BsArrowDownShort, BsArrowUpShort } from 'react-icons/bs';
 
 interface PortfolioChangeProps {
@@ -38,7 +38,7 @@ export default function PortfolioChange({
 			>
 				{amount > 0 && '+'}
 				{/* {amount < 0 && '-'} */}
-				{formatFullAmount(amount)} PLN
+				{formatShortPrice(amount)} PLN
 			</p>
 		</div>
 	);

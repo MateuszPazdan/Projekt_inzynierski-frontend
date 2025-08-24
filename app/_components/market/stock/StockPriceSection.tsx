@@ -1,10 +1,10 @@
 import { StockDetails } from '@/app/_actions/stockActions';
-import PeriodSelect from '../PeriodSelect';
-import ChangeChart from '../ChangeChart';
 import { useState } from 'react';
 import { useRetrieveStockHistoricalPriceQuery } from '@/app/_redux/features/marketApiSlice';
-import Spinner from '../Spinner';
-import EmptyList from '../EmptyList';
+import PeriodSelect from '../../PeriodSelect';
+import Spinner from '../../Spinner';
+import EmptyList from '../../EmptyList';
+import ChangeChart from '../../ChangeChart';
 
 interface StockPriceSectionProps {
 	stockDetails: StockDetails;
@@ -50,7 +50,8 @@ export default function StockPriceSection({
 				<span className='text-gray-600 text-sm'>{stockDetails?.name} Cena</span>
 			</p>
 			<p className='text-2xl sm:text-3xl font-medium'>
-				<span>{stockDetails?.currency}</span> {historicalData?.additional_info?.current_price.toFixed(2)}{' '}
+				<span>{stockDetails?.currency}</span>{' '}
+				{historicalData?.additional_info?.current_price.toFixed(2)}{' '}
 			</p>
 			<div className='grid grid-rows-2 grid-cols-2 sm:grid-rows-1 sm:grid-cols-[auto_1fr_auto] gap-1 sm:gap-2 md:gap-3 items-center text-xs lg:text-sm '>
 				<p className='sm:order-1 '>
@@ -88,7 +89,7 @@ export default function StockPriceSection({
 			) : !historicalData || historicalData.historical_data.length === 0 ? (
 				<EmptyList description='Brak danych do wyświetlenia wykresu' />
 			) : (
-				<div className={`${isHistoricalDataFetching && 'opacity-50'}`}>
+				<div className={`${isHistoricalDataFetching && 'opacity-50'} h-full`}>
 					<ChangeChart historicalData={historicalData} />
 				</div>
 			)}

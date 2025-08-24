@@ -1,4 +1,4 @@
-import { formatFullAmount } from '@/app/_utils/formatAmountOfMoney';
+import { formatShortPrice } from '@/app/_utils/formatAmountOfMoney';
 import Image from 'next/image';
 
 interface TopGainerProps {
@@ -28,7 +28,7 @@ export default function TopGainer({ topGainer }: TopGainerProps) {
 					>
 						{amount > 0 && '+'}
 						{/* {amount < 0 && '-'} */}
-						{formatFullAmount(amount)} PLN
+						{formatShortPrice(amount)} PLN
 					</span>
 				</p>
 			</div>

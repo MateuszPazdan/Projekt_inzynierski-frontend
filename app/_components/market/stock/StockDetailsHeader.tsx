@@ -1,8 +1,8 @@
 import { BsThreeDotsVertical } from 'react-icons/bs';
-import Button from '../Button';
 import { PiStar } from 'react-icons/pi';
 import { FaPlus } from 'react-icons/fa6';
 import { StockDetails } from '@/app/_actions/stockActions';
+import Button from '../../Button';
 
 export default function StockDetailsHeader({
 	stockDetails,

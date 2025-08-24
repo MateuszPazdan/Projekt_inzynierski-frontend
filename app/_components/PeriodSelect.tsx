@@ -19,7 +19,7 @@ export default function PeriodSelect({ range, setRange }: PeriodSelectProps) {
 	};
 
 	return (
-		<div className='flex items-center w-full gap-1 sm:gap-2 bg-grayOne border border-grayThird rounded-xl p-1 text-xs sm:text-sm text-gray-600'>
+		<div className='flex items-center w-full gap-1 sm:gap-2 bg-grayOne border border-grayThird rounded-md p-1 text-xs sm:text-sm text-gray-600'>
 			{options.map((opt) => (
 				<label
 					key={opt.value}

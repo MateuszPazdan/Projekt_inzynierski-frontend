@@ -1,6 +1,6 @@
 'use client';
 
-import { formatFullAmount } from '@/app/_utils/formatAmountOfMoney';
+import { formatShortPrice } from '@/app/_utils/formatAmountOfMoney';
 import {
 	Area,
 	AreaChart,
@@ -55,7 +55,7 @@ export default function HoldingsChangeChart() {
 						scale={'auto'}
 						orientation={'right'}
 						tickFormatter={(value) => {
-							return formatFullAmount(value);
+							return formatShortPrice(value);
 						}}
 					/>
 

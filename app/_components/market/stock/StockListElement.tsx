@@ -4,7 +4,7 @@ import { PiStar } from 'react-icons/pi';
 import { thStyles } from './StockList';
 import { useRouter } from 'next/navigation';
 import { BsArrowDownShort, BsArrowUpShort } from 'react-icons/bs';
-import { formatFullAmount } from '@/app/_utils/formatAmountOfMoney';
+import { formatShortPrice } from '@/app/_utils/formatAmountOfMoney';
 import { Stock } from '@/app/_redux/features/marketApiSlice';
 
 interface StockListElementProps {
@@ -37,9 +37,16 @@ export default function StockListElement({ stock }: StockListElementProps) {
 				</button>
 			</td>
 			<td className={`${thStyles} text-center`}>{stock.market_cap_rank}</td>
-			<td className={`${thStyles} flex flex-col items-start`}>
-				<span>{stock.name}</span>
-				<span className='text-sm text-gray-700'>{stock.symbol}</span>
+			<td className={`${thStyles} flex flex-row items-center gap-2`}>
+				<p
+					className={`flex items-center justify-center w-6 h-6 text-xs aspect-square bg-main text-white rounded-full`}
+				>
+					{stock?.name.trimStart().charAt(0).toUpperCase()}
+				</p>
+				<p className='flex flex-col items-start text-left'>
+					<span>{stock.name}</span>
+					<span className='text-sm text-gray-700'>{stock.symbol}</span>
+				</p>
 			</td>
 			<td className={`${thStyles} text-nowrap`}>
 				{stock.price.toFixed(2)} PLN
@@ -102,11 +109,11 @@ export default function StockListElement({ stock }: StockListElementProps) {
 				</span>
 			</td>
 			<td className={`${thStyles} text-nowrap`}>
-				{formatFullAmount(Number(stock.volume_24h * stock.price))}{' '}
+				{formatShortPrice(Number(stock.volume_24h * stock.price))}{' '}
 				{stock.currency}
 			</td>
 			<td className={`${thStyles} pr-2 md:pr-3 text-nowrap`}>
-				{formatFullAmount(stock.market_cap)} {stock.currency}
+				{formatShortPrice(stock.market_cap)} {stock.currency}
 			</td>
 		</tr>
 	);

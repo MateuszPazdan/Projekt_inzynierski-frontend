@@ -1,5 +1,5 @@
 import { getStockDetailsBySymbol } from '@/app/_actions/stockActions';
-import StockDetailsCard from '@/app/_components/market/StockDetails';
+import StockDetailsCard from '@/app/_components/market/stock/StockDetails';
 
 export const revalidate = 600;
 

@@ -1,24 +1,24 @@
 'use client';
 
+import StockListElement from './StockListElement';
 import { useState } from 'react';
 import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
-import { sortCryptos } from '@/app/_utils/sortAssets';
-import CryptoListElement from './CryptoListElement';
-import { useRetrieveCryptosQuery } from '@/app/_redux/features/marketApiSlice';
-import AssetListSkeleton from './AssetListSkeleton';
-import Pagination from '../Pagination';
-import EmptyList from '../EmptyList';
+import { sortStocks } from '@/app/_utils/sortAssets';
+import { useRetrieveStocksQuery } from '@/app/_redux/features/marketApiSlice';
+import AssetListSkeleton from '../AssetListSkeleton';
+import EmptyList from '../../EmptyList';
+import Pagination from '../../Pagination';
 
 export const thStyles = 'group px-3 py-2 ';
 
-export default function CryptoList() {
+export default function StockList() {
 	const [currPage, setCurrPage] = useState(1);
 	const [sort, setSort] = useState({ by: 'rank', order: 'asc' });
 	const {
-		data: cryptos,
-		isLoading: isCryptosLoading,
-		isFetching: isCryptosFetching,
-	} = useRetrieveCryptosQuery(
+		data: stocks,
+		isLoading: isStocksLoading,
+		isFetching,
+	} = useRetrieveStocksQuery(
 		{
 			page: currPage,
 		},
@@ -26,7 +26,7 @@ export default function CryptoList() {
 			pollingInterval: 60000,
 		}
 	);
-	const cryptoList = sortCryptos(sort, cryptos?.items);
+	const stockList = sortStocks(sort, stocks?.items);
 
 	const handleSort = (by: string) => {
 		setSort((prev) => ({
@@ -35,15 +35,17 @@ export default function CryptoList() {
 		}));
 	};
 
-	if (isCryptosLoading || isCryptosFetching) {
+	if (isStocksLoading || isFetching) {
 		return <AssetListSkeleton />;
 	}
 
-	if (!cryptoList || cryptoList?.length === 0)
-		return <EmptyList description='Nie odnaleziono żadnych kryptowalut.' />;
+	if (!stockList || stockList?.length === 0)
+		return <EmptyList description='Nie odnaleziono żadnych akcji.' />;
 
 	return (
-		<div className='overflow-x-auto rounded-lg border border-grayThird shadow-md bg-white p-3 px-4 '>
+		<div
+			className={`overflow-x-auto rounded-lg border border-grayThird shadow-md bg-white p-3 px-4`}
+		>
 			<table className='text-right divide-y divide-grayThird text-xs md:text-sm w-full min-w-[700px] bg-white'>
 				<thead>
 					<tr>
@@ -168,7 +170,7 @@ export default function CryptoList() {
 							</span>
 						</th>
 						<th
-							className={`${thStyles} pr-2 md:pr-5 cursor-pointer`}
+							className={`${thStyles} pr-2 md:pr-3 cursor-pointer`}
 							onClick={() => handleSort('market_cap')}
 						>
 							<span className='flex flex-row justify-end items-center '>
@@ -187,14 +189,14 @@ export default function CryptoList() {
 					</tr>
 				</thead>
 				<tbody className='divide-y divide-grayThird'>
-					{cryptoList.map((crypto) => (
-						<CryptoListElement key={crypto.name} crypto={crypto} />
+					{stockList?.map((stock) => (
+						<StockListElement stock={stock} key={stock.name} />
 					))}
 				</tbody>
 			</table>
 			<Pagination
 				currPage={currPage}
-				pages={cryptos?.pages}
+				pages={stocks?.pages}
 				setCurrPage={setCurrPage}
 			/>
 		</div>

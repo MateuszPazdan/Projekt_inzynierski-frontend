@@ -1,22 +1,21 @@
 'use client';
 
-import { formatShortPrice } from '@/app/_utils/formatAmountOfMoney';
+import { StockHistoricalData } from '@/app/_redux/features/marketApiSlice';
+import { formatFullPrice } from '@/app/_utils/formatAmountOfMoney';
 import {
 	Area,
 	AreaChart,
-	CartesianGrid,
 	ResponsiveContainer,
 	Tooltip,
 	XAxis,
 	YAxis,
 } from 'recharts';
-import { StockHistoricalData } from '../_redux/features/marketApiSlice';
 
-interface ChangeChartProps {
+interface SimpleChartProps {
 	historicalData: StockHistoricalData;
 }
 
-export default function ChangeChart({ historicalData }: ChangeChartProps) {
+export default function SimpleChart({ historicalData }: SimpleChartProps) {
 	const chartData = historicalData.historical_data;
 	const firstDate = new Date(chartData[0].date);
 	const lastDate = new Date(chartData[chartData.length - 1].date);
@@ -31,7 +30,7 @@ export default function ChangeChart({ historicalData }: ChangeChartProps) {
 
 			if (diffInDays > 365) {
 				return date.getFullYear() !== prev.getFullYear();
-			} else if (diffInDays <= 7 && diffInDays >= 1) {
+			} else if (diffInDays <= 31 && diffInDays >= 1) {
 				return (
 					date.getDate() !== prev.getDate() ||
 					date.getMonth() !== prev.getMonth()
@@ -46,18 +45,16 @@ export default function ChangeChart({ historicalData }: ChangeChartProps) {
 			}
 		})
 		.map((item) => item.date);
-
 	return (
 		<ResponsiveContainer width='100%' className={'min-h-[300px]'}>
-			<AreaChart data={chartData} margin={{ right: 25, left: 30 }}>
-				<CartesianGrid vertical={false} />
+			<AreaChart data={chartData} margin={{ right: 0, left: 0 }}>
 				<XAxis
 					dataKey='date'
 					ticks={ticks}
 					axisLine={false}
 					tickLine={false}
-					tickMargin={10}
 					minTickGap={40}
+					style={{ fontSize: 14 }}
 					tickFormatter={(dateStr) => {
 						const date = new Date(dateStr);
 
@@ -75,8 +72,8 @@ export default function ChangeChart({ historicalData }: ChangeChartProps) {
 							});
 						} else {
 							return date.toLocaleDateString('pl-PL', {
+								day: 'numeric',
 								month: 'short',
-								year: 'numeric',
 							});
 						}
 					}}
@@ -88,11 +85,14 @@ export default function ChangeChart({ historicalData }: ChangeChartProps) {
 					tickLine={false}
 					domain={['dataMin', 'auto']}
 					tickMargin={10}
-					scale={'auto'}
+					scale={'sequential'}
 					orientation={'right'}
 					tickFormatter={(value) => {
-						return formatShortPrice(value);
+						return formatFullPrice(value, 2);
 					}}
+					style={{ fontSize: 12 }}
+					width={'auto'}
+					type='number'
 				/>
 
 				<Tooltip
@@ -114,27 +114,18 @@ export default function ChangeChart({ historicalData }: ChangeChartProps) {
 									<p>
 										<span className='text-gray-600'>Wartość:</span>{' '}
 										<span className='font-medium'>
-											{payload[0].value.toLocaleString('pl-PL', {
-												style: 'currency',
-												currency: 'PLN',
-												minimumFractionDigits: 2,
-											})}
+											{formatFullPrice(payload[0].value)}
 										</span>
 									</p>
 									<p>
 										<span className='text-gray-600'>Wolumen: </span>
 										<span className='font-medium'>
-											{payload[0].payload.volume.toLocaleString('pl-PL', {
-												style: 'currency',
-												currency: 'PLN',
-												minimumFractionDigits: 2,
-											})}
+											{formatFullPrice(payload[0].payload.volume)}
 										</span>
 									</p>
 								</div>
 							);
 						}
-
 						return null;
 					}}
 				/>
@@ -152,20 +143,10 @@ export default function ChangeChart({ historicalData }: ChangeChartProps) {
 				<defs>
 					<linearGradient id='colorUv' x1='0' y1='0' x2='0' y2='1'>
 						<stop offset='10%' stopColor='#3c37ff' stopOpacity={0.7} />
-						<stop offset='90%' stopColor='#3c37ff' stopOpacity={0.1} />
+						<stop offset='70%' stopColor='#3c37ff' stopOpacity={0.2} />
+						<stop offset='100%' stopColor='#3c37ff' stopOpacity={0} />
 					</linearGradient>
 				</defs>
-				{/* <Brush height={30} strokeWidth={1} stroke='#3e37ff'>
-						<LineChart>
-							<Line
-								type='linear'
-								dataKey='close_price'
-								stroke='#3c37ff'
-								strokeWidth={1}
-								dot={false}
-							/>
-						</LineChart>
-					</Brush> */}
 			</AreaChart>
 		</ResponsiveContainer>
 	);
