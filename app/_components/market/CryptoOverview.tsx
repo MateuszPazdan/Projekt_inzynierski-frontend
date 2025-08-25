@@ -13,19 +13,27 @@ export default function CryptoOverview() {
 			<div className={`grid grid-row-2 gap-3`}>
 				<div className='rounded-lg border border-grayThird shadow-md bg-white p-3 px-4 space-y-1'>
 					<p className='text-gray-600 font-medium'>Kapitalizacja rynkowa</p>
-					<p className='font-semibold text-xl'>
-						{formatFullPrice(
-							assetsPerformance?.global_crypto_data.total_market_cap
-						)}
-					</p>
+					{!isAssetsPerformanceLoading ? (
+						<p className='font-semibold text-xl'>
+							{formatFullPrice(
+								assetsPerformance?.global_crypto_data.total_market_cap
+							)}
+						</p>
+					) : (
+						<div className='h-[30px] w-2/3 sm:w-1/3 rounded shimmer' />
+					)}
 				</div>
 				<div className='rounded-lg border border-grayThird shadow-md bg-white p-3 px-4 space-y-1'>
 					<p className='text-gray-600 font-medium'>Wolumen 24 godzinny</p>
-					<p className='font-semibold text-xl'>
-						{formatFullPrice(
-							assetsPerformance?.global_crypto_data.total_volume_24h
-						)}
-					</p>
+					{!isAssetsPerformanceLoading ? (
+						<p className='font-semibold text-xl'>
+							{formatFullPrice(
+								assetsPerformance?.global_crypto_data.total_volume_24h
+							)}
+						</p>
+					) : (
+						<div className='h-[30px] w-2/3 sm:w-1/3 rounded shimmer' />
+					)}
 				</div>
 			</div>
 			<AssetListCard
