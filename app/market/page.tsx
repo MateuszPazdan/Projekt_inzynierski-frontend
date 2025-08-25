@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import SectionHeader from '../_components/SectionHeader';
-import CryptoOverview from '../_components/market/CryptoOverview';
 import { FaAngleRight } from 'react-icons/fa6';
 import StockOverview from '../_components/market/StockOverview';
-import CryptoOverviewChart from '../_components/market/crypto/CryptoOverviewChart';
 import StockOverviewChart from '../_components/market/stock/StockOverviewChart';
+import CryptoOverviewChart from '../_components/market/crypto/CryptoOverviewChart';
+import CryptoOverview from '../_components/market/CryptoOverview';
 
 export default function page() {
 	return (

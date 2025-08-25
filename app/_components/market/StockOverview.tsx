@@ -3,6 +3,7 @@
 import { formatFullPrice } from '@/app/_utils/formatAmountOfMoney';
 import AssetListCard from './AssetListCard';
 import { useRetrieveAssetsPerformanceQuery } from '@/app/_redux/features/marketApiSlice';
+import NoData from '../NoData';
 
 export default function StockOverview() {
 	const { data: assetsPerformance, isLoading: isAssetsPerformanceLoading } =
@@ -18,6 +19,7 @@ export default function StockOverview() {
 							{formatFullPrice(
 								assetsPerformance?.global_stock_data.total_market_cap
 							)}
+							{!assetsPerformance && <NoData />}
 						</p>
 					) : (
 						<div className='h-[30px] w-2/3 sm:w-1/3 rounded shimmer' />
@@ -30,6 +32,7 @@ export default function StockOverview() {
 							{formatFullPrice(
 								assetsPerformance?.global_stock_data.total_volume_24h
 							)}
+							{!assetsPerformance && <NoData />}
 						</p>
 					) : (
 						<div className='h-[30px] w-2/3 sm:w-1/3 rounded shimmer' />

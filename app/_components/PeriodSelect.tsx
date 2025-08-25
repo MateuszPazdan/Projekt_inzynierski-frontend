@@ -11,7 +11,7 @@ export default function PeriodSelect({ range, setRange }: PeriodSelectProps) {
 
 	const options = [
 		{ value: '1d', label: '24h' },
-		{ value: '1w', label: '7d' },
+		{ value: '1w', label: '1w' },
 		{ value: '1m', label: '1m' },
 		{ value: '1y', label: '1y' },
 		{ value: 'max', label: 'Wszystko' },

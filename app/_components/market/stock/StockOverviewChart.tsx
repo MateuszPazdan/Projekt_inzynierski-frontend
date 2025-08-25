@@ -9,11 +9,12 @@ import { useEffect, useState } from 'react';
 import PriceChange from '../PriceChange';
 import SimpleChart from '../SimpleChart';
 import PeriodSelect from '../../PeriodSelect';
+import NoData from '../../NoData';
 
 export default function StockOverviewChart() {
 	const { data: assetsPerformance, isLoading: isAssetsPerformanceLoading } =
 		useRetrieveAssetsPerformanceQuery();
-	const [period, setPeriod] = useState<string>('1y');
+	const [period, setPeriod] = useState<string>('1w');
 	const [symbol, setSymbol] = useState<string>(
 		assetsPerformance?.global_stock_data.top_market_cap_rank[0].symbol ?? ''
 	);
@@ -37,60 +38,61 @@ export default function StockOverviewChart() {
 		);
 	}, [assetsPerformance]);
 
-	if (isAssetsPerformanceLoading || isHistoricalDataLoading)
-		return (
-			<div className='rounded-lg border border-grayThird shadow-md bg-white p-3 px-3 space-y-3'>
+	return (
+		<div className='rounded-lg border border-grayThird shadow-md bg-white p-3 px-3 space-y-3'>
+			{isAssetsPerformanceLoading ? (
 				<div className='flex flex-col items-stretch md:flex-row gap-3'>
 					<div className='h-[58px] md:w-1/3 rounded shimmer w-full' />
 					<div className='h-[58px] md:w-1/3 rounded shimmer w-full' />
 					<div className='h-[58px] md:w-1/3 rounded shimmer w-full' />
 				</div>
-				<div className='h-[300px] w-full rounded shimmer' />
-				<div className='h-[38px] w-full rounded shimmer' />
-			</div>
-		);
-
-	return (
-		<div className='rounded-lg border border-grayThird shadow-md bg-white p-3 px-3 space-y-3'>
-			<div className='grid grid-cols-1 md:grid-cols-3 gap-3'>
-				{assetsPerformance?.global_stock_data.top_market_cap_rank?.map(
-					(item) => (
-						<button
-							onClick={() => setSymbol(item.symbol)}
-							className={`flex flex-row items-center  gap-2 p-2 rounded-md text-sm border hover:bg-graySecond transition-colors duration-300 ${
-								symbol === item.symbol
-									? 'bg-grayOne border-grayThird'
-									: 'border-transparent'
-							} `}
-							key={item.symbol}
-						>
-							<p
-								className={`flex items-center justify-center w-6 h-6 text-xs aspect-square bg-main text-white rounded-full`}
+			) : (
+				<div className='grid grid-cols-1 md:grid-cols-3 gap-3'>
+					{assetsPerformance?.global_stock_data.top_market_cap_rank?.map(
+						(item) => (
+							<button
+								onClick={() => setSymbol(item.symbol)}
+								className={`flex flex-row items-center  gap-2 p-2 rounded-md text-sm border hover:bg-graySecond transition-colors duration-300 ${
+									symbol === item.symbol
+										? 'bg-grayOne border-grayThird'
+										: 'border-transparent'
+								} `}
+								key={item.symbol}
 							>
-								{item?.name.trimStart().charAt(0).toUpperCase()}
-							</p>
-							<p className='flex flex-col justify-start'>
-								<span className='truncate font-medium text-start'>
-									{item.name}
-								</span>
-								<span className='flex flex-row gap-1'>
-									<span className=''>{formatFullPrice(item.price, 2)}</span>
-									<PriceChange change={item.price_change_percentage_24h} />
-								</span>
-							</p>
-						</button>
-					)
-				)}
-			</div>
+								<p
+									className={`flex items-center justify-center w-6 h-6 text-xs aspect-square bg-main text-white rounded-full`}
+								>
+									{item?.name.trimStart().charAt(0).toUpperCase()}
+								</p>
+								<p className='flex flex-col justify-start'>
+									<span className='truncate font-medium text-start'>
+										{item.name}
+									</span>
+									<span className='flex flex-row gap-1'>
+										<span className=''>{formatFullPrice(item.price, 2)}</span>
+										<PriceChange change={item.price_change_percentage_24h} />
+									</span>
+								</p>
+							</button>
+						)
+					)}
+				</div>
+			)}
 
-			{isHistoricalDataFetching ||
-			isHistoricalDataLoading ||
-			!historicalData ? (
+			{isHistoricalDataFetching || isHistoricalDataLoading ? (
 				<div className='h-[300px] w-full rounded shimmer' />
+			) : !historicalData || historicalData[0].period !== period ? (
+				<div className='h-[300px] flex items-center justify-center'>
+					<NoData message='Brak danych do wykresu' />
+				</div>
 			) : (
 				<SimpleChart historicalData={historicalData} />
 			)}
-			<PeriodSelect range={period} setRange={setPeriod} />
+			{isAssetsPerformanceLoading ? (
+				<div className='h-[38px] w-full rounded shimmer' />
+			) : (
+				<PeriodSelect range={period} setRange={setPeriod} />
+			)}
 		</div>
 	);
 }

@@ -3,6 +3,7 @@ import { formatFullPrice } from '@/app/_utils/formatAmountOfMoney';
 import Image from 'next/image';
 import PriceChange from './PriceChange';
 import Link from 'next/link';
+import NoData from '../NoData';
 
 export default function AssetListCard({
 	title,
@@ -21,7 +22,6 @@ export default function AssetListCard({
 		return (
 			<div className='grid grid-rows-[auto_auto] gap-1 rounded-lg border border-gray-300 shadow-md bg-white p-3 px-4'>
 				<p className='text-gray-600 font-medium pb-2'>{title}</p>
-
 				{Array.from({ length: 3 }).map((_, i) => (
 					<div
 						key={i}
@@ -41,9 +41,13 @@ export default function AssetListCard({
 			</div>
 		);
 	return (
-		<div className='grid grid-rows-[1fr_auto] gap-1 rounded-lg border border-gray-300 shadow-md bg-white p-3 px-4'>
+		<div className='grid grid-rows-[auto_1fr] gap-1 rounded-lg border border-gray-300 shadow-md bg-white p-3 px-4'>
 			<p className='text-gray-600 font-medium pb-2'>{title}</p>
-
+			{!assetList && (
+				<div className='flex xl:justify-center items-center'>
+					<NoData />
+				</div>
+			)}
 			{assetList?.slice(0, limit).map((asset) => (
 				<Link
 					href={`/market/${assetType === 'crypto' ? 'crypto' : 'stocks'}/${
