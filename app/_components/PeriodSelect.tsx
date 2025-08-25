@@ -32,7 +32,7 @@ export default function PeriodSelect({ range, setRange }: PeriodSelectProps) {
 						onChange={() => setRange(opt.value)}
 						className='hidden peer'
 					/>
-					<span className='px-2 sm:px-5 py-1 rounded-lg font-medium w-full text-center hover:bg-graySecond peer-checked:bg-white peer-checked:text-main peer-checked:shadow cursor-pointer transition-colors duration-300 truncate '>
+					<span className='px-2 sm:px-5 py-1 rounded-sm font-medium w-full text-center hover:bg-graySecond peer-checked:bg-white peer-checked:text-main peer-checked:shadow cursor-pointer transition-colors duration-300 truncate '>
 						{opt.label}
 					</span>
 				</label>

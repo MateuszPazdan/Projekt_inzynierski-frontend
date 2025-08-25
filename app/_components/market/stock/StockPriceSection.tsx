@@ -5,10 +5,9 @@ import {
 	useRetrieveStockPricePerformanceQuery,
 } from '@/app/_redux/features/marketApiSlice';
 import PeriodSelect from '../../PeriodSelect';
-import Spinner from '../../Spinner';
-import EmptyList from '../../EmptyList';
-import ChangeChart from '../../ChangeChart';
 import { formatFullPrice } from '@/app/_utils/formatAmountOfMoney';
+import SimpleChart from '../SimpleChart';
+import NoData from '../../NoData';
 
 interface StockPriceSectionProps {
 	stockDetails: StockDetails;
@@ -18,11 +17,10 @@ export default function StockPriceSection({
 	stockDetails,
 }: StockPriceSectionProps) {
 	const [period, setPeriod] = useState<string>('1w');
-	const { data: stockPricePerformance } = useRetrieveStockPricePerformanceQuery(
-		{
+	const { data: stockPricePerformance, isLoading: isAssetsPerformanceLoading } =
+		useRetrieveStockPricePerformanceQuery({
 			stock_symbol: stockDetails.symbol,
-		}
-	);
+		});
 	const {
 		data: historicalData,
 		isFetching: isHistoricalDataFetching,
@@ -37,8 +35,6 @@ export default function StockPriceSection({
 		}
 	);
 
-	if (!stockPricePerformance) return;
-
 	const minPrice =
 		historicalData && Math.min(...historicalData.map((data) => data.low_price));
 	const maxPrice =
@@ -47,6 +43,7 @@ export default function StockPriceSection({
 	const pricePercent =
 		minPrice &&
 		maxPrice &&
+		stockPricePerformance &&
 		((stockPricePerformance?.price - minPrice) / (maxPrice - minPrice)) * 100;
 
 	return (
@@ -60,48 +57,85 @@ export default function StockPriceSection({
 				<span className='text-gray-600 text-sm'>{stockDetails?.name} Cena</span>
 			</p>
 			<p className='text-2xl sm:text-3xl font-medium'>
-				<span>{stockDetails?.currency}</span>{' '}
-				{formatFullPrice(stockPricePerformance?.price)}{' '}
+				{isAssetsPerformanceLoading ? (
+					<span className='inline-block h-6 w-24 rounded shimmer' />
+				) : stockPricePerformance?.price ? (
+					<>
+						<span>{stockDetails?.currency}</span>{' '}
+						{formatFullPrice(stockPricePerformance?.price)}
+					</>
+				) : (
+					<NoData />
+				)}
 			</p>
-			<div className='grid grid-rows-2 grid-cols-2 sm:grid-rows-1 sm:grid-cols-[auto_1fr_auto] gap-1 sm:gap-2 md:gap-3 items-center text-xs lg:text-sm '>
-				<p className='sm:order-1 '>
-					<span className='hidden sm:inline text-gray-500'>Minimum</span>{' '}
-					<span className='font-medium text-gray-500 sm:text-black'>
-						{formatFullPrice(minPrice)} {stockDetails?.currency}
-					</span>
-				</p>
-				<p className='sm:order-3 text-right'>
-					<span className='hidden sm:inline text-gray-500'>Maksimum</span>{' '}
-					<span className='font-medium text-gray-500 sm:text-black'>
-						{formatFullPrice(maxPrice)} {stockDetails?.currency}
-					</span>
-				</p>
-				<div className='sm:order-2 col-span-2 sm:col-span-1 w-full relative bg-grayOne border border-grayThird h-2 rounded-lg overflow-hidden'>
-					<div
-						className='absolute h-full transition-all duration-300 ease-in-out'
-						style={{
-							width: `${pricePercent}%`,
-							background:
-								'linear-gradient(to right, #add7f6, #2520e3, #3c37ff)',
-						}}
-					></div>
+
+			{(historicalData ||
+				isAssetsPerformanceLoading ||
+				isHistoricalDataFetching ||
+				isHistoricalDataLoading) && (
+				<div className='grid grid-rows-2 grid-cols-2 sm:grid-rows-1 sm:grid-cols-[auto_1fr_auto] gap-1 sm:gap-2 md:gap-3 items-center text-xs lg:text-sm '>
+					<p className='sm:order-1 '>
+						{isAssetsPerformanceLoading ||
+						isHistoricalDataFetching ||
+						isHistoricalDataLoading ? (
+							<span className='block h-6 w-24 rounded shimmer' />
+						) : (
+							<>
+								<span className='hidden sm:inline text-gray-500'>Minimum</span>{' '}
+								<span className='font-medium text-gray-500 sm:text-black'>
+									{formatFullPrice(minPrice)} {stockDetails?.currency}
+								</span>
+							</>
+						)}
+					</p>
+
+					<p className='sm:order-3 text-right'>
+						{isAssetsPerformanceLoading ||
+						isHistoricalDataFetching ||
+						isHistoricalDataLoading ? (
+							<span className='block place-self-end h-6 w-24 rounded shimmer' />
+						) : (
+							<>
+								<span className='hidden sm:inline text-gray-500'>Maksimum</span>{' '}
+								<span className='font-medium text-gray-500 sm:text-black'>
+									{formatFullPrice(maxPrice)} {stockDetails?.currency}
+								</span>
+							</>
+						)}
+					</p>
+
+					<div className='sm:order-2 col-span-2 sm:col-span-1 w-full relative bg-grayOne border border-grayThird h-2 rounded-lg overflow-hidden'>
+						{isAssetsPerformanceLoading ||
+						isHistoricalDataFetching ||
+						isHistoricalDataLoading ? (
+							<span className='absolute left-0 top-0 h-full w-full rounded shimmer' />
+						) : (
+							<div
+								className='absolute h-full transition-all duration-300 ease-in-out'
+								style={{
+									width: `${pricePercent}%`,
+									background:
+										'linear-gradient(to right, #add7f6, #2520e3, #3c37ff)',
+								}}
+							></div>
+						)}
+					</div>
 				</div>
-			</div>
-			<PeriodSelect range={period} setRange={setPeriod} />
-			{isHistoricalDataLoading ? (
-				<span className='flex h-full min-h-[300px]'>
-					<Spinner
-						size='large'
-						color='text-main'
-						description='Ładowanie wykresu...'
-					/>
-				</span>
-			) : !historicalData || historicalData?.length === 0 ? (
-				<EmptyList description='Brak danych do wyświetlenia wykresu' />
+			)}
+
+			{isAssetsPerformanceLoading ? (
+				<div className='h-[38px] w-full rounded shimmer' />
 			) : (
-				<div className={`${isHistoricalDataFetching && 'opacity-50'} h-full`}>
-					<ChangeChart historicalData={historicalData} />
+				<PeriodSelect range={period} setRange={setPeriod} />
+			)}
+			{isHistoricalDataFetching || isHistoricalDataLoading ? (
+				<div className='h-full min-h-[300px] w-full rounded shimmer' />
+			) : !historicalData || historicalData[0].period !== period ? (
+				<div className='h-full min-h-[300px] flex items-center justify-center'>
+					<NoData message='Brak danych do wykresu' />
 				</div>
+			) : (
+				<SimpleChart historicalData={historicalData} />
 			)}
 		</div>
 	);

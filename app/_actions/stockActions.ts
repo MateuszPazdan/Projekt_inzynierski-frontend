@@ -38,6 +38,7 @@ export async function getStockDetailsBySymbol(stockSymbol: string) {
 				headers: {
 					'Content-Type': 'application/json',
 				},
+				cache: 'no-store',
 			}
 		);
 		if (!response.ok) {
@@ -47,5 +48,6 @@ export async function getStockDetailsBySymbol(stockSymbol: string) {
 		return data;
 	} catch (error) {
 		console.error('Nie udało się pobrać szczegółów akcji.', error);
+		throw new Error('Nie udało się pobrać szczegółów akcji.');
 	}
 }

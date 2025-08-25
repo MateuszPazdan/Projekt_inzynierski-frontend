@@ -1,7 +1,7 @@
 export default function NotFound() {
 	return (
 		<div>
-			<p>problemooo</p>
+			<p>problemooo - not foundero</p>
 		</div>
 	);
 }

@@ -4,74 +4,132 @@ import { StockDetails } from '@/app/_actions/stockActions';
 import StockPriceSection from './StockPriceSection';
 import StockDetailsHeader from './StockDetailsHeader';
 import { useRetrieveStockPricePerformanceQuery } from '@/app/_redux/features/marketApiSlice';
+import NoData from '../../NoData';
 
 interface StockDetailsProps {
 	stockDetails: StockDetails;
 }
 
 export default function StockDetailsCard({ stockDetails }: StockDetailsProps) {
-	const { data: stockPricePerformance } = useRetrieveStockPricePerformanceQuery(
-		{
-			stock_symbol: stockDetails.symbol,
-		}
-	);
-
-	if (!stockPricePerformance) return;
+	const {
+		data: stockPricePerformance,
+		isLoading: isStockPricePerformanceLoading,
+	} = useRetrieveStockPricePerformanceQuery({
+		stock_symbol: stockDetails.symbol,
+	});
 
 	return (
 		<div className='flex flex-col gap-3'>
 			<StockDetailsHeader stockDetails={stockDetails} />
-			<div className='grid xl:grid-cols-[3fr_1fr] grid-rows-[1fr_auto] h-fit gap-3'>
+			<div className='grid xl:grid-cols-[3fr_1fr] xl:grid-rows-[1fr_auto] h-fit gap-3'>
 				<StockPriceSection stockDetails={stockDetails} />
-				<div className='row-span-2 flex flex-col gap-5 rounded-lg border border-grayThird shadow-md  bg-white py-3 px-5 overflow-hidden'>
+				<div className='h-fit row-span-2 flex flex-col gap-5 rounded-lg border border-grayThird shadow-md  bg-white py-3 px-5 overflow-hidden'>
 					<div>
 						<span className='text-gray-600 text-sm font-medium mb-2 block'>
 							Zmiana wartości
 						</span>
-						<div className='grid grid-cols-3 gap-3 justify-between text-center'>
-							<div className='flex flex-col gap-1 bg-grayOne rounded-md p-3  border border-grayThird'>
-								<p className='text-sm text-gray-500'>1h</p>
-								<p
-									className={`font-medium ${
-										stockPricePerformance?.price_change_percentage_1h < 0
-											? ' text-red-500 '
-											: stockPricePerformance.price_change_percentage_1h === 0
-											? ''
-											: ' text-green-500 '
-									}`}
-								>
-									{stockPricePerformance.price_change_percentage_1h ?? '-'}%
-								</p>
+						{isStockPricePerformanceLoading ? (
+							<div className='grid grid-cols-3 gap-3 justify-between text-center'>
+								<span className='block w-full h-[74px] rounded shimmer' />
+								<span className='block w-full h-[74px] rounded shimmer' />
+								<span className='block w-full h-[74px] rounded shimmer' />
+								<span className='block w-full h-[74px] rounded shimmer' />
+								<span className='block w-full h-[74px] rounded shimmer' />
+								<span className='block w-full h-[74px] rounded shimmer' />
 							</div>
-							<div className='flex flex-col gap-1 bg-grayOne rounded-md p-3  border border-grayThird'>
-								<p className='text-sm text-gray-500'>24h</p>
-								<p
-									className={`font-medium ${
-										stockPricePerformance.price_change_percentage_24h < 0
-											? ' text-red-500 '
-											: stockPricePerformance.price_change_percentage_24h === 0
-											? ''
-											: ' text-green-500 '
-									}`}
-								>
-									{stockPricePerformance.price_change_percentage_24h ?? '-'}%
-								</p>
+						) : stockPricePerformance ? (
+							<div className='grid grid-cols-3 gap-3 justify-between text-center'>
+								<div className='flex flex-col gap-1 bg-grayOne rounded-md p-3 px-1  border border-grayThird'>
+									<p className='text-sm text-gray-500'>1h</p>
+									<p
+										className={`font-medium ${
+											stockPricePerformance?.price_change_percentage_1h < 0
+												? ' text-red-500 '
+												: stockPricePerformance.price_change_percentage_1h === 0
+												? ''
+												: ' text-green-500 '
+										}`}
+									>
+										{stockPricePerformance.price_change_percentage_1h ?? '-'}%
+									</p>
+								</div>
+								<div className='flex flex-col gap-1 bg-grayOne rounded-md p-3 px-1  border border-grayThird'>
+									<p className='text-sm text-gray-500'>24h</p>
+									<p
+										className={`font-medium ${
+											stockPricePerformance.price_change_percentage_24h < 0
+												? ' text-red-500 '
+												: stockPricePerformance.price_change_percentage_24h ===
+												  0
+												? ''
+												: ' text-green-500 '
+										}`}
+									>
+										{stockPricePerformance.price_change_percentage_24h ?? '-'}%
+									</p>
+								</div>
+								<div className='flex flex-col gap-1 bg-grayOne rounded-md p-3 px-1  border border-grayThird'>
+									<p className='text-sm text-gray-500'>7d</p>
+									<p
+										className={`font-medium ${
+											stockPricePerformance.price_change_percentage_7d < 0
+												? ' text-red-500 '
+												: stockPricePerformance.price_change_percentage_7d === 0
+												? ''
+												: ' text-green-500 '
+										}`}
+									>
+										{stockPricePerformance.price_change_percentage_7d ?? '-'}%
+									</p>
+								</div>
+								<div className='flex flex-col gap-1 bg-grayOne rounded-md p-3 px-1  border border-grayThird'>
+									<p className='text-sm text-gray-500'>1m</p>
+									<p
+										className={`font-medium ${
+											stockPricePerformance.price_change_percentage_30d < 0
+												? ' text-red-500 '
+												: stockPricePerformance.price_change_percentage_30d ===
+												  0
+												? ''
+												: ' text-green-500 '
+										}`}
+									>
+										{stockPricePerformance.price_change_percentage_30d ?? '-'}%
+									</p>
+								</div>
+								<div className='flex flex-col gap-1 bg-grayOne rounded-md p-3 px-1  border border-grayThird'>
+									<p className='text-sm text-gray-500'>1y</p>
+									<p
+										className={`font-medium ${
+											stockPricePerformance.price_change_percentage_1y < 0
+												? ' text-red-500 '
+												: stockPricePerformance.price_change_percentage_1y === 0
+												? ''
+												: ' text-green-500 '
+										}`}
+									>
+										{stockPricePerformance.price_change_percentage_1y ?? '-'}%
+									</p>
+								</div>
+								<div className='flex flex-col gap-1 bg-grayOne rounded-md p-3 px-1  border border-grayThird'>
+									<p className='text-sm text-gray-500'>Wszystko</p>
+									<p
+										className={`font-medium ${
+											stockPricePerformance.price_change_percentage_max < 0
+												? ' text-red-500 '
+												: stockPricePerformance.price_change_percentage_max ===
+												  0
+												? ''
+												: ' text-green-500 '
+										}`}
+									>
+										{stockPricePerformance.price_change_percentage_max ?? '-'}%
+									</p>
+								</div>
 							</div>
-							<div className='flex flex-col gap-1 bg-grayOne rounded-md p-3  border border-grayThird'>
-								<p className='text-sm text-gray-500'>7 dni</p>
-								<p
-									className={`font-medium ${
-										stockPricePerformance.price_change_percentage_7d < 0
-											? ' text-red-500 '
-											: stockPricePerformance.price_change_percentage_7d === 0
-											? ''
-											: ' text-green-500 '
-									}`}
-								>
-									{stockPricePerformance.price_change_percentage_7d ?? '-'}%
-								</p>
-							</div>
-						</div>
+						) : (
+							<NoData />
+						)}
 					</div>
 					<div className='grid sm:grid-cols-2 gap-4 xl:grid-cols-1 font-medium'>
 						<InfoItem label='Stan rynku' value={stockDetails.market_state} />
@@ -121,7 +179,7 @@ export default function StockDetailsCard({ stockDetails }: StockDetailsProps) {
 						/>
 					</div>
 				</div>
-				<div className='grid grid-rows-[auto_auto] gap-4 rounded-lg border border-grayThird shadow-md  bg-white py-3 px-5 overflow-hidden'>
+				<div className=' grid grid-rows-[auto_auto] gap-4 rounded-lg border border-grayThird shadow-md  bg-white py-3 px-5 overflow-hidden'>
 					<div className='col-span-1'>
 						<p className='text-gray-600 text-sm'>Sektor</p>
 						<p className='font-medium'>{stockDetails.sector ?? '-'}</p>

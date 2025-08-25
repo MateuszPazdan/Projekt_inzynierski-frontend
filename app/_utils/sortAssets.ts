@@ -1,5 +1,4 @@
-import { Crypto } from '../_actions/cryptoActions';
-import { Stock } from '../_redux/features/marketApiSlice';
+import { Crypto, Stock } from '../_redux/features/marketApiSlice';
 
 export function sortStocks(
 	sort: { by: string; order: string },
