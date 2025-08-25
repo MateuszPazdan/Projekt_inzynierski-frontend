@@ -38,7 +38,6 @@ export async function getStockDetailsBySymbol(stockSymbol: string) {
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				cache: 'no-store',
 			}
 		);
 		if (!response.ok) {
@@ -48,6 +47,23 @@ export async function getStockDetailsBySymbol(stockSymbol: string) {
 		return data;
 	} catch (error) {
 		console.error('Nie udało się pobrać szczegółów akcji.', error);
-		throw new Error('Nie udało się pobrać szczegółów akcji.');
+	}
+}
+
+export async function getAllStockSymbols() {
+	try {
+		const response = await fetch(`${API_URL}/portfolio/assets/stocks/symbols`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+		if (!response.ok) {
+			throw new Error(`Błąd serwera: ${response.status}`);
+		}
+		const data: { symbol: string }[] = await response.json();
+		return data;
+	} catch (error) {
+		console.error('Nie udało się pobrać symboli akcji.', error);
 	}
 }
