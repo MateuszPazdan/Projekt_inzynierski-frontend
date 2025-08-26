@@ -10,7 +10,7 @@ interface PaginationProps {
 	size?: 'lg' | 'sm';
 }
 
-export default function ServerPagination({
+export default function SearchParamsPagination({
 	currPage = 1,
 	pages = 1,
 	size = 'lg',

@@ -8,7 +8,7 @@ import AssetListSkeleton from '../AssetListSkeleton';
 import EmptyList from '../../EmptyList';
 import CryptoListHeader from './CryptoListHeader';
 import { useSearchParams } from 'next/navigation';
-import ServerPagination from '../../ServerPagination';
+import SearchParamsPagination from '../../SearchParamsPagination';
 
 export const thStyles = 'group px-3 py-2 ';
 
@@ -58,7 +58,7 @@ export default function CryptoList() {
 					))}
 				</tbody>
 			</table>
-			<ServerPagination currPage={currPage} pages={cryptos?.pages} />
+			<SearchParamsPagination currPage={currPage} pages={cryptos?.pages} />
 		</div>
 	);
 }

@@ -8,7 +8,7 @@ import AssetListSkeleton from '../AssetListSkeleton';
 import EmptyList from '../../EmptyList';
 import StockListHeader from './StockListHeader';
 import { useSearchParams } from 'next/navigation';
-import ServerPagination from '../../ServerPagination';
+import SearchParamsPagination from '../../SearchParamsPagination';
 
 export const thStyles = 'group px-3 py-2 ';
 
@@ -60,7 +60,7 @@ export default function StockList() {
 					))}
 				</tbody>
 			</table>
-			<ServerPagination currPage={currPage} pages={stocks?.pages} />
+			<SearchParamsPagination currPage={currPage} pages={stocks?.pages} />
 		</div>
 	);
 }

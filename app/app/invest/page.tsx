@@ -22,7 +22,7 @@ export default function page() {
 		icon: '/logo.png',
 	};
 	return (
-		<div className='px-2 sm:px-5 lg:px-12 py-10 max-w-[1800px] mx-auto '>
+		<div className='px-2 sm:px-5 lg:px-12 py-10 max-w-[1800px] mx-auto'>
 			<div className='flex flex-col justify-between items-start sm500:flex-row sm500:items-center gap-4 pb-5 md:pb-10'>
 				<p className='text-blackOne text-center text-3xl md:text-3xl lg:text-4xl'>
 					Przegląd inwestycji

@@ -26,6 +26,7 @@ export default function ManageTransactionModal({
 	const {
 		register,
 		handleSubmit,
+		setValue,
 		formState: { errors },
 	} = useForm<FieldValues>({
 		defaultValues: {
@@ -70,10 +71,11 @@ export default function ManageTransactionModal({
 				})
 				.catch((error) => {
 					toast.error(
-						error.meassege || 'Wystąpił błąd przy tworzeniu budżetu.'
+						error.meassege || 'Wystąpił błąd przy tworzeniu transakcji.'
 					);
 				});
 		}
+
 		if (transaction) {
 			modifyTransaction({
 				budgetId,
@@ -91,12 +93,12 @@ export default function ManageTransactionModal({
 			})
 				.unwrap()
 				.then(() => {
-					toast.success('Edytowano transakcję.');
+					toast.success('Zmodyfikowano transakcję.');
 					onCloseModal();
 				})
 				.catch((error) => {
 					toast.error(
-						error.meassege || 'Wystąpił błąd przy edytowaniu transakcji.'
+						error.meassege || 'Wystąpił błąd przy modyfikacji transakcji.'
 					);
 				});
 		}
@@ -105,7 +107,7 @@ export default function ManageTransactionModal({
 	return (
 		<div>
 			<ModalHeader
-				title={transaction ? 'Edycja transakcji' : 'Tworzenie transakcji'}
+				title={transaction ? 'Modyfikacja transakcji' : 'Tworzenie transakcji'}
 				onCloseModal={onCloseModal}
 			/>
 			<form
@@ -126,9 +128,10 @@ export default function ManageTransactionModal({
 					name='category'
 					options={list}
 					register={register}
-					error={errors?.category?.message as string}
 					required
 					defaultValue='Wybierz kategorię'
+					error={errors?.category?.message as string}
+					setValue={setValue}
 				/>
 				<FormInput
 					label='Kwota transakcji'

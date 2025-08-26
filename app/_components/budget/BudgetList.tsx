@@ -4,17 +4,18 @@ import { useRetrieveBudgetsQuery } from '@/app/_redux/features/budgetApiSlice';
 import BudgetElement from '../../_components/budget/BudgetElement';
 import Spinner from '../Spinner';
 import EmptyList from '../EmptyList';
-import Pagination from '../Pagination';
-import { useState } from 'react';
+import SearchParamsPagination from '../SearchParamsPagination';
+import { useSearchParams } from 'next/navigation';
 
 export default function BudgetList() {
-	const [currPage, setCurrPage] = useState(1);
+	const searchParams = useSearchParams();
+	const currPage = Number(searchParams.get('page')) || 1;
 	const {
 		data,
 		isLoading: isBudgetsLoading,
 		isFetching: isBudgetFetching,
 	} = useRetrieveBudgetsQuery({
-		size: 30,
+		size: 10,
 		page: currPage,
 	});
 	const budgets = data?.items;
@@ -38,11 +39,7 @@ export default function BudgetList() {
 					{budgets?.map((budget) => (
 						<BudgetElement key={budget.id} budget={budget} />
 					))}
-					<Pagination
-						currPage={currPage}
-						setCurrPage={setCurrPage}
-						pages={data?.pages}
-					/>
+					<SearchParamsPagination currPage={currPage} pages={data?.pages} />
 				</>
 			) : (
 				<EmptyList description='Nie odnaleziono żadnych budżetów.' />

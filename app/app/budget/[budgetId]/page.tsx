@@ -7,7 +7,7 @@ export default async function page({
 }) {
 	const { budgetId } = await params;
 	return (
-		<div className='px-2 sm:px-5 lg:px-12 py-10 max-w-[1800px] mx-auto w-full '>
+		<div className='flex-1 min-h-full px-2 sm:px-5 lg:px-12 py-10 max-w-[1800px] w-full mx-auto flex flex-col gap-10'>
 			<BudgetInfo budgetId={budgetId} />
 		</div>
 	);

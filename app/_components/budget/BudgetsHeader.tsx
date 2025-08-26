@@ -4,19 +4,8 @@ import { BsPlus } from 'react-icons/bs';
 import Button from '../Button';
 import Modal from '../Modal';
 import ManageBudgetModal from './ManageBudgetModal';
-import { useEffect, useState } from 'react';
 
 export default function BudgetsHeader() {
-	const [windowWidth, setWindowWidth] = useState<number | null>(null);
-
-	useEffect(() => {
-		setWindowWidth(window.innerWidth);
-		const handleResize = () => setWindowWidth(window.innerWidth);
-		window.addEventListener('resize', handleResize);
-
-		return () => window.removeEventListener('resize', handleResize);
-	}, []);
-
 	return (
 		<div className='flex flex-col justify-between items-start sm500:flex-row sm500:items-center gap-4 pb-10'>
 			<p className='text-blackOne text-center text-3xl md:text-3xl lg:text-4xl'>
@@ -24,11 +13,7 @@ export default function BudgetsHeader() {
 			</p>
 			<Modal>
 				<Modal.Open opens='createBudget'>
-					<Button
-						size={`${
-							windowWidth !== null && windowWidth >= 768 ? 'large' : 'small'
-						}`}
-					>
+					<Button size={`small`}>
 						<span className='text-3xl'>
 							<BsPlus />
 						</span>
