@@ -32,7 +32,7 @@ export default function CryptoDetailsCard({
 							Zmiana wartości
 						</span>
 						{isCryptoPricePerformanceLoading ? (
-							<div className='grid grid-cols-3 gap-3 justify-between text-center'>
+							<div className='grid grid-cols-2 sm500:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3 gap-3 justify-between text-center'>
 								<span className='block w-full h-[74px] rounded shimmer' />
 								<span className='block w-full h-[74px] rounded shimmer' />
 								<span className='block w-full h-[74px] rounded shimmer' />
@@ -41,7 +41,7 @@ export default function CryptoDetailsCard({
 								<span className='block w-full h-[74px] rounded shimmer' />
 							</div>
 						) : cryptoPricePerformance ? (
-							<div className='grid grid-cols-3 gap-3 justify-between text-center'>
+							<div className='grid grid-cols-2 sm500:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3 gap-3 justify-between text-center'>
 								<PerformanceBox
 									label='1h'
 									value={cryptoPricePerformance?.price_change_percentage_1h}
