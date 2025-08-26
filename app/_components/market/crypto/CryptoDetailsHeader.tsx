@@ -1,28 +1,33 @@
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { PiStar } from 'react-icons/pi';
 import { FaPlus } from 'react-icons/fa6';
-import { StockDetails } from '@/app/_actions/stockActions';
 import Button from '../../Button';
+import { CryptoDetails } from '@/app/_actions/cryptoActions';
+import Image from 'next/image';
 
-export default function StockDetailsHeader({
-	stockDetails,
+export default function CryptoDetailsHeader({
+	cryptoDetails,
 }: {
-	stockDetails: StockDetails;
+	cryptoDetails: CryptoDetails;
 }) {
 	return (
 		<div className='flex flex-row justify-between gap-5 items-center pb-5'>
 			<div className='flex flex-row gap-2 md:gap-4 items-center'>
-				<p
-					className={`flex items-center justify-center w-12 h-12 md:w-14 md:h-14 text-2xl aspect-square bg-main text-white rounded-full`}
-				>
-					{stockDetails?.name.trimStart().charAt(0).toUpperCase()}
-				</p>
+				<Image
+					alt={`${cryptoDetails.name}-logo`}
+					src={`${cryptoDetails.icon}`}
+					width={56}
+					height={56}
+				/>
 				<p className='flex flex-col items-start justify-center '>
 					<span className='sm:text-lg md:text-xl font-semibold'>
-						{stockDetails.name}
+						{cryptoDetails.name}
+						<span className='p-1 rounded-lg inline-flex justify-center items-center text-sm text-gray-500 font-normal '>
+							#{cryptoDetails.market_cap_rank}
+						</span>
 					</span>
 					<span className='text-sm md:text-base text-gray-600'>
-						{stockDetails.symbol.toUpperCase()}
+						{cryptoDetails.symbol.toUpperCase()}
 					</span>
 				</p>
 			</div>

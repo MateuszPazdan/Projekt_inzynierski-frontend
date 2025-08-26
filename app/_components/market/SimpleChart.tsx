@@ -8,6 +8,7 @@ import { formatFullPrice } from '@/app/_utils/formatAmountOfMoney';
 import {
 	Area,
 	AreaChart,
+	CartesianGrid,
 	ResponsiveContainer,
 	Tooltip,
 	XAxis,
@@ -16,9 +17,15 @@ import {
 
 interface SimpleChartProps {
 	historicalData: StockHistoricalData[] | CryptoHistoricalData[];
+	verticalCartesianGrid?: boolean;
+	horizontalCartesianGrid?: boolean;
 }
 
-export default function SimpleChart({ historicalData }: SimpleChartProps) {
+export default function SimpleChart({
+	historicalData,
+	verticalCartesianGrid = false,
+	horizontalCartesianGrid = false,
+}: SimpleChartProps) {
 	const firstDate = new Date(historicalData[0].date);
 	const lastDate = new Date(historicalData[historicalData.length - 1].date);
 	const diffInDays =
@@ -50,6 +57,11 @@ export default function SimpleChart({ historicalData }: SimpleChartProps) {
 	return (
 		<ResponsiveContainer width='100%' className={'min-h-[300px]'}>
 			<AreaChart data={historicalData} margin={{ right: 0, left: 0 }}>
+				<CartesianGrid
+					vertical={verticalCartesianGrid}
+					horizontal={horizontalCartesianGrid}
+					strokeOpacity={0.5}
+				/>
 				<XAxis
 					dataKey='date'
 					ticks={ticks}
@@ -90,7 +102,7 @@ export default function SimpleChart({ historicalData }: SimpleChartProps) {
 					scale={'sequential'}
 					orientation={'right'}
 					tickFormatter={(value) => {
-						return formatFullPrice(value, 2);
+						return formatFullPrice(value);
 					}}
 					style={{ fontSize: 12 }}
 					width={'auto'}

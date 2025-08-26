@@ -5,6 +5,7 @@ import StockPriceSection from './StockPriceSection';
 import StockDetailsHeader from './StockDetailsHeader';
 import { useRetrieveStockPricePerformanceQuery } from '@/app/_redux/features/marketApiSlice';
 import NoData from '../../NoData';
+import PerformanceBox from '../PerformanceBox';
 
 interface StockDetailsProps {
 	stockDetails: StockDetails;
@@ -39,93 +40,30 @@ export default function StockDetailsCard({ stockDetails }: StockDetailsProps) {
 							</div>
 						) : stockPricePerformance ? (
 							<div className='grid grid-cols-3 gap-3 justify-between text-center'>
-								<div className='flex flex-col gap-1 bg-grayOne rounded-md p-3 px-1  border border-grayThird'>
-									<p className='text-sm text-gray-500'>1h</p>
-									<p
-										className={`font-medium ${
-											stockPricePerformance?.price_change_percentage_1h < 0
-												? ' text-red-500 '
-												: stockPricePerformance.price_change_percentage_1h === 0
-												? ''
-												: ' text-green-500 '
-										}`}
-									>
-										{stockPricePerformance.price_change_percentage_1h ?? '-'}%
-									</p>
-								</div>
-								<div className='flex flex-col gap-1 bg-grayOne rounded-md p-3 px-1  border border-grayThird'>
-									<p className='text-sm text-gray-500'>24h</p>
-									<p
-										className={`font-medium ${
-											stockPricePerformance.price_change_percentage_24h < 0
-												? ' text-red-500 '
-												: stockPricePerformance.price_change_percentage_24h ===
-												  0
-												? ''
-												: ' text-green-500 '
-										}`}
-									>
-										{stockPricePerformance.price_change_percentage_24h ?? '-'}%
-									</p>
-								</div>
-								<div className='flex flex-col gap-1 bg-grayOne rounded-md p-3 px-1  border border-grayThird'>
-									<p className='text-sm text-gray-500'>7d</p>
-									<p
-										className={`font-medium ${
-											stockPricePerformance.price_change_percentage_7d < 0
-												? ' text-red-500 '
-												: stockPricePerformance.price_change_percentage_7d === 0
-												? ''
-												: ' text-green-500 '
-										}`}
-									>
-										{stockPricePerformance.price_change_percentage_7d ?? '-'}%
-									</p>
-								</div>
-								<div className='flex flex-col gap-1 bg-grayOne rounded-md p-3 px-1  border border-grayThird'>
-									<p className='text-sm text-gray-500'>1m</p>
-									<p
-										className={`font-medium ${
-											stockPricePerformance.price_change_percentage_30d < 0
-												? ' text-red-500 '
-												: stockPricePerformance.price_change_percentage_30d ===
-												  0
-												? ''
-												: ' text-green-500 '
-										}`}
-									>
-										{stockPricePerformance.price_change_percentage_30d ?? '-'}%
-									</p>
-								</div>
-								<div className='flex flex-col gap-1 bg-grayOne rounded-md p-3 px-1  border border-grayThird'>
-									<p className='text-sm text-gray-500'>1y</p>
-									<p
-										className={`font-medium ${
-											stockPricePerformance.price_change_percentage_1y < 0
-												? ' text-red-500 '
-												: stockPricePerformance.price_change_percentage_1y === 0
-												? ''
-												: ' text-green-500 '
-										}`}
-									>
-										{stockPricePerformance.price_change_percentage_1y ?? '-'}%
-									</p>
-								</div>
-								<div className='flex flex-col gap-1 bg-grayOne rounded-md p-3 px-1  border border-grayThird'>
-									<p className='text-sm text-gray-500'>Wszystko</p>
-									<p
-										className={`font-medium ${
-											stockPricePerformance.price_change_percentage_max < 0
-												? ' text-red-500 '
-												: stockPricePerformance.price_change_percentage_max ===
-												  0
-												? ''
-												: ' text-green-500 '
-										}`}
-									>
-										{stockPricePerformance.price_change_percentage_max ?? '-'}%
-									</p>
-								</div>
+								<PerformanceBox
+									label='1h'
+									value={stockPricePerformance?.price_change_percentage_1h}
+								/>
+								<PerformanceBox
+									label='24h'
+									value={stockPricePerformance?.price_change_percentage_24h}
+								/>
+								<PerformanceBox
+									label='7d'
+									value={stockPricePerformance?.price_change_percentage_7d}
+								/>
+								<PerformanceBox
+									label='1m'
+									value={stockPricePerformance?.price_change_percentage_30d}
+								/>
+								<PerformanceBox
+									label='1y'
+									value={stockPricePerformance?.price_change_percentage_1y}
+								/>
+								<PerformanceBox
+									label='Wszystko'
+									value={stockPricePerformance?.price_change_percentage_max}
+								/>
 							</div>
 						) : (
 							<NoData />

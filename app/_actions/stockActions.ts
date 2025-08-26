@@ -32,7 +32,7 @@ export interface StockDetails {
 export async function getStockDetailsBySymbol(stockSymbol: string) {
 	try {
 		const response = await fetch(
-			`${API_URL}/portfolio/assets/stocks/${stockSymbol}/general`,
+			`${API_URL}/assets/stocks/${stockSymbol}/general`,
 			{
 				method: 'GET',
 				headers: {
@@ -52,7 +52,7 @@ export async function getStockDetailsBySymbol(stockSymbol: string) {
 
 export async function getAllStockSymbols() {
 	try {
-		const response = await fetch(`${API_URL}/portfolio/assets/stocks/symbols`, {
+		const response = await fetch(`${API_URL}/assets/stocks/symbols`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',

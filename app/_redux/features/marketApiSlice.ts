@@ -71,6 +71,17 @@ export interface CryptoHistoricalData {
 	period: string;
 }
 
+export interface CryptoPricePerformance {
+	price: number;
+	price_change_percentage_1h: number;
+	price_change_percentage_24h: number;
+	price_change_percentage_7d: number;
+	price_change_percentage_30d: number;
+	price_change_percentage_1y: number;
+	price_change_percentage_max: number;
+	updated_at: string;
+}
+
 export interface StockBase {
 	symbol: string;
 	name: string;
@@ -128,7 +139,7 @@ const marketApiSlice = apiSlice.injectEndpoints({
 			{ search?: string; page?: number; size?: number }
 		>({
 			query: ({ search = '', page = 1, size = 50 }) => ({
-				url: `/portfolio/assets/stocks?search=${search}&page=${page}&size=${size}`,
+				url: `/assets/stocks?search=${search}&page=${page}&size=${size}`,
 				method: 'GET',
 			}),
 			keepUnusedDataFor: 600,
@@ -138,7 +149,7 @@ const marketApiSlice = apiSlice.injectEndpoints({
 			{ stock_symbol: string; period: string }
 		>({
 			query: ({ stock_symbol, period }) => ({
-				url: `/portfolio/assets/stocks/${stock_symbol}/historical?period=${period}`,
+				url: `/assets/stocks/${stock_symbol}/historical?period=${period}`,
 				method: 'GET',
 			}),
 			keepUnusedDataFor: 600,
@@ -148,7 +159,7 @@ const marketApiSlice = apiSlice.injectEndpoints({
 			{ stock_symbol: string }
 		>({
 			query: ({ stock_symbol }) => ({
-				url: `/portfolio/assets/stocks/${stock_symbol}/price-performance`,
+				url: `/assets/stocks/${stock_symbol}/price-performance`,
 			}),
 			keepUnusedDataFor: 600,
 		}),
@@ -157,7 +168,7 @@ const marketApiSlice = apiSlice.injectEndpoints({
 			{ search?: string; page?: number; size?: number }
 		>({
 			query: ({ search = '', page = 1, size = 50 }) => ({
-				url: `/portfolio/assets/cryptos?search=${search}&page=${page}&size=${size}`,
+				url: `/assets/cryptos?search=${search}&page=${page}&size=${size}`,
 				method: 'GET',
 			}),
 			keepUnusedDataFor: 600,
@@ -167,14 +178,23 @@ const marketApiSlice = apiSlice.injectEndpoints({
 			{ crypto_symbol: string; period: string }
 		>({
 			query: ({ crypto_symbol, period }) => ({
-				url: `/portfolio/assets/cryptos/${crypto_symbol}/historical?period=${period}`,
+				url: `/assets/cryptos/${crypto_symbol}/historical?period=${period}`,
 				method: 'GET',
+			}),
+			keepUnusedDataFor: 600,
+		}),
+		retrieveCryptoPricePerformance: builder.query<
+			CryptoPricePerformance,
+			{ crypto_symbol: string }
+		>({
+			query: ({ crypto_symbol }) => ({
+				url: `/assets/crypto/${crypto_symbol}/price-performance`,
 			}),
 			keepUnusedDataFor: 600,
 		}),
 		retrieveAssetsPerformance: builder.query<AssetsPerformance, void>({
 			query: () => ({
-				url: `/portfolio/assets/global-performance`,
+				url: `/assets/global-performance`,
 				method: 'GET',
 			}),
 			keepUnusedDataFor: 600,
@@ -187,6 +207,7 @@ export const {
 	useRetrieveStockHistoricalPriceQuery,
 	useRetrieveStockPricePerformanceQuery,
 	useRetrieveCryptosQuery,
+	useRetrieveCryptoPricePerformanceQuery,
 	useRetrieveCryptoHistoricalPriceQuery,
 	useRetrieveAssetsPerformanceQuery,
 } = marketApiSlice;

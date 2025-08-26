@@ -28,11 +28,11 @@ export async function generateMetadata({
 	}
 
 	return {
-		title: `${stock.name} (${stock.symbol}) | Asset Flow`,
-		description: `Sprawdź aktualne dane, cenę i szczegóły akcji ${stock.name} (${stock.symbol}).`,
+		title: `${stock.name} | Asset Flow`,
+		description: `Sprawdź aktualne dane, cenę i szczegóły akcji ${stock.name}.`,
 		openGraph: {
-			title: `${stock.name} (${stock.symbol}) | Asset Flow`,
-			description: `Aktualne dane i wykresy dla ${stock.name} (${stock.symbol}).`,
+			title: `${stock.name} | Asset Flow`,
+			description: `Aktualne dane i wykresy dla ${stock.name}.`,
 		},
 	};
 }
