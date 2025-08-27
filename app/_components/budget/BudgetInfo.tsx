@@ -1,7 +1,6 @@
 'use client';
 
 import { useRetrieveBudgetQuery } from '@/app/_redux/features/budgetApiSlice';
-import Spinner from '../Spinner';
 import Button from '../Button';
 import TransactionsList from './TransactionsList';
 import Modal from '../Modal';
@@ -16,40 +15,38 @@ interface BudgetInfoProps {
 }
 
 export default function BudgetInfo({ budgetId }: BudgetInfoProps) {
-	const { data: budget, isLoading } = useRetrieveBudgetQuery(budgetId);
+	const { data: budget, isLoading: isBudgetLoading } =
+		useRetrieveBudgetQuery(budgetId);
 
-	if (isLoading) {
-		return (
-			<div className='flex-1 py-10 flex justify-center items-center'>
-				<Spinner
-					size='medium'
-					color='text-main'
-					description='Ładowanie informacji o budżecie...'
-				/>
-			</div>
-		);
-	}
-
-	if (!budget) notFound();
+	if (!budget && !isBudgetLoading) notFound();
 
 	return (
 		<div className='flex flex-col gap-3'>
 			<div className='flex flex-col md:flex-row justify-between gap-5 items-center pb-5'>
 				<div className='flex md:flex-row flex-row-reverse justify-between gap-5 items-center w-full md:w-fit'>
-					<p
-						className={`flex items-center justify-center w-12 h-12 md:w-14 md:h-14 text-2xl aspect-square text-white rounded-full`}
-						style={{ backgroundColor: budget?.color }}
-					>
-						{budget?.title.trimStart().charAt(0).toUpperCase()}
-					</p>
-					<p className='text-2xl md:text-3xl'>{budget?.title}</p>
+					{!isBudgetLoading ? (
+						<>
+							<p
+								className='flex items-center justify-center w-12 h-12 md:w-14 md:h-14 text-2xl aspect-square text-white rounded-full'
+								style={{ backgroundColor: budget?.color }}
+							>
+								{budget?.title.trimStart().charAt(0).toUpperCase()}
+							</p>
+							<p className='text-2xl md:text-3xl'>{budget?.title}</p>
+						</>
+					) : (
+						<>
+							<div className='h-12 w-12 md:w-14 md:h-14 rounded-full shimmer' />
+							<div className='h-9 w-32 sm:w-44 rounded shimmer' />
+						</>
+					)}
 				</div>
 				<div className='flex flex-row gap-3 w-full md:w-fit'>
-					<ManageBudgetBtn budget={budget} />
+					<ManageBudgetBtn budget={budget} isLoading={isBudgetLoading} />
 
 					<Modal>
 						<Modal.Open opens='addTransaction'>
-							<Button size='small' stretch>
+							<Button size='small' stretch disabled={isBudgetLoading}>
 								<span className='text-3xl'>
 									<BsPlus />
 								</span>
@@ -65,21 +62,31 @@ export default function BudgetInfo({ budgetId }: BudgetInfoProps) {
 					</Modal>
 				</div>
 			</div>
-			<div className='grid grid-cols-1  md:grid-cols-[1fr_auto] gap-3'>
-				<div className='rounded-lg border border-grayThird shadow-md bg-white p-3 px-5'>
-					<p className='text-xl font-medium mb-2'>Opis</p>
-					<p>{budget?.description || 'Brak opisu'}</p>
+
+			<div className='grid grid-cols-1 md:grid-cols-[1fr_auto] gap-3'>
+				<div className='rounded-lg border border-grayThird shadow-md bg-white p-3 px-4 space-y-1'>
+					<p className='text-gray-600 font-medium'>Opis</p>
+					{!isBudgetLoading ? (
+						<p className='font-medium text-lg'>
+							{budget?.description || 'Brak opisu'}
+						</p>
+					) : (
+						<div className='h-[28px] w-2/3 sm:w-1/3 rounded shimmer' />
+					)}
 				</div>
-				<div className='min-w-[250px] md:w-fit rounded-lg border shadow-md border-grayThird bg-white p-3 px-5'>
-					<p className='text-xl font-medium mb-2 '>Balans</p>
-					<p className='text-xl md:text-2xl truncate overflow-hidden whitespace-nowrap'>
-						{formatShortPrice(budget?.total_amount || 0)} PLN
-					</p>
+				<div className='min-w-[250px] md:w-fit rounded-lg border border-grayThird shadow-md bg-white p-3 px-4 space-y-1'>
+					<p className='text-gray-600 font-medium'>Balans</p>
+					{!isBudgetLoading ? (
+						<p className='font-medium text-lg'>
+							{formatShortPrice(budget?.total_amount || 0)} PLN
+						</p>
+					) : (
+						<div className='h-[28px] w-2/3 sm:w-1/2 rounded shimmer' />
+					)}
 				</div>
 			</div>
-			<div className='rounded-lg border border-grayThird shadow-md bg-white p-3 grow '>
-				<TransactionsList budgetId={budgetId} />
-			</div>
+
+			<TransactionsList budgetId={budgetId} />
 		</div>
 	);
 }

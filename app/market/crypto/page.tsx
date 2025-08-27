@@ -1,5 +1,5 @@
 import CryptoList from '@/app/_components/market/crypto/CryptoList';
-import CryptoOverview from '@/app/_components/market/CryptoOverview';
+import CryptoOverview from '@/app/_components/market/crypto/CryptoOverview';
 import SectionHeader from '@/app/_components/SectionHeader';
 import { Metadata } from 'next';
 

@@ -43,7 +43,7 @@ function Button({
 					: size === 'icon'
 					? ' w-12 aspect-square '
 					: ''
-			} rounded-lg text-nowrap flex flex-row items-center justify-center ${
+			} rounded-lg text-nowrap flex flex-row items-center justify-center disabled:cursor-not-allowed ${
 				stretch && ' w-full '
 			} ${additionalClasses}`}
 			disabled={disabled || isLoading}

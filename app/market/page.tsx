@@ -4,7 +4,7 @@ import { FaAngleRight } from 'react-icons/fa6';
 import StockOverview from '../_components/market/StockOverview';
 import StockOverviewChart from '../_components/market/stock/StockOverviewChart';
 import CryptoOverviewChart from '../_components/market/crypto/CryptoOverviewChart';
-import CryptoOverview from '../_components/market/CryptoOverview';
+import CryptoOverview from '../_components/market/crypto/CryptoOverview';
 
 export default function page() {
 	return (

@@ -2,10 +2,10 @@
 
 import { useRetrieveBudgetsQuery } from '@/app/_redux/features/budgetApiSlice';
 import BudgetElement from '../../_components/budget/BudgetElement';
-import Spinner from '../Spinner';
 import EmptyList from '../EmptyList';
 import SearchParamsPagination from '../SearchParamsPagination';
 import { useSearchParams } from 'next/navigation';
+import BudgetElementSkeleton from './BudgetElementSkeleton';
 
 export default function BudgetList() {
 	const searchParams = useSearchParams();
@@ -20,21 +20,13 @@ export default function BudgetList() {
 	});
 	const budgets = data?.items;
 
-	if (isBudgetsLoading || isBudgetFetching) {
-		return (
-			<div className='py-10'>
-				<Spinner
-					size='large'
-					description='Ładowanie budżetów...'
-					color='text-main'
-				/>
-			</div>
-		);
-	}
-
 	return (
 		<div className='grid grid-cols-1 gap-2 sm:gap-5 items-stretch'>
-			{budgets && budgets?.length > 0 ? (
+			{isBudgetsLoading || isBudgetFetching ? (
+				Array.from({ length: 5 }).map((_, i) => (
+					<BudgetElementSkeleton key={i} />
+				))
+			) : budgets && budgets?.length > 0 ? (
 				<>
 					{budgets?.map((budget) => (
 						<BudgetElement key={budget.id} budget={budget} />
@@ -42,7 +34,10 @@ export default function BudgetList() {
 					<SearchParamsPagination currPage={currPage} pages={data?.pages} />
 				</>
 			) : (
-				<EmptyList description='Nie odnaleziono żadnych budżetów.' />
+				<EmptyList
+					description='Dodaj nowe budżety, aby je tutaj zobaczyć.'
+					title='Nie odnaleziono żadnych budżetów.'
+				/>
 			)}
 		</div>
 	);

@@ -2,8 +2,8 @@
 
 import { useRetrieveAssetsPerformanceQuery } from '@/app/_redux/features/marketApiSlice';
 import { formatFullPrice } from '@/app/_utils/formatAmountOfMoney';
-import AssetListCard from './AssetListCard';
-import NoData from '../NoData';
+import AssetListCard from '../AssetListCard';
+import NoData from '../../NoData';
 
 export default function CryptoOverview() {
 	const { data: assetsPerformance, isLoading: isAssetsPerformanceLoading } =
