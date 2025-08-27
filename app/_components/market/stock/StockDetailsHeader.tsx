@@ -20,6 +20,9 @@ export default function StockDetailsHeader({
 				<p className='flex flex-col items-start justify-center '>
 					<span className='sm:text-lg md:text-xl font-semibold'>
 						{stockDetails.name}
+						<span className='p-1 rounded-lg inline-flex justify-center items-center text-sm text-gray-500 font-normal '>
+							#{stockDetails.market_cap_rank}
+						</span>
 					</span>
 					<span className='text-sm md:text-base text-gray-600'>
 						{stockDetails.symbol.toUpperCase()}

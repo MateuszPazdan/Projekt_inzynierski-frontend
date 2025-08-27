@@ -9,6 +9,7 @@ export interface StockDetails {
 	currency: string;
 	volume_24h: number;
 	market_cap: number;
+	market_cap_rank: number;
 	market_state: string;
 	description: string;
 	debt_to_equity: number;
