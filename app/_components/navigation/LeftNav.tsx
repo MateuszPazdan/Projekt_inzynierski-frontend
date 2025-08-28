@@ -23,9 +23,7 @@ export default function LeftNav() {
 		<nav
 			onMouseEnter={() => setIsNavExtented(true)}
 			onMouseLeave={() => setIsNavExtented(false)}
-			className={`hidden overflow-hidden lg:flex flex-col items-center fixed left-0 top-0 h-screen transition-all duration-300  ${
-				isNavExtended ? 'w-64' : 'w-16 '
-			} bg-white border-r border-graThird overflow-y-auto z-50`}
+			className={`hidden overflow-hidden lg:flex flex-col items-center fixed left-0 top-0 h-screen transition-all duration-300 w-16 hover:w-64  bg-white border-r border-graThird overflow-y-auto z-50 focus:w-64`}
 		>
 			<div className='h-16 flex items-center self-start pl-2 pr-3'>
 				<Logo isTextHidden={false} />

@@ -31,7 +31,7 @@ export default function StockPriceSection({
 			period,
 		},
 		{
-			pollingInterval: 900000,
+			pollingInterval: 600000,
 		}
 	);
 

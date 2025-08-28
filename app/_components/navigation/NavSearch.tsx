@@ -8,8 +8,8 @@ export default function NavSearch() {
 			</span>
 			<input
 				type='text'
-				className=' bg-grayOne rounded-lg p-2 pl-10 w-full'
-				placeholder='Szukaj...'
+				className=' border-grayThird bg-grayOne border rounded-lg focus:outline-none focus focus:border-main p-2 pl-10 w-full transition-colors duration-300'
+				placeholder='Szukaj'
 			/>
 		</div>
 	);

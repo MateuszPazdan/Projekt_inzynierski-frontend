@@ -25,7 +25,7 @@ export default function CryptoList() {
 			page: currPage,
 		},
 		{
-			pollingInterval: 60000,
+			pollingInterval: 600000,
 		}
 	);
 	const cryptoList = sortCryptos(sort, cryptos?.items);

@@ -28,7 +28,7 @@ export default function StockOverviewChart() {
 			period,
 		},
 		{
-			pollingInterval: 900000,
+			pollingInterval: 600000,
 		}
 	);
 

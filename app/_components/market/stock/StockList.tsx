@@ -25,7 +25,7 @@ export default function StockList() {
 			page: currPage,
 		},
 		{
-			pollingInterval: 60000,
+			pollingInterval: 600000,
 		}
 	);
 	const stockList = sortStocks(sort, stocks?.items);
