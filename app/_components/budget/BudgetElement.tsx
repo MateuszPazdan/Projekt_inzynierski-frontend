@@ -20,7 +20,7 @@ export default function BudgetElement({ budget }: BudgetElementProps) {
 					{budget?.title.trimStart().charAt(0).toUpperCase()}
 				</p>
 				<div>
-					<p className='text-xl md:text-2xl font-medium'>{budget?.title}</p>
+					<p className='text-xl md:text-2xl'>{budget?.title}</p>
 					<p className='text-blackOne/70 line-clamp-2 sm600:line-clamp-1 text-sm mb-1'>
 						{budget?.description}
 					</p>
