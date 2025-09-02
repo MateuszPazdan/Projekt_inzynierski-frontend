@@ -4,7 +4,7 @@ import UserSettings from '../_components/settings/UserSettings';
 
 export default function page() {
 	return (
-		<div className='px-2 sm:px-5 lg:px-12 py-10 max-w-[1800px] mx-auto md:space-y-5'>
+		<div className='px-2 sm:px-5 lg:px-12 py-10 max-w-[1800px] mx-auto min-h-full w-full flex flex-col md:space-y-5'>
 			<div className='pb-5 mb-5 '>
 				<p className='text-3xl font-medium'>Konto</p>
 				<span className='text-gray-700'>Zarządzaj swoim profilem.</span>
