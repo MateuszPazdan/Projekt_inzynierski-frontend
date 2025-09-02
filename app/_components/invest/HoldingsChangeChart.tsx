@@ -13,6 +13,7 @@ import {
 	XAxis,
 	YAxis,
 } from 'recharts';
+import InfoCard from '../InfoCard';
 
 const data = [
 	{ time: '2024-06-29', price: 1605.23 },
@@ -26,8 +27,7 @@ const data = [
 
 export default function HoldingsChangeChart() {
 	return (
-		<div className='flex flex-col rounded-lg border border-grayThird shadow-md  bg-white p-3 px-5 overflow-hidden'>
-			<p className='text-lg xl:text-xl font-medium mb-2'>Całkowita zmiana</p>
+		<InfoCard title='Całkowita zmiana'>
 			<ResponsiveContainer width='100%' height={400}>
 				<AreaChart
 					data={data}
@@ -118,6 +118,6 @@ export default function HoldingsChangeChart() {
 					</Brush>
 				</AreaChart>
 			</ResponsiveContainer>
-		</div>
+		</InfoCard>
 	);
 }

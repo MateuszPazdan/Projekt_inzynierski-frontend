@@ -1,5 +1,7 @@
 import { formatShortPrice } from '@/app/_utils/formatAmountOfMoney';
 import Image from 'next/image';
+import InfoCard from '../InfoCard';
+import PercentageChange from '../market/PercentageChange';
 
 interface TopGainerProps {
 	topGainer: {
@@ -13,25 +15,25 @@ interface TopGainerProps {
 export default function TopGainer({ topGainer }: TopGainerProps) {
 	const { amount, assetName, icon } = topGainer;
 	return (
-		<div className='rounded-lg border border-grayThird shadow-md bg-white p-3 px-5'>
-			<p className='text-lg xl:text-xl font-medium mb-2'>
-				Najwięcej zystukjąca inwestycja
-			</p>
-			<div className='flex flex-row items-center gap-1'>
-				<Image src={icon} alt={assetName} width={24} height={24} />
-				<p className='flex flex-row items-center gap-1'>
-					{assetName}
-					<span
-						className={` ${amount > 0 && 'text-green-500'} ${
-							amount < 0 && 'text-red-500'
-						}`}
-					>
-						{amount > 0 && '+'}
-						{/* {amount < 0 && '-'} */}
-						{formatShortPrice(amount)} PLN
-					</span>
-				</p>
+		<InfoCard title='Najwięcej zystukjąca inwestycja'>
+			<div className='grid grid-cols-[1fr_auto] gap-1 text-sm pt-1'>
+				<div className='flex flex-row items-center gap-2'>
+					{'icon' in topGainer && icon ? (
+						<Image src={`${icon}`} alt={assetName} width={28} height={28} />
+					) : (
+						<p
+							className={`flex items-center justify-center w-6 h-6 text-xs aspect-square bg-main text-white rounded-full`}
+						>
+							{assetName.trimStart().charAt(0).toUpperCase()}
+						</p>
+					)}
+					<p className='font-medium text-xl truncate'>{assetName}</p>
+				</div>
+
+				<div className='flex sm:items-center flex-col-reverse sm:flex-row gap-2 justify-end flex-wrap-reverse'>
+					<p className='font-medium text-xl'>+{formatShortPrice(amount)}</p>
+				</div>
 			</div>
-		</div>
+		</InfoCard>
 	);
 }

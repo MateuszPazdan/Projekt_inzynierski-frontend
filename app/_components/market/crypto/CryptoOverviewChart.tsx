@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import SimpleChart from '../SimpleChart';
 import PeriodSelect from '../../PeriodSelect';
 import Image from 'next/image';
-import PriceChange from '../PriceChange';
+import PercentageChange from '../PercentageChange';
 import { formatFullPrice } from '@/app/_utils/formatAmountOfMoney';
 import NoData from '../../NoData';
 
@@ -67,7 +67,9 @@ export default function CryptoOverviewChart() {
 									</span>
 									<span className='flex flex-row gap-1'>
 										<span className=''>{formatFullPrice(item.price, 2)}</span>
-										<PriceChange change={item.price_change_percentage_24h} />
+										<PercentageChange
+											change={item.price_change_percentage_24h}
+										/>
 									</span>
 								</p>
 							</button>

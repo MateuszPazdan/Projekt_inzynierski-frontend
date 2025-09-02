@@ -1,7 +1,7 @@
 import { CryptoBase, StockBase } from '@/app/_redux/features/marketApiSlice';
 import { formatFullPrice } from '@/app/_utils/formatAmountOfMoney';
 import Image from 'next/image';
-import PriceChange from './PriceChange';
+import PercentageChange from './PercentageChange';
 import Link from 'next/link';
 import NoData from '../NoData';
 
@@ -75,7 +75,7 @@ export default function AssetListCard({
 					</div>
 
 					<div className='flex sm:items-center flex-col-reverse sm:flex-row gap-2 justify-end flex-wrap-reverse'>
-						<PriceChange change={asset.price_change_percentage_24h} />
+						<PercentageChange change={asset.price_change_percentage_24h} />
 						<p className='font-medium'>{formatFullPrice(asset.price, 2)}</p>
 					</div>
 				</Link>

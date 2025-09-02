@@ -9,6 +9,7 @@ import {
 	ResponsiveContainer,
 	Tooltip,
 } from 'recharts';
+import InfoCard from '../InfoCard';
 
 const data = [
 	{ name: 'BTC', value: 20, fill: '#f9844a' },
@@ -31,8 +32,7 @@ export default function TotalHoldingsChart() {
 		return () => window.removeEventListener('resize', handleResize);
 	}, []);
 	return (
-		<div className='flex flex-col rounded-lg border border-grayThird shadow-md bg-white p-3 px-5'>
-			<p className='text-lg xl:text-xl font-medium mb-2'>Całkowite udziały</p>
+		<InfoCard title='Całkowite udziały'>
 			<ResponsiveContainer
 				width='100%'
 				height={windowWidth && windowWidth < 768 ? 500 : 400}
@@ -74,7 +74,7 @@ export default function TotalHoldingsChart() {
 					/>
 				</PieChart>
 			</ResponsiveContainer>
-		</div>
+		</InfoCard>
 	);
 }
 

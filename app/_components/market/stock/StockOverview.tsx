@@ -1,12 +1,12 @@
 'use client';
 
-import { useRetrieveAssetsPerformanceQuery } from '@/app/_redux/features/marketApiSlice';
 import { formatFullPrice } from '@/app/_utils/formatAmountOfMoney';
 import AssetListCard from '../AssetListCard';
+import { useRetrieveAssetsPerformanceQuery } from '@/app/_redux/features/marketApiSlice';
 import NoData from '../../NoData';
 import InfoCard from '../../InfoCard';
 
-export default function CryptoOverview() {
+export default function StockOverview() {
 	const { data: assetsPerformance, isLoading: isAssetsPerformanceLoading } =
 		useRetrieveAssetsPerformanceQuery();
 
@@ -14,41 +14,41 @@ export default function CryptoOverview() {
 		<div className='grid grid-cols-1 xl:grid-cols-3 gap-3'>
 			<div className={`grid grid-row-2 gap-3`}>
 				<InfoCard
-					title='Kapitalizacja rynku'
 					isLoading={isAssetsPerformanceLoading}
+					title='Kapitalizacja rynku'
 				>
 					<p className='font-medium text-xl'>
 						{formatFullPrice(
-							assetsPerformance?.global_crypto_data.total_market_cap
+							assetsPerformance?.global_stock_data.total_market_cap
 						)}
 						{!assetsPerformance && <NoData />}
 					</p>
 				</InfoCard>
 				<InfoCard
-					title='Wolumen 24 godzinny'
 					isLoading={isAssetsPerformanceLoading}
+					title='Wolumen 24 godzinny'
 				>
 					<p className='font-medium text-xl'>
 						{formatFullPrice(
-							assetsPerformance?.global_crypto_data.total_volume_24h
+							assetsPerformance?.global_stock_data.total_volume_24h
 						)}
 						{!assetsPerformance && <NoData />}
 					</p>
 				</InfoCard>
 			</div>
 			<AssetListCard
-				assetList={assetsPerformance?.global_crypto_data.top_gainers_24h}
+				assetList={assetsPerformance?.global_stock_data.top_gainers_24h}
 				title='Trendujące'
 				limit={3}
 				isLoading={isAssetsPerformanceLoading}
-				assetType='crypto'
+				assetType='stock'
 			/>
 			<AssetListCard
-				assetList={assetsPerformance?.global_crypto_data.top_losers_24h}
+				assetList={assetsPerformance?.global_stock_data.top_losers_24h}
 				title='Największe spadki'
 				limit={3}
 				isLoading={isAssetsPerformanceLoading}
-				assetType='crypto'
+				assetType='stock'
 			/>
 		</div>
 	);

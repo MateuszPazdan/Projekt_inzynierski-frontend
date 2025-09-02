@@ -4,6 +4,7 @@ import PortfolioChange from '@/app/_components/invest/PortfolioChange';
 import TopGainter from '@/app/_components/invest/TopGainer';
 import TotalHoldingsChart from '@/app/_components/invest/TotalHoldingsChart';
 import TotalPortfolioChange from '@/app/_components/invest/TotalPortfolioChange';
+import SectionHeader from '@/app/_components/SectionHeader';
 
 export default function page() {
 	const totalInvestmentAmount = 123456.78;
@@ -19,14 +20,12 @@ export default function page() {
 		amount: 12345.67,
 		percentage: 3.21,
 		assetName: 'BTC',
-		icon: '/logo.png',
+		icon: '/bitcoin-logo-svgrepo-com.svg',
 	};
 	return (
-		<div className='px-2 sm:px-5 lg:px-12 py-10 max-w-[1800px] mx-auto'>
-			<div className='flex flex-col justify-between items-start sm500:flex-row sm500:items-center gap-4 pb-5 md:pb-10'>
-				<p className='text-blackOne text-center text-3xl md:text-3xl lg:text-4xl'>
-					Przegląd inwestycji
-				</p>
+		<div className='px-2 sm:px-5 lg:px-12 py-10 max-w-[1800px] mx-auto min-h-full w-full flex flex-col gap-10'>
+			<div>
+				<SectionHeader title='Przegląd inwestycji' description='dsadsad' />
 			</div>
 			<div className='flex flex-col gap-3'>
 				<div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3'>

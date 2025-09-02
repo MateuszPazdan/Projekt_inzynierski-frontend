@@ -1,5 +1,5 @@
 import StockList from '@/app/_components/market/stock/StockList';
-import StockOverview from '@/app/_components/market/StockOverview';
+import StockOverview from '@/app/_components/market/stock/StockOverview';
 import SectionHeader from '@/app/_components/SectionHeader';
 import { Metadata } from 'next';
 
