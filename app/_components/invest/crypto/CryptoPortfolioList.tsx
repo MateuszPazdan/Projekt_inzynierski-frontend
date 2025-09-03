@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import SearchParamsPagination from '../../SearchParamsPagination';
 import EmptyList from '../../EmptyList';
 import PortfolioListElement from '../PortfolioListElement';
+import PortfolioListElementSkeleton from '../PortfolioListElementSkeleton';
 
 export default function CryptoPortfolioList() {
 	const searchParams = useSearchParams();
@@ -23,8 +24,7 @@ export default function CryptoPortfolioList() {
 		<div className='grid grid-cols-1 gap-2 sm:gap-5 items-stretch'>
 			{isCryptoPortfoliosLoading || isCryptoPortfoliosFetching ? (
 				Array.from({ length: 5 }).map((_, i) => (
-					// <BudgetElementSkeleton key={i} />
-					<div key={i}>loading</div>
+					<PortfolioListElementSkeleton key={i} />
 				))
 			) : cryptoPortfolios && cryptoPortfolios?.length > 0 ? (
 				<>
