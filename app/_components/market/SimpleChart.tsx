@@ -147,7 +147,7 @@ export default function SimpleChart({
 				<Area
 					type='linear'
 					dataKey='close_price'
-					name='Wartość portfela'
+					name='Wartość'
 					stroke='#3c37ff'
 					fillOpacity={1}
 					fill='url(#colorUv)'

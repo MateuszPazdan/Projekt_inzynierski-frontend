@@ -1,0 +1,31 @@
+'use client';
+
+import { BsPlus } from 'react-icons/bs';
+import Button from '../../Button';
+import Modal from '../../Modal';
+import SectionHeader from '../../SectionHeader';
+import ManageCryptoPortfolioModal from './ManageCryptoPortfolioModal';
+
+export default function CryptoPortfolioHeader() {
+	return (
+		<div className='flex flex-col justify-between items-start sm500:flex-row sm500:items-center gap-4'>
+			<SectionHeader
+				title='Inwestycje w kryptowaluty'
+				description='Śledź swoje inwestycje w kryptowaluty.'
+			/>
+			<Modal>
+				<Modal.Open opens='createCryptoPortfolio'>
+					<Button size={`small`}>
+						<span className='text-3xl'>
+							<BsPlus />
+						</span>
+						<span className='pr-3'>Dodaj portfolio</span>
+					</Button>
+				</Modal.Open>
+				<Modal.Window name='createCryptoPortfolio'>
+					<ManageCryptoPortfolioModal onCloseModal={() => undefined} />
+				</Modal.Window>
+			</Modal>
+		</div>
+	);
+}

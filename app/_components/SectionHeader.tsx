@@ -6,11 +6,11 @@ export default function SectionHeader({
 	description?: string;
 }) {
 	return (
-		<>
+		<div>
 			<p className='text-blackOne text-3xl md:text-3xl lg:text-4xl'>{title}</p>
 			<p className='font-light text-sm sm500:text-base md:text-lg pt-2'>
 				{description}
 			</p>
-		</>
+		</div>
 	);
 }

@@ -1,13 +1,10 @@
 'use client';
 
-import { formatShortPrice } from '@/app/_utils/formatAmountOfMoney';
+import { formatFullPrice } from '@/app/_utils/formatAmountOfMoney';
 import {
 	Area,
 	AreaChart,
-	Brush,
 	CartesianGrid,
-	Line,
-	LineChart,
 	ResponsiveContainer,
 	Tooltip,
 	XAxis,
@@ -29,10 +26,7 @@ export default function HoldingsChangeChart() {
 	return (
 		<InfoCard title='Całkowita zmiana'>
 			<ResponsiveContainer width='100%' height={400}>
-				<AreaChart
-					data={data}
-					margin={{ top: 20, right: 50, left: 50, bottom: 20 }}
-				>
+				<AreaChart data={data}>
 					<CartesianGrid vertical={false} />
 					<XAxis
 						dataKey='time'
@@ -52,11 +46,14 @@ export default function HoldingsChangeChart() {
 						tickLine={false}
 						domain={['dataMin', 'auto']}
 						tickMargin={10}
-						scale={'auto'}
+						scale={'sequential'}
 						orientation={'right'}
 						tickFormatter={(value) => {
-							return formatShortPrice(value);
+							return formatFullPrice(value);
 						}}
+						style={{ fontSize: 12 }}
+						width={'auto'}
+						type='number'
 					/>
 
 					<Tooltip
@@ -105,17 +102,6 @@ export default function HoldingsChangeChart() {
 							<stop offset='90%' stopColor='#3c37ff' stopOpacity={0.1} />
 						</linearGradient>
 					</defs>
-					<Brush height={30} strokeWidth={1} stroke='#3e37ff'>
-						<LineChart>
-							<Line
-								type='linear'
-								dataKey='price'
-								stroke='#3c37ff'
-								strokeWidth={1}
-								dot={false}
-							/>
-						</LineChart>
-					</Brush>
 				</AreaChart>
 			</ResponsiveContainer>
 		</InfoCard>

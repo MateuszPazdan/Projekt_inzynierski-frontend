@@ -4,13 +4,15 @@ import { BsPlus } from 'react-icons/bs';
 import Button from '../Button';
 import Modal from '../Modal';
 import ManageBudgetModal from './ManageBudgetModal';
+import SectionHeader from '../SectionHeader';
 
 export default function BudgetsHeader() {
 	return (
 		<div className='flex flex-col justify-between items-start sm500:flex-row sm500:items-center gap-4 pb-10'>
-			<p className='text-blackOne text-center text-3xl md:text-3xl lg:text-4xl'>
-				Przegląd budżetów
-			</p>
+			<SectionHeader
+				title='Przegląd budżetów'
+				description='Śledź swoje przychody i wydatki oraz zarządzaj swoim budżetem.'
+			/>
 			<Modal>
 				<Modal.Open opens='createBudget'>
 					<Button size={`small`}>
