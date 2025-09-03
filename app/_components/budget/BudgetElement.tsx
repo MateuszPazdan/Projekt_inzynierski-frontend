@@ -1,5 +1,8 @@
 import { Budget } from '@/app/_redux/features/budgetApiSlice';
-import { formatShortPrice } from '@/app/_utils/formatAmountOfMoney';
+import {
+	formatFullPrice,
+	formatShortPrice,
+} from '@/app/_utils/formatAmountOfMoney';
 import Link from 'next/link';
 
 interface BudgetElementProps {
@@ -9,29 +12,33 @@ interface BudgetElementProps {
 export default function BudgetElement({ budget }: BudgetElementProps) {
 	return (
 		<Link
-			className='min-h-[110px] flex flex-col md:flex-row justify-center sm:justify-between gap-2 items-center px-3 py-2 sm:px-5 sm:py-6 lg:px-8  lg:py-8 border border-grayThird shadow-md bg-white hover:bg-graySecond rounded-lg transition-colors duration-300'
+			className='min-w-[90px] sm:min-w-fit flex flex-row justify-between gap-3 px-3 py-2 sm:px-5 sm:py-6 lg:px-8 lg:py-8 border border-grayThird shadow-md bg-white hover:bg-graySecond rounded-lg transition-colors duration-300'
 			href={`budget/${budget?.id}`}
 		>
-			<div className='flex flex-row gap-5 items-center w-full'>
-				<p
+			<div className='flex flex-row gap-2 md:gap-3 items-center'>
+				<span
 					className={`flex items-center justify-center w-12 h-12 md:w-14 md:h-14 text-xl aspect-square text-white rounded-full`}
 					style={{ backgroundColor: budget?.color }}
 				>
 					{budget?.title.trimStart().charAt(0).toUpperCase()}
-				</p>
-				<div>
-					<p className='text-xl md:text-2xl'>{budget?.title}</p>
-					<p className='text-blackOne/70 line-clamp-2 sm600:line-clamp-1 text-sm mb-1'>
+				</span>
+				<p className='flex flex-col'>
+					<span className='text-lg md:text-2xl line-clamp-1'>
+						{budget?.title}
+					</span>
+					<span className='text-blackOne/70 line-clamp-2 sm600:line-clamp-1 text-sm mb-1'>
 						{budget?.description}
-					</p>
-					<p className='text-md text-nowrap md:hidden'>
-						{formatShortPrice(budget?.total_amount)} zł
-					</p>
-				</div>
+					</span>
+				</p>
 			</div>
-			<p className='hidden md:inline text-2xl text-nowrap'>
-				{formatShortPrice(budget?.total_amount)} zł
-			</p>
+			<div className='flex flex-col justify-center items-center p-2 text-sm md:text-base'>
+				<span className='hidden sm:inline text-nowrap md:text-2xl'>
+					{formatFullPrice(budget?.total_amount)}
+				</span>
+				<span className='inline sm:hidden text-nowrap'>
+					{formatShortPrice(budget?.total_amount)}
+				</span>
+			</div>
 		</Link>
 	);
 }

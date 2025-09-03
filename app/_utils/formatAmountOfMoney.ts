@@ -12,7 +12,7 @@ export function formatFullPrice(
 	amount: number | undefined,
 	maximumFractionDigits?: number
 ): string {
-	if (!amount) return '';
+	if (!amount || amount === 0) return '0 PLN';
 	const formatter = new Intl.NumberFormat('pl-PL', {
 		maximumFractionDigits: maximumFractionDigits || 0,
 		minimumSignificantDigits: 4,
