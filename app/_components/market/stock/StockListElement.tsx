@@ -48,9 +48,7 @@ export default function StockListElement({ stock }: StockListElementProps) {
 					<span className='text-sm text-gray-700'>{stock.symbol}</span>
 				</p>
 			</td>
-			<td className={`${thStyles} text-nowrap`}>
-				{stock.price.toFixed(2)} PLN
-			</td>
+			<td className={`${thStyles} text-nowrap`}>{stock.price.toFixed(2)}</td>
 			<td className={`${thStyles}`}>
 				<span
 					className={`flex items-center justify-end ${
@@ -110,10 +108,9 @@ export default function StockListElement({ stock }: StockListElementProps) {
 			</td>
 			<td className={`${thStyles} text-nowrap`}>
 				{formatShortPrice(Number(stock.volume_24h * stock.price))}{' '}
-				{stock.currency}
 			</td>
 			<td className={`${thStyles} pr-2 md:pr-3 text-nowrap`}>
-				{formatShortPrice(stock.market_cap)} {stock.currency}
+				{formatShortPrice(stock.market_cap)}
 			</td>
 		</tr>
 	);

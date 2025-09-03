@@ -76,7 +76,7 @@ export default function AssetListCard({
 
 					<div className='flex sm:items-center flex-col-reverse sm:flex-row gap-2 justify-end flex-wrap-reverse'>
 						<PercentageChange change={asset.price_change_percentage_24h} />
-						<p className='font-medium'>{formatFullPrice(asset.price, 2)}</p>
+						<p className='font-medium'>{formatFullPrice(asset.price)}</p>
 					</div>
 				</Link>
 			))}

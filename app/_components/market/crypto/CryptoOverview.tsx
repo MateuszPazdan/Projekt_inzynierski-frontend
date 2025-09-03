@@ -17,7 +17,7 @@ export default function CryptoOverview() {
 					title='Kapitalizacja rynku'
 					isLoading={isAssetsPerformanceLoading}
 				>
-					<p className='font-medium text-xl'>
+					<p>
 						{formatFullPrice(
 							assetsPerformance?.global_crypto_data.total_market_cap
 						)}
@@ -28,7 +28,7 @@ export default function CryptoOverview() {
 					title='Wolumen 24 godzinny'
 					isLoading={isAssetsPerformanceLoading}
 				>
-					<p className='font-medium text-xl'>
+					<p>
 						{formatFullPrice(
 							assetsPerformance?.global_crypto_data.total_volume_24h
 						)}

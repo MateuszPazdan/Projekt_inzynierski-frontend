@@ -69,7 +69,7 @@ export default function StockOverviewChart() {
 										{item.name}
 									</span>
 									<span className='flex flex-row gap-1'>
-										<span className=''>{formatFullPrice(item.price, 2)}</span>
+										<span className=''>{formatFullPrice(item.price)}</span>
 										<PercentageChange
 											change={item.price_change_percentage_24h}
 										/>

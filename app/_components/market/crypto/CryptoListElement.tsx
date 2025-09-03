@@ -5,7 +5,10 @@ import { PiStar } from 'react-icons/pi';
 import { thStyles } from './CryptoList';
 import { useRouter } from 'next/navigation';
 import { BsArrowDownShort, BsArrowUpShort } from 'react-icons/bs';
-import { formatShortPrice } from '@/app/_utils/formatAmountOfMoney';
+import {
+	formatFullPrice,
+	formatShortPrice,
+} from '@/app/_utils/formatAmountOfMoney';
 import { Crypto } from '@/app/_redux/features/marketApiSlice';
 
 interface CryptoListElementProps {
@@ -51,7 +54,7 @@ export default function CryptoListElement({ crypto }: CryptoListElementProps) {
 				</p>
 			</td>
 			<td className={`${thStyles} text-nowrap`}>
-				{crypto?.price?.toFixed(2)} PLN
+				{formatFullPrice(crypto?.price)}
 			</td>
 			<td className={`${thStyles}`}>
 				<span
@@ -111,11 +114,10 @@ export default function CryptoListElement({ crypto }: CryptoListElementProps) {
 				</span>
 			</td>
 			<td className={`${thStyles} text-nowrap`}>
-				{formatShortPrice(Number(crypto.volume_24h * crypto?.price))}{' '}
-				{crypto.currency}
+				{formatShortPrice(Number(crypto.volume_24h * crypto?.price))}
 			</td>
 			<td className={`${thStyles} pr-2 md:pr-5 text-nowrap`}>
-				{formatShortPrice(crypto.market_cap)} {crypto.currency}
+				{formatShortPrice(crypto.market_cap)}
 			</td>
 		</tr>
 	);

@@ -9,18 +9,18 @@ import Link from 'next/link';
 import { FaAngleRight } from 'react-icons/fa6';
 
 export default function page() {
-	const totalInvestmentAmount = 123456.78;
+	const totalInvestmentAmount = 5740278321.42;
 	const totalInvestmentChange24h = {
-		amount: -1234.56,
-		percentage: 2.34,
+		amount: -12500.09,
+		percentage: -2.34,
 	};
 	const totalInvestmentProfitLoss = {
-		amount: 56789.01,
-		percentage: 4.56,
+		amount: -56789.01,
+		percentage: -4.56,
 	};
 	const largestInvestmentProfit = {
-		amount: 12345.67,
-		percentage: 3.21,
+		amount: 1234235.67,
+		percentage: 32.21,
 		assetName: 'BTC',
 		icon: '/bitcoin-logo-svgrepo-com.svg',
 	};

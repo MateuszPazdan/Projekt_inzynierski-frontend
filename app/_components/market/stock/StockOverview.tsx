@@ -17,7 +17,7 @@ export default function StockOverview() {
 					isLoading={isAssetsPerformanceLoading}
 					title='Kapitalizacja rynku'
 				>
-					<p className='font-medium text-xl'>
+					<p>
 						{formatFullPrice(
 							assetsPerformance?.global_stock_data.total_market_cap
 						)}
@@ -28,7 +28,7 @@ export default function StockOverview() {
 					isLoading={isAssetsPerformanceLoading}
 					title='Wolumen 24 godzinny'
 				>
-					<p className='font-medium text-xl'>
+					<p>
 						{formatFullPrice(
 							assetsPerformance?.global_stock_data.total_volume_24h
 						)}
