@@ -37,7 +37,7 @@ export default function DropdownMenu({
 			</Button>
 			<div
 				ref={dropdownRef}
-				className={`absolute  rounded-md border  border-grayThird shadow-md bg-white left-0 md:left-auto md:right-0 top-[110%] text-nowrap ${
+				className={`absolute rounded-lg border p-2 gap-1 border-grayThird shadow-md bg-white left-0 md:left-auto md:right-0 top-[110%] text-nowrap ${
 					isExtended ? 'flex' : 'hidden'
 				} flex-col text-sm overflow-hidden`}
 			>

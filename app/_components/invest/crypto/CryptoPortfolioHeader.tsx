@@ -4,7 +4,7 @@ import { BsPlus } from 'react-icons/bs';
 import Button from '../../Button';
 import Modal from '../../Modal';
 import SectionHeader from '../../SectionHeader';
-import ManageCryptoPortfolioModal from './ManageCryptoPortfolioModal';
+import ManageCryptoPortfolioModal from '../ManagePortfolioModal';
 
 export default function CryptoPortfolioHeader() {
 	return (
@@ -23,7 +23,10 @@ export default function CryptoPortfolioHeader() {
 					</Button>
 				</Modal.Open>
 				<Modal.Window name='createCryptoPortfolio'>
-					<ManageCryptoPortfolioModal onCloseModal={() => undefined} />
+					<ManageCryptoPortfolioModal
+						onCloseModal={() => undefined}
+						portfolioType='crypto'
+					/>
 				</Modal.Window>
 			</Modal>
 		</div>

@@ -26,6 +26,27 @@ export interface PortfolioInfo {
 	updated_at: string;
 }
 
+export interface CryptoTransaction {
+	id: string;
+	transaction_type: string;
+	amount: number;
+	price_per_unit: number;
+	transaction_date: string;
+	crypto: {
+		symbol: string;
+	};
+}
+
+export interface CryptoPortfolioDetails extends PortfolioInfo {
+	crypto_transactions: CryptoTransaction[];
+	watched_cryptos: {
+		id: number;
+		crypto: {
+			symbol: string;
+		};
+	}[];
+}
+
 const portfolioApiSlice = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
 		retrieveCryptoPortfolios: builder.query<
@@ -49,10 +70,71 @@ const portfolioApiSlice = apiSlice.injectEndpoints({
 			}),
 			invalidatesTags: ['CryptoPortfolios'],
 		}),
+		modifyCryptoPortfolio: builder.mutation<
+			PortfolioInfo,
+			{ portfolioId: string; portfolio: PortfolioRequestBody }
+		>({
+			query: ({ portfolio, portfolioId }) => ({
+				url: `/portfolios/cryptos/${portfolioId}`,
+				method: 'PATCH',
+				body: portfolio,
+			}),
+			invalidatesTags: (result, error, { portfolioId }) => [
+				{ type: 'CryptoPortfolio', id: portfolioId },
+				{ type: 'CryptoPortfolios' },
+			],
+		}),
+		deleteCryptoPortfolio: builder.mutation<void, string>({
+			query: (portfolioId) => ({
+				url: `/portfolios/cryptos/${portfolioId}`,
+				method: 'DELETE',
+			}),
+			invalidatesTags: () => [{ type: 'CryptoPortfolios' }],
+		}),
+		deleteAllTransactionsCryptoPortfolio: builder.mutation<void, string>({
+			query: (portfolioId) => ({
+				url: `/portfolios/cryptos/${portfolioId}/transactions`,
+				method: 'DELETE',
+			}),
+			invalidatesTags: (result, error, portfolioId) => [
+				{ type: 'CryptoPortfolios' },
+				{ type: 'CryptoPortfolio', id: portfolioId },
+			],
+		}),
+		retrieveCryptoPortfolioDetails: builder.query<
+			CryptoPortfolioDetails,
+			string
+		>({
+			query: (portfolioId) => ({
+				url: `/portfolios/cryptos/${portfolioId}`,
+				method: 'GET',
+			}),
+			providesTags: (result, error, portfolioId) => [
+				{ type: 'CryptoPortfolio', id: portfolioId },
+			],
+		}),
+		addWatchedCryptoPortfolio: builder.mutation<
+			void,
+			{ portfolioId: string; crypto_symbol: string }
+		>({
+			query: ({ portfolioId, crypto_symbol }) => ({
+				url: `/portfolios/cryptos/${portfolioId}/watched_cryptos/${crypto_symbol}`,
+				method: 'POST',
+			}),
+			invalidatesTags: (result, error, { portfolioId }) => [
+				{ type: 'CryptoPortfolio', id: portfolioId },
+				{ type: 'CryptoPortfolios' },
+			],
+		}),
 	}),
 });
 
 export const {
 	useRetrieveCryptoPortfoliosQuery,
 	useCreateCryptoPortfolioMutation,
+	useModifyCryptoPortfolioMutation,
+	useDeleteCryptoPortfolioMutation,
+	useDeleteAllTransactionsCryptoPortfolioMutation,
+	useRetrieveCryptoPortfolioDetailsQuery,
+	useAddWatchedCryptoPortfolioMutation,
 } = portfolioApiSlice;

@@ -1,22 +1,23 @@
-import { BsFillPencilFill, BsSliders2 } from 'react-icons/bs';
-import Modal from '../Modal';
-import ModifyBudgetModal from './ManageBudgetModal';
-import { Budget } from '@/app/_redux/features/budgetApiSlice';
-import { FaBrush, FaTrashAlt } from 'react-icons/fa';
-import DeleteAllTransactionsModal from './DeleteAllTransactionsModal';
-import DeleteBudgetModal from './DeleteBudgetModal';
-import DropdownMenu from '../DropdownMenu';
+import { PortfolioInfo } from '@/app/_redux/features/portfiolioApiSlice';
 import { useState } from 'react';
+import { BsFillPencilFill, BsSliders2 } from 'react-icons/bs';
+import { FaBrush, FaTrashAlt } from 'react-icons/fa';
+import DropdownMenu from '../DropdownMenu';
+import Modal from '../Modal';
+import DeletePortfolioModal from './DeletePortfolioModal';
+import DeletePortfolioTransactionsModal from './DeletePortfolioTransactionsModal';
+import ManagePortfolioModal from './ManagePortfolioModal';
 import DropdownMenuElement from '../DropdownMenuElement';
 
-interface ManageBudgetBtnProps {
-	budget?: Budget;
+interface ManagePortfolioBtnProps {
+	portfolio?: PortfolioInfo;
 	isLoading: boolean;
+	portfolioType: 'crypto' | 'stocks';
 }
-export default function ManageBudgetBtn({
-	budget,
+export default function ManagePortfolioBtn({
+	portfolio,
 	isLoading,
-}: ManageBudgetBtnProps) {
+}: ManagePortfolioBtnProps) {
 	const [isExtended, setIsExtended] = useState(false);
 
 	return (
@@ -26,50 +27,53 @@ export default function ManageBudgetBtn({
 			setIsExtended={setIsExtended}
 			disabled={isLoading}
 		>
-			{!isLoading && budget && (
+			{!isLoading && portfolio && (
 				<>
 					<Modal>
-						<Modal.Open opens='modifyBudget'>
+						<Modal.Open opens='modifyPortfolio'>
 							<DropdownMenuElement
 								icon={<BsFillPencilFill />}
-								text='Modyfikuj budżet'
+								text='Modyfikuj portfolio'
 								onClick={() => setIsExtended(false)}
 							/>
 						</Modal.Open>
-						<Modal.Window name='modifyBudget'>
-							<ModifyBudgetModal
+						<Modal.Window name='modifyPortfolio'>
+							<ManagePortfolioModal
 								onCloseModal={() => undefined}
-								budget={budget}
+								portfolio={portfolio}
+								portfolioType='crypto'
 							/>
 						</Modal.Window>
 					</Modal>
 					<Modal>
-						<Modal.Open opens='deleteBudget'>
+						<Modal.Open opens='deletePortfolio'>
 							<DropdownMenuElement
 								icon={<FaTrashAlt />}
-								text='Usuń budżet'
+								text='Usuń portfolio'
 								onClick={() => setIsExtended(false)}
 							/>
 						</Modal.Open>
-						<Modal.Window name='deleteBudget'>
-							<DeleteBudgetModal
+						<Modal.Window name='deletePortfolio'>
+							<DeletePortfolioModal
 								onCloseModal={() => undefined}
-								budget={budget}
+								portfolioId={portfolio.id}
+								portfolioType='crypto'
 							/>
 						</Modal.Window>
 					</Modal>
 					<Modal>
-						<Modal.Open opens='deleeteTransactions'>
+						<Modal.Open opens='deleteTransactions'>
 							<DropdownMenuElement
 								icon={<FaBrush />}
 								text='Wyczyść transakcje'
 								onClick={() => setIsExtended(false)}
 							/>
 						</Modal.Open>
-						<Modal.Window name='deleeteTransactions'>
-							<DeleteAllTransactionsModal
+						<Modal.Window name='deleteTransactions'>
+							<DeletePortfolioTransactionsModal
 								onCloseModal={() => undefined}
-								budget={budget}
+								portfolioId={portfolio.id}
+								portfolioType='crypto'
 							/>
 						</Modal.Window>
 					</Modal>

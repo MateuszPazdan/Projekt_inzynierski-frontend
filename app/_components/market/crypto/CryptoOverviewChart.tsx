@@ -17,7 +17,7 @@ export default function CryptoOverviewChart() {
 		useRetrieveAssetsPerformanceQuery();
 	const [period, setPeriod] = useState<string>('1w');
 	const [symbol, setSymbol] = useState<string>(
-		assetsPerformance?.global_crypto_data.top_market_cap_rank[0].symbol ?? ''
+		assetsPerformance?.global_crypto_data?.top_market_cap_rank[0]?.symbol ?? ''
 	);
 	const {
 		data: historicalData,
@@ -35,7 +35,7 @@ export default function CryptoOverviewChart() {
 
 	useEffect(() => {
 		setSymbol(
-			assetsPerformance?.global_crypto_data.top_market_cap_rank[0].symbol ?? ''
+			assetsPerformance?.global_crypto_data?.top_market_cap_rank[0]?.symbol ?? ''
 		);
 	}, [assetsPerformance]);
 
