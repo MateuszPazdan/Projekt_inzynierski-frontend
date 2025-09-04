@@ -28,8 +28,8 @@ export default function CoinAndValueInput({
 	useClickOutside(listRef, closeModal, buttonRef);
 
 	return (
-		<div className='relative'>
-			<div className='flex flex-row gap-2 items-center p-2 bg-grayOne border-grayThird border rounded-md'>
+		<div className='relative w-full'>
+			<div className='flex flex-row gap-2 items-center p-2 bg-white border-grayThird border rounded-md'>
 				<button
 					type='button'
 					ref={buttonRef}
@@ -53,7 +53,7 @@ export default function CoinAndValueInput({
 					</span>
 				</button>
 				<input
-					placeholder='0.00'
+					placeholder='1.00'
 					min={0}
 					step={0.000001}
 					type='number'
