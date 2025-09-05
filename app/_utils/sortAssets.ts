@@ -143,3 +143,69 @@ export function sortCryptos(
 
 	return list;
 }
+
+//TODO
+// export function sortPortfolioAssets(
+// 	sort: { by: string; order: string },
+// 	portfolioList?: {
+// 		id: number;
+// 		crypto: PortfolioAsset;
+// 	}[]
+// ) {
+// 	if (!portfolioList) return;
+
+// 	const list = [...portfolioList];
+
+// 	if (sort.by === 'currency' && sort.order === 'asc') {
+// 		return list.sort((a, b) => a.crypto.name.localeCompare(b.crypto.name));
+// 	}
+// 	if (sort.by === 'currency' && sort.order === 'desc') {
+// 		return list.sort((a, b) => b.crypto.name.localeCompare(a.crypto.name));
+// 	}
+// 	if (sort.by === 'price' && sort.order === 'asc') {
+// 		return list.sort((a, b) => a.crypto.price - b.crypto.price);
+// 	}
+// 	if (sort.by === 'price' && sort.order === 'desc') {
+// 		return list.sort((a, b) => b.crypto.price - a.crypto.price);
+// 	}
+// 	if (sort.by === 'change24h' && sort.order === 'asc') {
+// 		return list.sort(
+// 			(a, b) =>
+// 				a.crypto.price_change_percentage_24h -
+// 				b.crypto.price_change_percentage_24h
+// 		);
+// 	}
+// 	if (sort.by === 'change24h' && sort.order === 'desc') {
+// 		return list.sort(
+// 			(a, b) =>
+// 				b.crypto.price_change_percentage_24h -
+// 				a.crypto.price_change_percentage_24h
+// 		);
+// 	}
+// 	if (sort.by === 'total_cost' && sort.order === 'asc') {
+// 		return list.sort((a, b) => a.totalCost - b.totalCost);
+// 	}
+// 	if (sort.by === 'total_cost' && sort.order === 'desc') {
+// 		return list.sort((a, b) => b.totalCost - a.totalCost);
+// 	}
+// 	if (sort.by === 'average_cost' && sort.order === 'asc') {
+// 		return list.sort((a, b) => a.averageBuyPrice - b.averageBuyPrice);
+// 	}
+// 	if (sort.by === 'average_cost' && sort.order === 'desc') {
+// 		return list.sort((a, b) => b.averageBuyPrice - a.averageBuyPrice);
+// 	}
+// 	if (sort.by === 'total_profit_loss' && sort.order === 'asc') {
+// 		return list.sort((a, b) => a.totalProfitLoss - b.totalProfitLoss);
+// 	}
+// 	if (sort.by === 'total_profit_loss' && sort.order === 'desc') {
+// 		return list.sort((a, b) => b.totalProfitLoss - a.totalProfitLoss);
+// 	}
+// 	if (sort.by === 'resources' && sort.order === 'asc') {
+// 		return list.sort((a, b) => a.amount - b.amount);
+// 	}
+// 	if (sort.by === 'resources' && sort.order === 'desc') {
+// 		return list.sort((a, b) => b.amount - a.amount);
+// 	}
+
+// 	return list;
+// }

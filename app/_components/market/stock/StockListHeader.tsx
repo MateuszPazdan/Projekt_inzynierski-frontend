@@ -1,4 +1,4 @@
-import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
+import SortableTh from '../../SortableTh';
 
 interface StockListHeaderProps {
 	sort: { by: string; order: string };
@@ -15,142 +15,87 @@ export default function StockListHeader({
 		<thead>
 			<tr>
 				<th className={`w-0`}></th>
-				<th
-					className={`px-2 py-2 text-center group cursor-pointer`}
-					onClick={() => handleSort('rank')}
+				<SortableTh
+					sortKey='rank'
+					sort={sort}
+					handleSort={handleSort}
+					thStyles='px-2 py-2 text-center group'
+					textAlignment='center'
+					additionalStyles='text-center'
 				>
-					<span className='flex flex-row items-center '>
-						{sort.by === 'rank' ? (
-							sort.order === 'asc' ? (
-								<FaAngleUp />
-							) : (
-								<FaAngleDown />
-							)
-						) : (
-							<FaAngleDown className='group-hover:opacity-100 opacity-0 transition-opacity duration-300' />
-						)}
-						#
-					</span>
-				</th>
-				<th
-					className={`${thStyles} text-left cursor-pointer`}
-					onClick={() => handleSort('currency')}
+					#
+				</SortableTh>
+
+				<SortableTh
+					sortKey='currency'
+					sort={sort}
+					handleSort={handleSort}
+					thStyles={thStyles}
+					textAlignment='left'
+					additionalStyles='text-left'
 				>
-					<span className='flex flex-row items-center'>
-						Waluta
-						{sort.by === 'currency' ? (
-							sort.order === 'asc' ? (
-								<FaAngleUp />
-							) : (
-								<FaAngleDown />
-							)
-						) : (
-							<FaAngleDown className='group-hover:opacity-100 opacity-0 transition-opacity duration-300' />
-						)}
-					</span>
-				</th>
-				<th
-					className={`${thStyles} cursor-pointer`}
-					onClick={() => handleSort('price')}
+					Waluta
+				</SortableTh>
+
+				<SortableTh
+					sortKey='price'
+					sort={sort}
+					handleSort={handleSort}
+					thStyles={thStyles}
+					textAlignment='right'
 				>
-					<span className='flex flex-row justify-end items-center '>
-						{sort.by === 'price' ? (
-							sort.order === 'asc' ? (
-								<FaAngleUp />
-							) : (
-								<FaAngleDown />
-							)
-						) : (
-							<FaAngleDown className='group-hover:opacity-100 opacity-0 transition-opacity duration-300' />
-						)}
-						Kurs
-					</span>
-				</th>
-				<th
-					className={`${thStyles} cursor-pointer`}
-					onClick={() => handleSort('change1h')}
+					Kurs
+				</SortableTh>
+
+				<SortableTh
+					sortKey='change1h'
+					sort={sort}
+					handleSort={handleSort}
+					thStyles={thStyles}
+					textAlignment='right'
 				>
-					<span className='flex flex-row justify-end items-center '>
-						{sort.by === 'change1h' ? (
-							sort.order === 'asc' ? (
-								<FaAngleUp />
-							) : (
-								<FaAngleDown />
-							)
-						) : (
-							<FaAngleDown className='group-hover:opacity-100 opacity-0 transition-opacity duration-300' />
-						)}
-						1h
-					</span>
-				</th>
-				<th
-					className={`${thStyles} cursor-pointer`}
-					onClick={() => handleSort('change24h')}
+					1h
+				</SortableTh>
+
+				<SortableTh
+					sortKey='change24h'
+					sort={sort}
+					handleSort={handleSort}
+					thStyles={thStyles}
+					textAlignment='right'
 				>
-					<span className='flex flex-row justify-end items-center '>
-						{sort.by === 'change24h' ? (
-							sort.order === 'asc' ? (
-								<FaAngleUp />
-							) : (
-								<FaAngleDown />
-							)
-						) : (
-							<FaAngleDown className='group-hover:opacity-100 opacity-0 transition-opacity duration-300' />
-						)}
-						24h
-					</span>
-				</th>
-				<th
-					className={`${thStyles} cursor-pointer`}
-					onClick={() => handleSort('change7d')}
+					24h
+				</SortableTh>
+
+				<SortableTh
+					sortKey='change7d'
+					sort={sort}
+					handleSort={handleSort}
+					thStyles={thStyles}
+					textAlignment='right'
 				>
-					<span className='flex flex-row justify-end items-center '>
-						{sort.by === 'change7d' ? (
-							sort.order === 'asc' ? (
-								<FaAngleUp />
-							) : (
-								<FaAngleDown />
-							)
-						) : (
-							<FaAngleDown className='group-hover:opacity-100 opacity-0 transition-opacity duration-300' />
-						)}
-						7d
-					</span>
-				</th>
-				<th
-					className={`${thStyles} pr-2 md:pr-5 cursor-pointer`}
-					onClick={() => handleSort('volume_24h')}
+					7d
+				</SortableTh>
+
+				<SortableTh
+					sortKey='volume_24h'
+					sort={sort}
+					handleSort={handleSort}
+					thStyles={thStyles}
+					textAlignment='right'
 				>
-					<span className='flex flex-row justify-end items-center '>
-						{sort.by === 'volume_24h' ? (
-							sort.order === 'asc' ? (
-								<FaAngleUp />
-							) : (
-								<FaAngleDown />
-							)
-						) : (
-							<FaAngleDown className='group-hover:opacity-100 opacity-0 transition-opacity duration-300' />
-						)}
-						Wolumen 24h
-					</span>
-				</th>
-				<th
-					className={`${thStyles} pr-2 md:pr-5 cursor-pointer`}
-					onClick={() => handleSort('market_cap')}
+					Wolumen 24h
+				</SortableTh>
+
+				<SortableTh
+					sortKey='market_cap'
+					sort={sort}
+					handleSort={handleSort}
+					thStyles={thStyles}
+					textAlignment='right'
 				>
-					<span className='flex flex-row justify-end items-center '>
-						{sort.by === 'market_cap' ? (
-							sort.order === 'asc' ? (
-								<FaAngleUp />
-							) : (
-								<FaAngleDown />
-							)
-						) : (
-							<FaAngleDown className='group-hover:opacity-100 opacity-0 transition-opacity duration-300' />
-						)}
-						Kapitalizacja
-					</span>
-				</th>
+					Kapitalizacja
+				</SortableTh>
 			</tr>
 		</thead>
 	);

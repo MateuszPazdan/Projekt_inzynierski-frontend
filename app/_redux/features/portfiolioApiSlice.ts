@@ -37,13 +37,22 @@ export interface CryptoTransaction {
 	};
 }
 
+//TODO PAWEL IS COMING HERE
+export interface PortfolioAsset {
+	symbol: string;
+	name: string;
+	price: number;
+	price_change_percentage_24h: number;
+	totalCost: number;
+	averageBuyPrice: number;
+	totalProfitLoss: number;
+	amount: number;
+}
 export interface CryptoPortfolioDetails extends PortfolioInfo {
 	crypto_transactions: CryptoTransaction[];
 	watched_cryptos: {
 		id: number;
-		crypto: {
-			symbol: string;
-		};
+		crypto: PortfolioAsset;
 	}[];
 }
 

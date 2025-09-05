@@ -6,14 +6,10 @@ import PercentageChange from '../market/PercentageChange';
 import { thStyles } from './PortfolioWatchedList';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { PortfolioAsset } from '@/app/_redux/features/portfiolioApiSlice';
 
 interface PortfolioWatchedListElementProps {
-	watchedElement: {
-		id: number;
-		crypto: {
-			symbol: string;
-		};
-	};
+	watchedElement?: { id: number; crypto: PortfolioAsset };
 }
 
 export default function PortfolioWatchedListElement({
@@ -43,38 +39,48 @@ export default function PortfolioWatchedListElement({
 						height={24}
 					/>
 					<p className='flex flex-col items-start text-left'>
-						<span>Bitcoin</span>
-						<span className='text-sm text-gray-700'>
-							{watchedElement.crypto.symbol}
-						</span>
+						<span>{watchedElement?.crypto?.symbol.toUpperCase()}</span>
+						<span className='text-sm text-gray-700'>Bitcoin</span>
 					</p>
 				</Link>
 			</td>
 			<td className={`${thStyles} text-nowrap`}>
 				<span className='flex flex-col items-end text-right'>
-					{formatFullPrice(403059.99)}
-					<PercentageChange change={2.4} />
+					{formatFullPrice(Number(watchedElement?.id))}
+					<PercentageChange
+						change={Number(watchedElement?.id) * (30 - 1) + 1}
+					/>
 				</span>
 			</td>
 			<td className={`${thStyles}`}>
 				<span className={`flex items-center justify-end`}>
-					{formatFullPrice(16874.4)}
-				</span>
-			</td>
-			<td className={`${thStyles}`}>
-				<span className={`flex items-center justify-end`}>
-					{' '}
-					{formatFullPrice(813307.1)}
+					{formatFullPrice(Number(watchedElement?.id) * (100 - 1) + 1)}
 				</span>
 			</td>
 			<td className={`${thStyles}`}>
 				<span className={`flex items-center justify-end`}>
 					{' '}
-					{formatFullPrice(359564.55)}
+					{formatFullPrice(Number(watchedElement?.id) * 1000)}
 				</span>
 			</td>
-			<td className={`${thStyles} text-nowrap`}>{formatFullPrice(42444.1)}</td>
-			<td className={`${thStyles} text-nowrap`}>{formatFullPrice(752562.2)}</td>
+			<td className={`${thStyles}`}>
+				<span className={`flex items-center justify-end`}>
+					{' '}
+					{formatFullPrice(Number(watchedElement?.id) * 500)}
+				</span>
+			</td>
+			<td className={`${thStyles} text-nowrap`}>
+				{formatFullPrice(Number(watchedElement?.id) * 100)}
+			</td>
+			<td className={`${thStyles} text-nowrap`}>
+				<span className='flex flex-col items-end'>
+					<span>{formatFullPrice(Number(watchedElement?.id))}</span>
+					<span className='text-gray-600'>
+						{Number(Number(watchedElement?.id) * 10).toFixed(2)}{' '}
+						{watchedElement?.crypto.symbol.toUpperCase()}
+					</span>
+				</span>
+			</td>
 		</tr>
 	);
 }

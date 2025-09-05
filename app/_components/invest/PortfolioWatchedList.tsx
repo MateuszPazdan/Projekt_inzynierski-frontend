@@ -2,14 +2,10 @@ import { useState } from 'react';
 import EmptyList from '../EmptyList';
 import PortfolioWatchedListElement from './PortfolioWatchedListElement';
 import PortfolioWachedListHeader from './PortfolioWatchedListHeader';
+import { PortfolioAsset } from '@/app/_redux/features/portfiolioApiSlice';
 
 interface PortfolioWatchedListProps {
-	watchedList?: {
-		id: number;
-		crypto: {
-			symbol: string;
-		};
-	}[];
+	watchedList?: { id: number; crypto: PortfolioAsset }[];
 }
 
 export const thStyles = 'group px-3 py-2 ';
@@ -17,7 +13,7 @@ export const thStyles = 'group px-3 py-2 ';
 export default function PortfolioWatchedList({
 	watchedList,
 }: PortfolioWatchedListProps) {
-	const [sort, setSort] = useState({ by: 'rank', order: 'asc' });
+	const [sort, setSort] = useState({ by: 'currency', order: 'asc' });
 
 	const cryptoList = watchedList;
 
