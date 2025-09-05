@@ -1,13 +1,13 @@
-import { BsFillPencilFill, BsSliders2 } from 'react-icons/bs';
-import Modal from '../Modal';
-import ModifyBudgetModal from './ManageBudgetModal';
 import { Budget } from '@/app/_redux/features/budgetApiSlice';
+import { useState } from 'react';
+import { BsFillPencilFill, BsThreeDotsVertical } from 'react-icons/bs';
 import { FaBrush, FaTrashAlt } from 'react-icons/fa';
+import DropdownMenu from '../DropdownMenu';
+import DropdownMenuElement from '../DropdownMenuElement';
+import Modal from '../Modal';
 import DeleteAllTransactionsModal from './DeleteAllTransactionsModal';
 import DeleteBudgetModal from './DeleteBudgetModal';
-import DropdownMenu from '../DropdownMenu';
-import { useState } from 'react';
-import DropdownMenuElement from '../DropdownMenuElement';
+import ModifyBudgetModal from './ManageBudgetModal';
 
 interface ManageBudgetBtnProps {
 	budget?: Budget;
@@ -21,7 +21,7 @@ export default function ManageBudgetBtn({
 
 	return (
 		<DropdownMenu
-			openIcon={<BsSliders2 />}
+			openIcon={<BsThreeDotsVertical />}
 			isExtended={isExtended}
 			setIsExtended={setIsExtended}
 			disabled={isLoading}

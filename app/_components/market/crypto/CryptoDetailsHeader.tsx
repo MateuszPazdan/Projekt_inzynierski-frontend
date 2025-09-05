@@ -1,9 +1,8 @@
-import { BsThreeDotsVertical } from 'react-icons/bs';
-import { PiStar } from 'react-icons/pi';
-import { FaPlus } from 'react-icons/fa6';
-import Button from '../../Button';
 import { CryptoDetails } from '@/app/_actions/cryptoActions';
 import Image from 'next/image';
+import { BsPlus, BsThreeDotsVertical } from 'react-icons/bs';
+import { PiStar } from 'react-icons/pi';
+import Button from '../../Button';
 
 export default function CryptoDetailsHeader({
 	cryptoDetails,
@@ -44,11 +43,11 @@ export default function CryptoDetailsHeader({
 					<Button
 						size='large'
 						additionalClasses='h-12'
-						color='light'
+						color='dark'
 						onClick={() => {}}
 					>
-						<FaPlus className='mr-2 text-gray-500 font-semibold' />
-						<span>Dodaj do inwestycji</span>
+						<BsPlus className='text-3xl' />
+						<span className='mr-3'>Dodaj do inwestycji</span>
 					</Button>
 				</div>
 			</>

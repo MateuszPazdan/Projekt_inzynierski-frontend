@@ -3,9 +3,9 @@ export default function DropdownMenuElement({
 	text,
 	onClick,
 }: {
-	icon: React.ReactNode;
-	text: string;
-	onClick: () => void;
+	icon?: React.ReactNode;
+	text?: string;
+	onClick?: () => void;
 }) {
 	return (
 		<button

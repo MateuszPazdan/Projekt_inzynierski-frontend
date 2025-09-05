@@ -1,7 +1,6 @@
 'use client';
 
 import {
-	CryptoPortfolioDetails,
 	useAddWatchedCryptoPortfolioMutation,
 	useRetrieveCryptoPortfolioDetailsQuery,
 } from '@/app/_redux/features/portfiolioApiSlice';

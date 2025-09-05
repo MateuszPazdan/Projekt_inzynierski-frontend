@@ -1,6 +1,6 @@
 import { PortfolioInfo } from '@/app/_redux/features/portfiolioApiSlice';
 import { useState } from 'react';
-import { BsFillPencilFill, BsSliders2 } from 'react-icons/bs';
+import { BsFillPencilFill, BsThreeDotsVertical } from 'react-icons/bs';
 import { FaBrush, FaTrashAlt } from 'react-icons/fa';
 import DropdownMenu from '../DropdownMenu';
 import Modal from '../Modal';
@@ -22,7 +22,7 @@ export default function ManagePortfolioBtn({
 
 	return (
 		<DropdownMenu
-			openIcon={<BsSliders2 />}
+			openIcon={<BsThreeDotsVertical />}
 			isExtended={isExtended}
 			setIsExtended={setIsExtended}
 			disabled={isLoading}

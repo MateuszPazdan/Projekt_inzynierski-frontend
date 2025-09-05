@@ -1,14 +1,15 @@
 'use client';
 
 import { useRetrieveCryptoPortfolioDetailsQuery } from '@/app/_redux/features/portfiolioApiSlice';
+import { notFound } from 'next/navigation';
 import { BsPlus } from 'react-icons/bs';
 import Button from '../../Button';
+import InfoCard from '../../InfoCard';
 import Modal from '../../Modal';
 import ManagePortfolioBtn from '../ManagePortfolioBtn';
 import PortfolioOverview from '../PortfolioOverview';
-import InfoCard from '../../InfoCard';
+import PortfolioWatchedList from '../PortfolioWatchedList';
 import AddCryptoModal from './AddCryptoModal';
-import { notFound } from 'next/navigation';
 
 interface CryptoPortfolioDetailsProps {
 	portfolioId: string;
@@ -52,11 +53,15 @@ export default function CryptoPortfolioDetails({
 
 					<Modal>
 						<Modal.Open opens='addCoin'>
-							<Button size='small' stretch>
-								<span className='text-3xl'>
-									<BsPlus />
-								</span>
-								<span className='pr-3'>Dodaj walutę</span>
+							<Button
+								size='large'
+								additionalClasses='h-12'
+								color='dark'
+								onClick={() => {}}
+								stretch
+							>
+								<BsPlus className='text-3xl' />
+								<span className='mr-3'>Dodaj walutę</span>
 							</Button>
 						</Modal.Open>
 						<Modal.Window name='addCoin'>
@@ -74,11 +79,7 @@ export default function CryptoPortfolioDetails({
 				</p>
 			</InfoCard>
 			<PortfolioOverview />
-			<div>
-				{portfolioDetails?.watched_cryptos.map((crypto) => (
-					<p key={crypto.id}>{crypto.crypto.symbol}</p>
-				))}
-			</div>
+			<PortfolioWatchedList watchedList={portfolioDetails?.watched_cryptos} />
 		</>
 	);
 }
