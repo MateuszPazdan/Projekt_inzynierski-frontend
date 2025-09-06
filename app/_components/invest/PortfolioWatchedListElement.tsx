@@ -1,12 +1,12 @@
 'use client';
 
+import { PortfolioAsset } from '@/app/_redux/features/portfiolioApiSlice';
 import { formatFullPrice } from '@/app/_utils/formatAmountOfMoney';
 import Image from 'next/image';
+import Link from 'next/link';
+import { useParams, useRouter } from 'next/navigation';
 import PercentageChange from '../market/PercentageChange';
 import { thStyles } from './PortfolioWatchedList';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { PortfolioAsset } from '@/app/_redux/features/portfiolioApiSlice';
 
 interface PortfolioWatchedListElementProps {
 	watchedElement?: { id: number; crypto: PortfolioAsset };
@@ -16,20 +16,20 @@ export default function PortfolioWatchedListElement({
 	watchedElement,
 }: PortfolioWatchedListElementProps) {
 	const router = useRouter();
-
-	function handleNavigate() {
-		router.push(`/market/crypto/`);
-	}
+	const params = useParams();
+	const portfolioId = params.portfolioId;
 
 	return (
 		<tr
-			onClick={() => handleNavigate()}
+			onClick={() =>
+				router.push(`${portfolioId}/${watchedElement?.crypto.symbol}`)
+			}
 			className='hover:bg-grayOne transition-colors duration-300 hover:cursor-pointer'
 		>
 			<td className={`${thStyles} `}>
 				<Link
 					onClick={(e) => e.stopPropagation()}
-					href={'/btc'}
+					href={`/market/crypto/${watchedElement?.crypto?.symbol}`}
 					className='flex flex-row items-center gap-2'
 				>
 					<Image
