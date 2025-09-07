@@ -20,7 +20,10 @@ export default function CryptoPortfolioDetails({
 	portfolioId,
 }: CryptoPortfolioDetailsProps) {
 	const { data: portfolioDetails, isLoading: isPortfolioDetailsLoading } =
-		useRetrieveCryptoPortfolioDetailsQuery(portfolioId);
+		useRetrieveCryptoPortfolioDetailsQuery(portfolioId, {
+			refetchOnFocus: true,
+			skip: false,
+		});
 
 	if (!portfolioDetails && !isPortfolioDetailsLoading) return notFound();
 
@@ -79,15 +82,19 @@ export default function CryptoPortfolioDetails({
 					{portfolioDetails?.description || 'Brak opisu'}
 				</p>
 			</InfoCard>
-			<PortfolioOverview
-				portfolioDetails={portfolioDetails}
-				isLoading={isPortfolioDetailsLoading}
-			/>
-			{/* TODO - charts  */}
-			<PortfolioOverviewCharts
-				portfolioDetails={portfolioDetails}
-				isLoading={isPortfolioDetailsLoading}
-			/>
+			{portfolioDetails && portfolioDetails?.total_transactions > 0 && (
+				<>
+					<PortfolioOverview
+						portfolioDetails={portfolioDetails}
+						isLoading={isPortfolioDetailsLoading}
+					/>
+					{/* TODO - charts  */}
+					<PortfolioOverviewCharts
+						portfolioDetails={portfolioDetails}
+						isLoading={isPortfolioDetailsLoading}
+					/>
+				</>
+			)}
 			<PortfolioWatchedList
 				portfolioDetails={portfolioDetails}
 				isLoading={isPortfolioDetailsLoading}

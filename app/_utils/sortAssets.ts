@@ -167,12 +167,12 @@ export function sortPortfolioAssets(
 	}
 	if (sort.by === 'change24h' && sort.order === 'asc') {
 		return list.sort(
-			(a, b) => a.percentage_profit_loss_24h - b.percentage_profit_loss_24h
+			(a, b) => a.profit_loss_24h - b.profit_loss_24h
 		);
 	}
 	if (sort.by === 'change24h' && sort.order === 'desc') {
 		return list.sort(
-			(a, b) => b.percentage_profit_loss_24h - a.percentage_profit_loss_24h
+			(a, b) => b.profit_loss_24h - a.profit_loss_24h
 		);
 	}
 	if (sort.by === 'total_cost' && sort.order === 'asc') {

@@ -13,14 +13,6 @@ export default function PortfolioOverview({
 	portfolioDetails,
 	isLoading,
 }: PortfolioOverviewProps) {
-	const topGainerCrypto = portfolioDetails?.watched_cryptos?.reduce(
-		(max, curr) =>
-			Math.abs(curr.profit_loss_percentage) >
-			Math.abs(max.profit_loss_percentage)
-				? curr
-				: max
-	);
-
 	return (
 		<div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3'>
 			<CurrentBalance
@@ -38,10 +30,7 @@ export default function PortfolioOverview({
 				isLoading={isLoading}
 			/>
 			<TopGainer
-				assetName={topGainerCrypto?.crypto.name}
-				amount={topGainerCrypto?.profit_loss}
-				percentage={topGainerCrypto?.profit_loss_percentage}
-				icon={topGainerCrypto?.crypto.icon}
+				portfolioDetails={portfolioDetails}
 				isLoading={isLoading}
 			/>
 		</div>

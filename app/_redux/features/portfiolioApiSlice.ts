@@ -66,7 +66,6 @@ export interface WatchedCryptoDetails {
 	price: number;
 }
 
-
 const portfolioApiSlice = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
 		retrieveCryptoPortfolios: builder.query<
@@ -78,6 +77,7 @@ const portfolioApiSlice = apiSlice.injectEndpoints({
 				method: 'GET',
 			}),
 			providesTags: ['CryptoPortfolios'],
+			keepUnusedDataFor: 600,
 		}),
 		createCryptoPortfolio: builder.mutation<
 			PortfolioInfo,
@@ -132,6 +132,7 @@ const portfolioApiSlice = apiSlice.injectEndpoints({
 			providesTags: (result, error, portfolioId) => [
 				{ type: 'CryptoPortfolio', id: portfolioId },
 			],
+			keepUnusedDataFor: 600,
 		}),
 		addWatchedCryptoPortfolio: builder.mutation<
 			void,

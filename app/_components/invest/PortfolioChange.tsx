@@ -33,7 +33,7 @@ export default function PortfolioChange({
 					{formatFullPrice(profit_loss)}
 				</p>
 			) : (
-				<p>Brak danych</p>
+				<p>-</p>
 			)}
 		</InfoCard>
 	);

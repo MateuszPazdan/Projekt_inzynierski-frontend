@@ -11,7 +11,7 @@ export default function CurrentBalance({
 	return (
 		<InfoCard
 			title='Szacowana wartość'
-			text={`${balance ? formatFullPrice(balance) : 'Brak danych'}`}
+			text={`${balance ? formatFullPrice(balance) : '-'}`}
 			isLoading={isLoading}
 		/>
 	);

@@ -1,27 +1,31 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import {
-	DefaultLegendContentProps,
-	Legend,
-	Pie,
-	PieChart,
-	ResponsiveContainer,
-	Tooltip,
-} from 'recharts';
+import { Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 import InfoCard from '../InfoCard';
 
-const data = [
-	{ name: 'BTC', value: 20, fill: '#f9844a' },
-	{ name: 'ETH', value: 10, fill: '#f9c74f' },
-	{ name: 'S', value: 35, fill: '#90be6d' },
-	{ name: 'XRP', value: 5, fill: '#43aa8b' },
-	{ name: 'ALGO', value: 15, fill: '#4d908e' },
-	{ name: 'MATIC', value: 15, fill: '#577590' },
-	{ name: 'inne', value: 15, fill: '#577590' },
+interface ChartData {
+	crypto: { symbol: string; icon?: string; name: string };
+	current_value: number;
+	portfolio_percentage: number;
+	fill?: string;
+}
+
+const colors = [
+	'#3c37ff',
+	'#2563eb',
+	'#6366f1',
+	'#8b5cf6',
+	'#a855f7',
+	'#d946ef',
+	'#ec4899',
 ];
 
-export default function TotalHoldingsChart() {
+export default function TotalHoldingsChart({
+	chartData,
+}: {
+	chartData?: ChartData[];
+}) {
 	const [windowWidth, setWindowWidth] = useState<number | null>(null);
 
 	useEffect(() => {
@@ -31,29 +35,90 @@ export default function TotalHoldingsChart() {
 
 		return () => window.removeEventListener('resize', handleResize);
 	}, []);
+
+	const biggestHoldings = chartData?.slice(0, 5) ?? [];
+	const otherHoldings = chartData?.slice(5) ?? [];
+
+	const otherSum = otherHoldings.reduce(
+		(acc, curr) => acc + curr.portfolio_percentage,
+		0
+	);
+
+	const displayData = [
+		...biggestHoldings,
+		...(otherHoldings.length > 0
+			? [
+					{
+						crypto: {
+							symbol: 'inne',
+							icon: undefined,
+							name: 'Inne',
+						},
+						current_value: 0,
+						portfolio_percentage: otherSum,
+					},
+			  ]
+			: []),
+	].map((el, index) => {
+		return { ...el, fill: colors[index] };
+	});
+
 	return (
 		<InfoCard title='Całkowite udziały'>
-			<ResponsiveContainer width='100%' height={400}>
+			<ResponsiveContainer width='100%' className={'min-h-[400px]'}>
 				<PieChart>
 					<Pie
 						innerRadius={80}
 						outerRadius={110}
-						fill='#8884d8'
-						paddingAngle={5}
-						dataKey='value'
-						data={data}
-						cx='50%'
-						cy='50%'
-						activeShape
+						fill='#3c37ff'
+						paddingAngle={6}
+						dataKey='portfolio_percentage'
+						data={displayData}
 						animationDuration={300}
 					/>
 					<Legend
-						content={renderLegend}
-						align={windowWidth && windowWidth < 768 ? 'center' : 'right'}
+						align={windowWidth && windowWidth < 1024 ? 'center' : 'right'}
 						verticalAlign={`${
-							windowWidth && windowWidth < 768 ? 'bottom' : 'middle'
+							windowWidth && windowWidth < 1024 ? 'bottom' : 'middle'
 						}`}
+						wrapperStyle={{
+							width:
+								windowWidth && windowWidth < 1024
+									? '100%'
+									: windowWidth && windowWidth > 1200
+									? '40%'
+									: 'auto',
+						}}
 						layout='vertical'
+						style={{ width: '100%' }}
+						content={({ payload }) => {
+							return (
+								<div>
+									{payload?.map((entry, index) => {
+										const entryPayload = entry.payload as ChartData;
+										return (
+											<div
+												className='flex flex-row justify-between w-full gap-10 text-base'
+												key={`item-${index}`}
+											>
+												<div className='flex flex-row items-center gap-1'>
+													<div
+														style={{ backgroundColor: entryPayload.fill }}
+														className='w-4 h-4 rounded-full'
+													></div>
+													<span className='text-gray-600 font-normal '>
+														{entryPayload.crypto.symbol === 'inne'
+															? 'Inne'
+															: entryPayload.crypto.symbol.toUpperCase()}
+													</span>
+												</div>
+												<p className=''>{entryPayload.portfolio_percentage}%</p>
+											</div>
+										);
+									})}
+								</div>
+							);
+						}}
 					/>
 					<Tooltip
 						isAnimationActive={false}
@@ -61,8 +126,15 @@ export default function TotalHoldingsChart() {
 							if (active && payload && payload.length) {
 								return (
 									<div className='rounded-lg border border-grayThird shadow-md  bg-white px-4 py-2 text-sm'>
-										<p className='font-medium'>{payload[0]?.name}</p>{' '}
-										{payload[0]?.value}%
+										<p className='font-normal text-gray-600'>
+											{payload[0].payload.crypto.symbol === 'inne'
+												? 'Inne'
+												: payload[0].payload.crypto.symbol.toUpperCase()}
+											:{' '}
+											<span className='text-black'>
+												{payload[0].payload.portfolio_percentage}%
+											</span>
+										</p>
 									</div>
 								);
 							}
@@ -74,27 +146,3 @@ export default function TotalHoldingsChart() {
 		</InfoCard>
 	);
 }
-
-const renderLegend = ({ payload }: DefaultLegendContentProps) => {
-	if (!payload) return null;
-	return (
-		<ul className='flex flex-col  gap-2 '>
-			{payload?.map((entry, index) => {
-				return (
-					<li
-						className='flex flex-row gap-2 items-center'
-						key={`item-${index}`}
-					>
-						<span
-							className='w-4 h-4  inline-block rounded-full'
-							style={{ backgroundColor: entry?.color }}
-						></span>
-						<p className='text-gray-700 text-sm'>
-							{entry?.payload?.value} {entry?.value}
-						</p>
-					</li>
-				);
-			})}
-		</ul>
-	);
-};

@@ -13,10 +13,6 @@ export default function PortfolioOverviewCharts({
 	portfolioDetails,
 	isLoading,
 }: PortfolioOverviewChartsProps) {
-	// const sortedWachtedAsset = portfolioDetails?.watched_cryptos
-	// 	.slice()
-	// 	.sort((a, b) => b.current_value - a.current_value);
-
 	if (isLoading)
 		return (
 			<div className='grid grid-cols-1 lg:grid-cols-2 gap-3'>
@@ -45,9 +41,29 @@ export default function PortfolioOverviewCharts({
 			</div>
 		);
 
+	const sortedWatchedAsset = portfolioDetails?.watched_cryptos
+		.slice()
+		.sort((a, b) => b.current_value - a.current_value);
+
+	const portfolioTotalValue =
+		sortedWatchedAsset?.reduce((sum, curr) => (sum += curr.current_value), 0) ||
+		0;
+
+	const chartData = sortedWatchedAsset
+		?.filter(asset => asset.current_value > 0)
+		.map((asset) => {
+			const portfolioPercentage = Number(
+				((asset.current_value / portfolioTotalValue) * 100).toFixed(2)
+			);
+			return {
+				...asset,
+				portfolio_percentage: portfolioPercentage,
+			};
+		});
+
 	return (
 		<div className='grid grid-cols-1 lg:grid-cols-2 gap-3'>
-			<TotalHoldingsChart />
+			<TotalHoldingsChart chartData={chartData} />
 			<HoldingsChangeChart />
 		</div>
 	);
