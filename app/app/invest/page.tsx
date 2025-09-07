@@ -1,4 +1,3 @@
-import PortfolioOverview from '@/app/_components/invest/PortfolioOverview';
 import SectionHeader from '@/app/_components/SectionHeader';
 import Link from 'next/link';
 import { FaAngleRight } from 'react-icons/fa6';
@@ -11,7 +10,7 @@ export default function page() {
 				description='Śledź swoje inwestycje w kryptowaluty i akcje w jednym miejscu.'
 			/>
 
-			<PortfolioOverview />
+			{/* <PortfolioOverview /> */}
 			<div className='space-y-3'>
 				<Link
 					href={'/app/invest/crypto'}
@@ -20,7 +19,7 @@ export default function page() {
 					<span className='font-medium'>Kryptowaluty</span>
 					<FaAngleRight className='text-xl' />
 				</Link>
-				<PortfolioOverview />
+				{/* <PortfolioOverview /> */}
 			</div>
 			<div className='space-y-3'>
 				<Link
@@ -30,7 +29,7 @@ export default function page() {
 					<span className='font-medium'>Akcje</span>
 					<FaAngleRight className='text-xl' />
 				</Link>
-				<PortfolioOverview />
+				{/* <PortfolioOverview /> */}
 			</div>
 		</div>
 	);

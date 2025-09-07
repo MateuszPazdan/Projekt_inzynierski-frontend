@@ -1,6 +1,7 @@
 import { FaAngleDown, FaAngleUp } from 'react-icons/fa6';
 
-export default function PercentageChange({ change }: { change: number }) {
+export default function PercentageChange({ change }: { change?: number }) {
+	if (!change) return;
 	return (
 		<span className='flex flex-row items-center gap-1 w-fit'>
 			{change < 0 && <FaAngleDown className='text-sm text-red-500' />}

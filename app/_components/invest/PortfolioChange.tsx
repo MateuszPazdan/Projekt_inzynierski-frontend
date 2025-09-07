@@ -3,26 +3,38 @@ import InfoCard from '../InfoCard';
 import PercentageChange from '../market/PercentageChange';
 
 interface PortfolioChangeProps {
-	investmentChange: { amount: number; percentage: number };
+	profit_loss?: number;
+	profit_loss_percentage?: number;
+	isLoading?: boolean;
 }
 
 export default function PortfolioChange({
-	investmentChange,
+	profit_loss,
+	profit_loss_percentage,
+	isLoading,
 }: PortfolioChangeProps) {
-	const { amount, percentage } = investmentChange;
 	return (
 		<InfoCard
 			title='Zmiana 24h'
-			additionalInfo={<PercentageChange change={percentage} />}
+			additionalInfo={<PercentageChange change={profit_loss_percentage} />}
+			isLoading={isLoading}
 		>
-			<p
-				className={`flex flex-row items-center gap-2 ${
-					amount < 0 ? 'text-red-500' : amount > 0 ? 'text-green-500' : ''
-				}`}
-			>
-				{amount > 0 ? '+' : ''}
-				{formatFullPrice(amount)}
-			</p>
+			{profit_loss ? (
+				<p
+					className={`flex flex-row items-center gap-2 ${
+						profit_loss < 0
+							? 'text-red-500'
+							: profit_loss > 0
+							? 'text-green-500'
+							: ''
+					}`}
+				>
+					{profit_loss > 0 ? '+' : ''}
+					{formatFullPrice(profit_loss)}
+				</p>
+			) : (
+				<p>Brak danych</p>
+			)}
 		</InfoCard>
 	);
 }

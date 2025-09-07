@@ -10,6 +10,7 @@ import ManagePortfolioBtn from '../ManagePortfolioBtn';
 import PortfolioOverview from '../PortfolioOverview';
 import PortfolioWatchedList from '../PortfolioWatchedList';
 import AddCryptoModal from './AddCryptoModal';
+import PortfolioOverviewCharts from '../PortfolioOverviewCharts';
 
 interface CryptoPortfolioDetailsProps {
 	portfolioId: string;
@@ -78,8 +79,19 @@ export default function CryptoPortfolioDetails({
 					{portfolioDetails?.description || 'Brak opisu'}
 				</p>
 			</InfoCard>
-			<PortfolioOverview />
-			<PortfolioWatchedList watchedList={portfolioDetails?.watched_cryptos} />
+			<PortfolioOverview
+				portfolioDetails={portfolioDetails}
+				isLoading={isPortfolioDetailsLoading}
+			/>
+			{/* TODO - charts  */}
+			<PortfolioOverviewCharts
+				portfolioDetails={portfolioDetails}
+				isLoading={isPortfolioDetailsLoading}
+			/>
+			<PortfolioWatchedList
+				portfolioDetails={portfolioDetails}
+				isLoading={isPortfolioDetailsLoading}
+			/>
 		</>
 	);
 }

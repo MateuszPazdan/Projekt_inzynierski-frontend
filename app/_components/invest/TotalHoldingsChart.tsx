@@ -33,10 +33,7 @@ export default function TotalHoldingsChart() {
 	}, []);
 	return (
 		<InfoCard title='Całkowite udziały'>
-			<ResponsiveContainer
-				width='100%'
-				height={windowWidth && windowWidth < 768 ? 500 : 400}
-			>
+			<ResponsiveContainer width='100%' height={400}>
 				<PieChart>
 					<Pie
 						innerRadius={80}

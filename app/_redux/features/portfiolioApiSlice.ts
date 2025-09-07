@@ -24,6 +24,13 @@ export interface PortfolioInfo {
 	owner_id: string;
 	created_at: string;
 	updated_at: string;
+	total_watched_cryptos: number;
+	total_transactions: number;
+	total_investment: number;
+	profit_loss: number;
+	profit_loss_percentage: number;
+	profit_loss_24h: number;
+	percentage_profit_loss_24h: number;
 }
 
 export interface CryptoTransaction {
@@ -37,24 +44,28 @@ export interface CryptoTransaction {
 	};
 }
 
-//TODO PAWEL IS COMING HERE
-export interface PortfolioAsset {
+export interface CryptoPortfolioDetails extends PortfolioInfo {
+	watched_cryptos: WatchedCrypto[];
+}
+export interface WatchedCrypto {
+	id: number;
+	crypto: WatchedCryptoDetails;
+	percentage_profit_loss_24h: number;
+	profit_loss_24h: number;
+	profit_loss: number;
+	profit_loss_percentage: number;
+	total_invested: number;
+	avg_buy_price: number;
+	holdings: number;
+	current_value: number;
+}
+export interface WatchedCryptoDetails {
 	symbol: string;
+	icon: string;
 	name: string;
 	price: number;
-	price_change_percentage_24h: number;
-	totalCost: number;
-	averageBuyPrice: number;
-	totalProfitLoss: number;
-	amount: number;
 }
-export interface CryptoPortfolioDetails extends PortfolioInfo {
-	crypto_transactions: CryptoTransaction[];
-	watched_cryptos: {
-		id: number;
-		crypto: PortfolioAsset;
-	}[];
-}
+
 
 const portfolioApiSlice = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({

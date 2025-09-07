@@ -76,7 +76,7 @@ export default function PortfolioWachedListHeader({
 				</SortableTh>
 
 				<SortableTh
-					sortKey='resources'
+					sortKey='current_value'
 					sort={sort}
 					handleSort={handleSort}
 					thStyles={thStyles}
