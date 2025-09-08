@@ -17,11 +17,8 @@ export default function CurrentCryptoPortfolioOverview({
 	portfolioId,
 	cryptoSymbol,
 }: CurrentCryptoPortfolioOverviewProps) {
-	const type = 'crypto';
 	const { data: portfolioDetails, isLoading: isPortfolioDetailsLoading } =
-		useRetrieveCryptoPortfolioDetailsQuery(portfolioId, {
-			skip: type !== 'crypto',
-		});
+		useRetrieveCryptoPortfolioDetailsQuery(portfolioId);
 
 	if (!portfolioDetails && !isPortfolioDetailsLoading) return notFound();
 

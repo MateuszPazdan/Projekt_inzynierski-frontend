@@ -31,22 +31,31 @@ export interface PortfolioInfo {
 	profit_loss_percentage: number;
 	profit_loss_24h: number;
 	percentage_profit_loss_24h: number;
+	current_value: number;
 }
 
-export interface CryptoTransaction {
+export interface PortfolioTransaction {
 	id: string;
 	transaction_type: string;
 	amount: number;
 	price_per_unit: number;
 	transaction_date: string;
-	crypto: {
-		symbol: string;
-	};
+	profit_loss: number;
+	profit_loss_percentage: number;
 }
 
 export interface CryptoPortfolioDetails extends PortfolioInfo {
 	watched_cryptos: WatchedCrypto[];
+	cryptos_percentage_holdings: { [key: string]: number };
+	historical_value_7d: { date: string; value: number }[];
+	historical_value_1m: { date: string; value: number }[];
+	historical_value_1y: { date: string; value: number }[];
 }
+
+export interface PortfolioCryptoTransaction extends PortfolioTransaction {
+	crypto: WatchedCryptoDetails;
+}
+
 export interface WatchedCrypto {
 	id: number;
 	crypto: WatchedCryptoDetails;
@@ -64,6 +73,7 @@ export interface WatchedCryptoDetails {
 	icon: string;
 	name: string;
 	price: number;
+	price_change_percentage_24h: number;
 }
 
 const portfolioApiSlice = apiSlice.injectEndpoints({
@@ -77,7 +87,6 @@ const portfolioApiSlice = apiSlice.injectEndpoints({
 				method: 'GET',
 			}),
 			providesTags: ['CryptoPortfolios'],
-			keepUnusedDataFor: 600,
 		}),
 		createCryptoPortfolio: builder.mutation<
 			PortfolioInfo,
@@ -132,7 +141,6 @@ const portfolioApiSlice = apiSlice.injectEndpoints({
 			providesTags: (result, error, portfolioId) => [
 				{ type: 'CryptoPortfolio', id: portfolioId },
 			],
-			keepUnusedDataFor: 600,
 		}),
 		addWatchedCryptoPortfolio: builder.mutation<
 			void,
@@ -147,6 +155,20 @@ const portfolioApiSlice = apiSlice.injectEndpoints({
 				{ type: 'CryptoPortfolios' },
 			],
 		}),
+		retrieveCryptoPortfolioTransactions: builder.query<
+			PaginatedResponse<PortfolioCryptoTransaction>,
+			{
+				portfolioId: string;
+				cryptoSymbol: string;
+				page?: number;
+				size?: number;
+			}
+		>({
+			query: ({ portfolioId, cryptoSymbol, page = 1, size = 30 }) => ({
+				url: `/portfolios/cryptos/${portfolioId}/transactions?crypto_symbol=${cryptoSymbol}&page=${page}&size=${size}`,
+				method: 'GET',
+			}),
+		}),
 	}),
 });
 
@@ -158,4 +180,5 @@ export const {
 	useDeleteAllTransactionsCryptoPortfolioMutation,
 	useRetrieveCryptoPortfolioDetailsQuery,
 	useAddWatchedCryptoPortfolioMutation,
+	useRetrieveCryptoPortfolioTransactionsQuery,
 } = portfolioApiSlice;

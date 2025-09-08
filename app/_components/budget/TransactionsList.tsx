@@ -9,6 +9,7 @@ import Pagination from '../Pagination';
 import { useState } from 'react';
 import TransactionElement from './TransactionElement';
 import TransactionElementSkeleton from './TransactionElementSkeleton';
+import { formatDateLabel } from '@/app/_utils/formatDate';
 
 interface TransactionListProps {
 	budgetId: string;
@@ -22,26 +23,6 @@ export default function TransactionsList({ budgetId }: TransactionListProps) {
 			size: 30,
 			page: currPage,
 		});
-
-	function formatDateLabel(dateString: string): string {
-		const today = new Date();
-		const yesterday = new Date();
-		yesterday.setDate(today.getDate() - 1);
-
-		const givenDate = new Date(dateString);
-		const isToday = givenDate.toDateString() === today.toDateString();
-		const isYesterday = givenDate.toDateString() === yesterday.toDateString();
-
-		if (isToday) return 'Dzisiaj';
-		if (isYesterday) return 'Wczoraj';
-
-		return givenDate.toLocaleDateString('pl-PL', {
-			weekday: 'long',
-			day: '2-digit',
-			month: '2-digit',
-			year: 'numeric',
-		});
-	}
 
 	const groupedTransactions = transactions?.items?.reduce((acc, tx) => {
 		const date = tx.created_at.split('T')[0];

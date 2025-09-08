@@ -52,9 +52,11 @@ export default function PortfolioListElement({
 			</div>
 			<div className='flex flex-col justify-center items-end p-2 gap-1 text-sm md:text-base'>
 				<p className='hidden sm:inline text-nowrap md:text-2xl'>
-					{formatFullPrice(0)}
+					{formatFullPrice(portfolio?.current_value)}
 				</p>
-				<p className='sm:hidden text-nowrap'>{formatShortPrice(0)}</p>
+				<p className='sm:hidden text-nowrap'>
+					{formatShortPrice(portfolio?.current_value)}
+				</p>
 				<PercentageChange change={portfolio?.profit_loss_percentage} />
 			</div>
 		</Link>

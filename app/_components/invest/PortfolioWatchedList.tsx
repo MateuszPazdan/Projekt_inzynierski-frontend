@@ -19,7 +19,7 @@ export default function PortfolioWatchedList({
 }: PortfolioWatchedListProps) {
 	const [sort, setSort] = useState({ by: 'currency', order: 'asc' });
 
-	const wachedCryptos = sortPortfolioAssets(
+	const watchedCryptos = sortPortfolioAssets(
 		sort,
 		portfolioDetails?.watched_cryptos
 	);
@@ -35,7 +35,7 @@ export default function PortfolioWatchedList({
 		return <PortfolioWatchedListSkeleton />;
 	}
 
-	if (!wachedCryptos || wachedCryptos?.length === 0)
+	if (!watchedCryptos || watchedCryptos?.length === 0)
 		return (
 			<div className=' rounded-lg border overflow-x-auto border-grayThird shadow-md bg-white p-3 px-4 '>
 				<EmptyList
@@ -54,7 +54,7 @@ export default function PortfolioWatchedList({
 					thStyles={thStyles}
 				/>
 				<tbody className='divide-y divide-grayThird'>
-					{wachedCryptos.map((watchedElement) => (
+					{watchedCryptos.map((watchedElement) => (
 						<PortfolioWatchedListElement
 							key={watchedElement.id}
 							watchedElement={watchedElement}

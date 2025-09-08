@@ -1,0 +1,19 @@
+export function formatDateLabel(dateString: string): string {
+	const today = new Date();
+	const yesterday = new Date();
+	yesterday.setDate(today.getDate() - 1);
+
+	const givenDate = new Date(dateString);
+	const isToday = givenDate.toDateString() === today.toDateString();
+	const isYesterday = givenDate.toDateString() === yesterday.toDateString();
+
+	if (isToday) return 'Dzisiaj';
+	if (isYesterday) return 'Wczoraj';
+
+	return givenDate.toLocaleDateString('pl-PL', {
+		weekday: 'long',
+		day: '2-digit',
+		month: '2-digit',
+		year: 'numeric',
+	});
+}

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { thStyles } from './PortfolioWatchedList';
 import { WatchedCrypto } from '@/app/_redux/features/portfiolioApiSlice';
+import PercentageChange from '../market/PercentageChange';
 
 interface PortfolioWatchedListElementProps {
 	watchedElement?: WatchedCrypto;
@@ -48,9 +49,9 @@ export default function PortfolioWatchedListElement({
 			<td className={`${thStyles} text-nowrap`}>
 				<span className='flex flex-col items-end text-right'>
 					{formatFullPrice(watchedElement?.crypto.price)}
-					{/* <PercentageChange
-						change={}
-					/> */}
+					<PercentageChange
+						change={watchedElement?.crypto.price_change_percentage_24h}
+					/>
 				</span>
 			</td>
 			<td className={`${thStyles}`}>

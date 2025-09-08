@@ -49,8 +49,8 @@ export default function PortfolioOverviewCharts({
 		sortedWatchedAsset?.reduce((sum, curr) => (sum += curr.current_value), 0) ||
 		0;
 
-	const chartData = sortedWatchedAsset
-		?.filter(asset => asset.current_value > 0)
+	const holdingsChartData = sortedWatchedAsset
+		?.filter((asset) => asset.current_value > 0)
 		.map((asset) => {
 			const portfolioPercentage = Number(
 				((asset.current_value / portfolioTotalValue) * 100).toFixed(2)
@@ -63,8 +63,8 @@ export default function PortfolioOverviewCharts({
 
 	return (
 		<div className='grid grid-cols-1 lg:grid-cols-2 gap-3'>
-			<TotalHoldingsChart chartData={chartData} />
-			<HoldingsChangeChart />
+			<TotalHoldingsChart chartData={holdingsChartData} />
+			<HoldingsChangeChart chartData={portfolioDetails.historical_value_1m} />
 		</div>
 	);
 }

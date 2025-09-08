@@ -24,7 +24,6 @@ export default function CryptoPortfolioDetails({
 				portfolioDetails={portfolioDetails}
 				isLoading={isPortfolioDetailsLoading}
 			/>
-			{/* TODO - charts  */}
 			<PortfolioOverviewCharts
 				portfolioDetails={portfolioDetails}
 				isLoading={isPortfolioDetailsLoading}
