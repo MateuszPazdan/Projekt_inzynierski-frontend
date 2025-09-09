@@ -1,34 +1,37 @@
-import { useDeleteAllTransactionsCryptoPortfolioMutation } from '@/app/_redux/features/portfiolioApiSlice';
+import { useDeleteWatchedCryptoPortfolioMutation } from '@/app/_redux/features/portfiolioApiSlice';
 import toast from 'react-hot-toast';
 import Button from '../Button';
 import ModalHeader from '../ModalHeader';
+import { useRouter } from 'next/navigation';
 
-interface DeletePortfolioTransactionsModalProps {
+interface DeleteWatchedAssetModalProps {
 	onCloseModal: () => void;
 	portfolioId: string;
+	assetSymbol: string;
 	assetType: 'crypto' | 'stock';
-	assetSymbol?: string;
 }
 
-export default function DeletePortfolioTransactionsModal({
+export default function DeleteWatchedAssetModal({
 	onCloseModal,
 	portfolioId,
-	assetType,
 	assetSymbol,
-}: DeletePortfolioTransactionsModalProps) {
-	const [deleteTransactions, { isLoading: isTransactionDeleting }] =
-		useDeleteAllTransactionsCryptoPortfolioMutation();
+	assetType,
+}: DeleteWatchedAssetModalProps) {
+	const router = useRouter();
+	const [deleteWatchedCrypto, { isLoading: isWatchedCryptoDeleting }] =
+		useDeleteWatchedCryptoPortfolioMutation();
 
 	function handleDeleteTransactions() {
 		if (assetType === 'crypto') {
-			deleteTransactions({
-				portfolioId: portfolioId,
-				cryptoSymbol: assetSymbol,
+			deleteWatchedCrypto({
+				portfolio_id: portfolioId,
+				crypto_symbol: assetSymbol,
 			})
 				.unwrap()
 				.then(() => {
-					toast.success('Usunięto transakcje.');
+					toast.success('Usunięto aktywo z portfela.');
 					onCloseModal();
+					router.replace(`/app/invest/crypto/${portfolioId}`);
 				})
 				.catch((error) => {
 					toast.error(
@@ -41,22 +44,19 @@ export default function DeletePortfolioTransactionsModal({
 
 	return (
 		<div>
-			<ModalHeader
-				title={'Czyszczenie transakcji'}
-				onCloseModal={onCloseModal}
-			/>
+			<ModalHeader title={'Usuwanie aktywa'} onCloseModal={onCloseModal} />
 			<div className='gap-10 py-5'>
 				<p className='text-gray-700 md:text-center md:flex flex-col md:mx-auto text-lg'>
-					Na pewno chcesz usunąć wszystkie transakcje? Tego nie da się cofnąć.
+					Na pewno chcesz usunąć aktywo z portfela? Tego nie da się cofnąć.
 				</p>
 				<div className='flex justify-center pt-10'>
 					<Button
 						type='button'
 						color='danger'
-						isLoading={isTransactionDeleting}
+						isLoading={isWatchedCryptoDeleting}
 						onClick={handleDeleteTransactions}
 					>
-						Wyczyść transakcje
+						Usuń aktywo
 					</Button>
 				</div>
 			</div>

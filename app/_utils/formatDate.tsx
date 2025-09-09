@@ -1,4 +1,5 @@
-export function formatDateLabel(dateString: string): string {
+export function formatDateLabel(dateString?: string): string {
+	if (!dateString) return '';
 	const today = new Date();
 	const yesterday = new Date();
 	yesterday.setDate(today.getDate() - 1);
@@ -18,9 +19,15 @@ export function formatDateLabel(dateString: string): string {
 	});
 }
 
-export function formatTime(dateString: string) {
+export function formatTime(dateString?: string) {
+	if (!dateString) return '';
 	return new Date(dateString).toLocaleTimeString('pl-PL', {
 		hour: '2-digit',
 		minute: '2-digit',
 	});
+}
+
+export function formatDateForInput(date: Date | string) {
+	const dateObj = new Date(date);
+	return dateObj.toISOString().slice(0, 16);
 }

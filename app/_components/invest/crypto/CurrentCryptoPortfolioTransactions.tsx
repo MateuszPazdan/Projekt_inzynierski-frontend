@@ -10,10 +10,10 @@ import EmptyList from '../../EmptyList';
 import InfoCard from '../../InfoCard';
 import Modal from '../../Modal';
 import Pagination from '../../Pagination';
+import PortfolioTransactionDetailsModal from '../PortfolioTransactionDetailsModal';
 import PortfolioTransactionListElement from '../PortfolioTransactionListElement';
 import PortfolioTransactionListHeader from '../PortfolioTransactionListHeader';
 import PortfolioTransactionListSkeleton from '../PortfolioTransactionListSkeleton';
-import ManagePortfolioTransactionModal from '../ManangePortfolioTransactionModal';
 
 export const thStyles = 'group px-3 py-2 ';
 interface CurrentCryptoPortfolioTransactionsProps {
@@ -76,15 +76,16 @@ export default function CurrentCryptoPortfolioTransactions({
 							</tr>,
 							...(groupedTransactions?.[date].map((transaction) => (
 								<Modal key={transaction.id}>
-									<Modal.Open opens='manageTransaction'>
+									<Modal.Open opens='showPortfolioTransactionDetails'>
 										<PortfolioTransactionListElement
 											transaction={transaction}
 										/>
 									</Modal.Open>
-									<Modal.Window name='manageTransaction'>
-										<ManagePortfolioTransactionModal
-											transaction={transaction}
+									<Modal.Window name='showPortfolioTransactionDetails'>
+										<PortfolioTransactionDetailsModal
 											onCloseModal={() => undefined}
+											transaction={transaction}
+											portfolioId={portfolioId}
 										/>
 									</Modal.Window>
 								</Modal>

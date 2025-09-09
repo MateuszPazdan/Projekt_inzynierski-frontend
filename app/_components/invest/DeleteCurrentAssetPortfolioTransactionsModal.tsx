@@ -1,29 +1,35 @@
-import { useDeleteAllTransactionsCryptoPortfolioMutation } from '@/app/_redux/features/portfiolioApiSlice';
 import toast from 'react-hot-toast';
 import Button from '../Button';
 import ModalHeader from '../ModalHeader';
+import {
+	PortfolioCryptoTransaction,
+	useDeleteCurrentAssetPortfolioTransactionMutationMutation,
+} from '@/app/_redux/features/portfiolioApiSlice';
 
-interface DeletePortfolioTransactionsModalProps {
+interface DeleteCurrentPortfolioTransactionModalProps {
 	onCloseModal: () => void;
 	portfolioId: string;
-	assetType: 'crypto' | 'stock';
 	assetSymbol?: string;
+	assetType: 'crypto' | 'stock';
+	transaction?: PortfolioCryptoTransaction;
 }
 
-export default function DeletePortfolioTransactionsModal({
+export default function DeleteCurrentPortfolioTransactionModal({
 	onCloseModal,
 	portfolioId,
 	assetType,
-	assetSymbol,
-}: DeletePortfolioTransactionsModalProps) {
-	const [deleteTransactions, { isLoading: isTransactionDeleting }] =
-		useDeleteAllTransactionsCryptoPortfolioMutation();
+	transaction,
+}: DeleteCurrentPortfolioTransactionModalProps) {
+	const [
+		deletePortfolioTransactions,
+		{ isLoading: isPortfolioTransactionDeleting },
+	] = useDeleteCurrentAssetPortfolioTransactionMutationMutation();
 
 	function handleDeleteTransactions() {
 		if (assetType === 'crypto') {
-			deleteTransactions({
-				portfolioId: portfolioId,
-				cryptoSymbol: assetSymbol,
+			deletePortfolioTransactions({
+				portfolio_id: portfolioId,
+				transaction_id: transaction?.id,
 			})
 				.unwrap()
 				.then(() => {
@@ -41,22 +47,19 @@ export default function DeletePortfolioTransactionsModal({
 
 	return (
 		<div>
-			<ModalHeader
-				title={'Czyszczenie transakcji'}
-				onCloseModal={onCloseModal}
-			/>
+			<ModalHeader title={'Usuwanie transakcji'} onCloseModal={onCloseModal} />
 			<div className='gap-10 py-5'>
 				<p className='text-gray-700 md:text-center md:flex flex-col md:mx-auto text-lg'>
-					Na pewno chcesz usunąć wszystkie transakcje? Tego nie da się cofnąć.
+					Na pewno chcesz usunąć tę transakcje? Tego nie da się cofnąć.
 				</p>
 				<div className='flex justify-center pt-10'>
 					<Button
 						type='button'
 						color='danger'
-						isLoading={isTransactionDeleting}
+						isLoading={isPortfolioTransactionDeleting}
 						onClick={handleDeleteTransactions}
 					>
-						Wyczyść transakcje
+						Usuń transakcję
 					</Button>
 				</div>
 			</div>

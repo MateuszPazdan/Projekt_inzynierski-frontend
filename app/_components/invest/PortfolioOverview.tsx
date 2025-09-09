@@ -79,7 +79,7 @@ export default function PortfolioOverview({
 			</InfoCard>
 			<div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3'>
 				<CurrentBalance
-					balance={portfolioDetails?.total_investment}
+					balance={portfolioDetails?.current_value}
 					isLoading={isLoading}
 				/>
 				<PortfolioChange

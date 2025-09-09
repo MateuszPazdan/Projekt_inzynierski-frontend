@@ -4,6 +4,8 @@ import { FaBrush, FaTrashAlt } from 'react-icons/fa';
 import DropdownMenu from '../../DropdownMenu';
 import DropdownMenuElement from '../../DropdownMenuElement';
 import Modal from '../../Modal';
+import DeletePortfolioTransactionsModal from '../DeletePortfolioTransactionsModal';
+import DeleteWatchedAssetModal from '../DeleteWatchedAssetModal';
 
 interface ManageAssetTransactionsBtnProps {
 	portfolioId: string;
@@ -39,7 +41,12 @@ export default function ManageAssetTransactionsBtn({
 							/>
 						</Modal.Open>
 						<Modal.Window name='deleteAsset'>
-							<div>Delete asset</div>
+							<DeleteWatchedAssetModal
+								onCloseModal={() => undefined}
+								portfolioId={portfolioId}
+								assetSymbol={assetSymbol}
+								assetType='crypto'
+							/>
 						</Modal.Window>
 					</Modal>
 					<Modal>
@@ -51,7 +58,12 @@ export default function ManageAssetTransactionsBtn({
 							/>
 						</Modal.Open>
 						<Modal.Window name='deleteCurrentAssetTransactions'>
-							<div>Wyczyść transakcje</div>
+							<DeletePortfolioTransactionsModal
+								onCloseModal={() => undefined}
+								portfolioId={portfolioId}
+								assetSymbol={assetSymbol}
+								assetType={assetType}
+							/>
 						</Modal.Window>
 					</Modal>
 				</>

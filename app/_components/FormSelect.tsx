@@ -40,7 +40,7 @@ export default function FormSelect({
 				type='hidden'
 				value={(selected || defaultValue) ?? ''}
 				{...register(name, {
-					required: required && 'Wybór kategorii jest wymagany',
+					required: required && 'Pole wymagane',
 				})}
 			/>
 

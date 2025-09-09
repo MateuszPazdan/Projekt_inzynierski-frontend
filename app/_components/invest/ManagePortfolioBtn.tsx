@@ -73,7 +73,7 @@ export default function ManagePortfolioBtn({
 							<DeletePortfolioTransactionsModal
 								onCloseModal={() => undefined}
 								portfolioId={portfolio.id}
-								portfolioType='crypto'
+								assetType='crypto'
 							/>
 						</Modal.Window>
 					</Modal>

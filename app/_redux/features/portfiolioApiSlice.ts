@@ -15,6 +15,15 @@ export interface PortfolioRequestBody {
 	color: string;
 }
 
+export interface PortfolioTransactionRequestBody {
+	description: string;
+	transaction_type: 'buy' | 'sell';
+	amount: number;
+	price_per_unit: number;
+	transaction_date: string;
+	crypto: { symbol: string };
+}
+
 export interface PortfolioInfo {
 	title: string;
 	is_public: boolean;
@@ -121,14 +130,21 @@ const portfolioApiSlice = apiSlice.injectEndpoints({
 			}),
 			invalidatesTags: () => [{ type: 'CryptoPortfolios' }],
 		}),
-		deleteAllTransactionsCryptoPortfolio: builder.mutation<void, string>({
-			query: (portfolioId) => ({
-				url: `/portfolios/cryptos/${portfolioId}/transactions`,
+		deleteAllTransactionsCryptoPortfolio: builder.mutation<
+			void,
+			{
+				portfolioId: string;
+				cryptoSymbol?: string;
+			}
+		>({
+			query: ({ portfolioId, cryptoSymbol = '' }) => ({
+				url: `/portfolios/cryptos/${portfolioId}/transactions?crypto_symbol=${cryptoSymbol}`,
 				method: 'DELETE',
 			}),
-			invalidatesTags: (result, error, portfolioId) => [
+			invalidatesTags: (result, error, { portfolioId }) => [
 				{ type: 'CryptoPortfolios' },
 				{ type: 'CryptoPortfolio', id: portfolioId },
+				{ type: 'CryptoPortfolioTransactions', id: portfolioId },
 			],
 		}),
 		retrieveCryptoPortfolioDetails: builder.query<
@@ -156,6 +172,20 @@ const portfolioApiSlice = apiSlice.injectEndpoints({
 				{ type: 'CryptoPortfolios' },
 			],
 		}),
+		deleteWatchedCryptoPortfolio: builder.mutation<
+			void,
+			{ portfolio_id: string; crypto_symbol: string }
+		>({
+			query: ({ portfolio_id, crypto_symbol }) => ({
+				url: `/portfolios/cryptos/${portfolio_id}/watched_cryptos/${crypto_symbol}`,
+				method: 'DELETE',
+			}),
+			invalidatesTags: (result, error, { portfolio_id }) => [
+				{ type: 'CryptoPortfolio', id: portfolio_id },
+				{ type: 'CryptoPortfolios' },
+				{ type: 'CryptoPortfolioTransactions', id: portfolio_id },
+			],
+		}),
 		retrieveCryptoPortfolioTransactions: builder.query<
 			PaginatedResponse<PortfolioCryptoTransaction>,
 			{
@@ -169,6 +199,57 @@ const portfolioApiSlice = apiSlice.injectEndpoints({
 				url: `/portfolios/cryptos/${portfolioId}/transactions?crypto_symbol=${cryptoSymbol}&page=${page}&size=${size}`,
 				method: 'GET',
 			}),
+			providesTags: (result, error, { portfolioId }) => [
+				{ type: 'CryptoPortfolioTransactions', id: portfolioId },
+			],
+		}),
+		createCryptoPortfolioTransaction: builder.mutation<
+			PortfolioCryptoTransaction,
+			{ portfolio_id: string; transaction: PortfolioTransactionRequestBody }
+		>({
+			query: ({ portfolio_id, transaction }) => ({
+				url: `/portfolios/cryptos/${portfolio_id}/transactions`,
+				method: 'POST',
+				body: transaction,
+			}),
+			invalidatesTags: (result, error, { portfolio_id }) => [
+				{ type: 'CryptoPortfolio', id: portfolio_id },
+				{ type: 'CryptoPortfolios' },
+				{ type: 'CryptoPortfolioTransactions', id: portfolio_id },
+			],
+		}),
+		updateCryptoPortfolioTransaction: builder.mutation<
+			PortfolioCryptoTransaction,
+			{
+				portfolio_id: string;
+				transaction_id: string;
+				transaction: PortfolioTransactionRequestBody;
+			}
+		>({
+			query: ({ portfolio_id, transaction_id, transaction }) => ({
+				url: `/portfolios/cryptos/${portfolio_id}/transactions/${transaction_id}`,
+				method: 'PATCH',
+				body: transaction,
+			}),
+			invalidatesTags: (result, error, { portfolio_id }) => [
+				{ type: 'CryptoPortfolio', id: portfolio_id },
+				{ type: 'CryptoPortfolios' },
+				{ type: 'CryptoPortfolioTransactions', id: portfolio_id },
+			],
+		}),
+		deleteCurrentAssetPortfolioTransactionMutation: builder.mutation<
+			void,
+			{ portfolio_id: string; transaction_id?: string }
+		>({
+			query: ({ portfolio_id, transaction_id = '' }) => ({
+				url: `/portfolios/cryptos/${portfolio_id}/transactions/${transaction_id}`,
+				method: 'DELETE',
+			}),
+			invalidatesTags: (result, error, { portfolio_id }) => [
+				{ type: 'CryptoPortfolio', id: portfolio_id },
+				{ type: 'CryptoPortfolios' },
+				{ type: 'CryptoPortfolioTransactions', id: portfolio_id },
+			],
 		}),
 	}),
 });
@@ -181,5 +262,9 @@ export const {
 	useDeleteAllTransactionsCryptoPortfolioMutation,
 	useRetrieveCryptoPortfolioDetailsQuery,
 	useAddWatchedCryptoPortfolioMutation,
+	useDeleteWatchedCryptoPortfolioMutation,
 	useRetrieveCryptoPortfolioTransactionsQuery,
+	useCreateCryptoPortfolioTransactionMutation,
+	useUpdateCryptoPortfolioTransactionMutation,
+	useDeleteCurrentAssetPortfolioTransactionMutationMutation,
 } = portfolioApiSlice;
