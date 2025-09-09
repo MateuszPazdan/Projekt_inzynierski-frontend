@@ -42,6 +42,7 @@ export interface PortfolioTransaction {
 	transaction_date: string;
 	profit_loss: number;
 	profit_loss_percentage: number;
+	description: string;
 }
 
 export interface CryptoPortfolioDetails extends PortfolioInfo {

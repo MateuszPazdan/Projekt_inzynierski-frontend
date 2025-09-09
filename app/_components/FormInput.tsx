@@ -29,7 +29,6 @@ function FormInput({
 					required: required && 'Pole wymagane',
 					validate: validateFunction,
 				})}
-				type='email'
 				name={name}
 				className={`border-grayThird border rounded-lg p-2 focus:outline-none focus focus:border-main ${
 					error && 'border-redAccent focus:border-redAccent/50'

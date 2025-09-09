@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import Button from '../../Button';
 import Modal from '../../Modal';
@@ -7,6 +9,7 @@ import { notFound } from 'next/navigation';
 import { formatFullPrice } from '@/app/_utils/formatAmountOfMoney';
 import { BsPlus } from 'react-icons/bs';
 import InfoCard from '../../InfoCard';
+import ManagePortfolioTransactionModal from '../ManangePortfolioTransactionModal';
 
 interface CurrentCryptoPortfolioOverviewProps {
 	portfolioId: string;
@@ -67,7 +70,7 @@ export default function CurrentCryptoPortfolioOverview({
 					/>
 
 					<Modal>
-						<Modal.Open opens='addCoin'>
+						<Modal.Open opens='addPortfolioTransaction'>
 							<Button
 								size='large'
 								additionalClasses='h-12'
@@ -79,8 +82,12 @@ export default function CurrentCryptoPortfolioOverview({
 								<span className='mr-3'>Dodaj transakcję</span>
 							</Button>
 						</Modal.Open>
-						<Modal.Window name='addCoin'>
-							<div>add transaction</div>
+						<Modal.Window name='addPortfolioTransaction'>
+							<ManagePortfolioTransactionModal
+								onCloseModal={() => undefined}
+								portfolioId={portfolioId}
+								cryptoSymbol={cryptoSymbol}
+							/>
 						</Modal.Window>
 					</Modal>
 				</div>

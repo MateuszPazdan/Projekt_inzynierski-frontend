@@ -1,4 +1,5 @@
-import CurrentCryptoPortfolioDetails from '@/app/_components/invest/crypto/CurrentCryptoPortfolioDetails';
+import CurrentCryptoPortfolioOverview from '@/app/_components/invest/crypto/CurrentCryptoPortfolioOverview';
+import CurrentCryptoPortfolioTransactions from '@/app/_components/invest/crypto/CurrentCryptoPortfolioTransactions';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -13,7 +14,12 @@ export default function page({
 }) {
 	return (
 		<div className='px-2 sm:px-5 lg:px-12 py-10 max-w-[1800px] mx-auto min-h-full w-full flex flex-col gap-3'>
-			<CurrentCryptoPortfolioDetails
+			<CurrentCryptoPortfolioOverview
+				portfolioId={params.portfolioId}
+				cryptoSymbol={params.cryptoSymbol}
+			/>
+
+			<CurrentCryptoPortfolioTransactions
 				portfolioId={params.portfolioId}
 				cryptoSymbol={params.cryptoSymbol}
 			/>

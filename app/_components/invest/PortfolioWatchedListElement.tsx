@@ -33,7 +33,7 @@ export default function PortfolioWatchedListElement({
 					className='flex flex-row items-center gap-2'
 				>
 					<Image
-						alt='crypto-logo'
+						alt={`${watchedElement?.crypto.name}-logo`}
 						src={`${watchedElement?.crypto.icon}`}
 						width={24}
 						height={24}

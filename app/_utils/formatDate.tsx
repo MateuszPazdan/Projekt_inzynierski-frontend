@@ -17,3 +17,10 @@ export function formatDateLabel(dateString: string): string {
 		year: 'numeric',
 	});
 }
+
+export function formatTime(dateString: string) {
+	return new Date(dateString).toLocaleTimeString('pl-PL', {
+		hour: '2-digit',
+		minute: '2-digit',
+	});
+}

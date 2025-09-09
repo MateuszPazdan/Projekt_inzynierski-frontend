@@ -1,9 +1,9 @@
 import { FaAngleUp, FaAngleDown } from 'react-icons/fa6';
 
 interface SortableThProps {
-	sortKey: string;
-	sort: { by: string; order: string };
-	handleSort: (sortItem: string) => void;
+	sortKey?: string;
+	sort?: { by: string; order: string };
+	handleSort?: (sortItem: string) => void;
 	thStyles: string;
 	textAlignment?: 'left' | 'right' | 'center';
 	additionalStyles?: string;
@@ -34,27 +34,41 @@ export default function SortableTh({
 	const flexDirection =
 		textAlignment === 'right' ? 'flex-row-reverse' : 'flex-row';
 
-	return (
-		<th
-			className={`${thStyles} ${additionalStyles} cursor-pointer `}
-			onClick={() => handleSort(sortKey)}
-		>
-			<span
-				className={`flex gap-[2px] ${
-					textAlignment === 'right' ? alignmentClassReversed : alignmentClass
-				} ${flexDirection} items-center`}
+	if (sort && sortKey && handleSort)
+		return (
+			<th
+				className={`${thStyles} ${additionalStyles} cursor-pointer `}
+				onClick={() => handleSort(sortKey)}
 			>
-				{children}
-				{sort.by === sortKey ? (
-					sort.order === 'asc' ? (
-						<FaAngleUp />
+				<span
+					className={`flex gap-[2px] ${
+						textAlignment === 'right' ? alignmentClassReversed : alignmentClass
+					} ${flexDirection} items-center`}
+				>
+					{children}
+					{sort.by === sortKey ? (
+						sort.order === 'asc' ? (
+							<FaAngleUp />
+						) : (
+							<FaAngleDown />
+						)
 					) : (
-						<FaAngleDown />
-					)
-				) : (
-					<FaAngleDown className='group-hover:opacity-100 opacity-0 transition-opacity duration-300' />
-				)}
-			</span>
-		</th>
-	);
+						<FaAngleDown className='group-hover:opacity-100 opacity-0 transition-opacity duration-300' />
+					)}
+				</span>
+			</th>
+		);
+	else {
+		return (
+			<th className={`${thStyles} ${additionalStyles} `}>
+				<span
+					className={`flex gap-[2px] ${
+						textAlignment === 'right' ? alignmentClassReversed : alignmentClass
+					} ${flexDirection} items-center`}
+				>
+					{children}
+				</span>
+			</th>
+		);
+	}
 }

@@ -7,12 +7,13 @@ import { FaAngleDown } from 'react-icons/fa6';
 interface FormSelectProps {
 	label: string;
 	name: string;
-	options: string[];
+	options?: string[] | [];
 	register: UseFormRegister<FieldValues>;
 	required?: boolean;
 	defaultValue?: string;
 	error?: string;
 	setValue: UseFormSetValue<FieldValues>;
+	disabled?: boolean;
 }
 
 export default function FormSelect({
@@ -24,6 +25,7 @@ export default function FormSelect({
 	defaultValue,
 	error,
 	setValue,
+	disabled,
 }: FormSelectProps) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [selected, setSelected] = useState<string | null>(null);
@@ -36,7 +38,7 @@ export default function FormSelect({
 
 			<input
 				type='hidden'
-				value={selected ?? ''}
+				value={(selected || defaultValue) ?? ''}
 				{...register(name, {
 					required: required && 'Wybór kategorii jest wymagany',
 				})}
@@ -45,9 +47,10 @@ export default function FormSelect({
 			<button
 				type='button'
 				onClick={() => setIsOpen((prev) => !prev)}
-				className={`w-full flex justify-between items-center border border-grayThird rounded-lg p-2 text-left bg-white hover:bg-grayOne transition-colors duration-300  ${
+				className={`w-full flex justify-between items-center border border-grayThird rounded-lg p-2 text-left bg-white hover:bg-grayOne transition-colors duration-300 disabled:opacity-60 disabled:bg-grayOne disabled:cursor-default ${
 					error && 'border-redAccent focus:border-redAccent/50'
 				}`}
+				disabled={disabled || !options}
 			>
 				<span>{selected || defaultValue || 'Wybierz'}</span>
 				<FaAngleDown
@@ -57,21 +60,22 @@ export default function FormSelect({
 				/>
 			</button>
 
-			{isOpen && (
+			{isOpen && options && (
 				<ul className='absolute max-h-[240px] overflow-y-auto top-full left-0 w-full bg-white border border-grayThird rounded-lg mt-1 shadow-md z-10'>
-					{options.map((item) => (
-						<li
-							key={item}
-							onClick={() => {
-								setSelected(item);
-								setValue(name, item, { shouldValidate: true });
-								setIsOpen(false);
-							}}
-							className='p-2 hover:bg-grayOne cursor-pointer transition-colors duration-300 text-sm'
-						>
-							{item}
-						</li>
-					))}
+					{options &&
+						options.map((item) => (
+							<li
+								key={item}
+								onClick={() => {
+									setSelected(item);
+									setValue(name, item, { shouldValidate: true });
+									setIsOpen(false);
+								}}
+								className='p-2 hover:bg-grayOne cursor-pointer transition-colors duration-300 text-sm'
+							>
+								{item}
+							</li>
+						))}
 				</ul>
 			)}
 			<p className='absolute -bottom-6 left-2 text-sm text-redAccent'>
