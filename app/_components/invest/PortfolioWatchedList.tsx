@@ -5,6 +5,7 @@ import PortfolioWachedListHeader from './PortfolioWatchedListHeader';
 import { CryptoPortfolioDetails } from '@/app/_redux/features/portfiolioApiSlice';
 import PortfolioWatchedListSkeleton from './PortfolioWatchedListSkeleton';
 import { sortPortfolioAssets } from '@/app/_utils/sortAssets';
+import InfoCard from '../InfoCard';
 
 interface PortfolioWatchedListProps {
 	portfolioDetails?: CryptoPortfolioDetails;
@@ -37,16 +38,16 @@ export default function PortfolioWatchedList({
 
 	if (!watchedCryptos || watchedCryptos?.length === 0)
 		return (
-			<div className=' rounded-lg border overflow-x-auto border-grayThird shadow-md bg-white p-3 px-4 '>
+			<InfoCard title='Twoje aktywa'>
 				<EmptyList
 					title='Brak aktyw'
 					description='Dodaj aktywa do portfolio, aby je tutaj zobaczyć.'
 				/>
-			</div>
+			</InfoCard>
 		);
 
 	return (
-		<div className=' rounded-lg border overflow-x-auto border-grayThird shadow-md bg-white p-3 px-4 '>
+		<InfoCard title='Twoje aktywa'>
 			<table className='text-right divide-y divide-grayThird text-xs md:text-sm w-full min-w-[700px] bg-white'>
 				<PortfolioWachedListHeader
 					handleSort={handleSort}
@@ -62,6 +63,6 @@ export default function PortfolioWatchedList({
 					))}
 				</tbody>
 			</table>
-		</div>
+		</InfoCard>
 	);
 }

@@ -36,7 +36,7 @@ export default function TopGainer({
 			}
 			isLoading={isLoading}
 		>
-			{portfolioDetails ? (
+			{portfolioDetails && topGainerCrypto?.profit_loss !== 0 ? (
 				<div className='grid grid-cols-[1fr_auto] items-center gap-1'>
 					<div className='flex flex-row items-center gap-2'>
 						{topGainerCrypto?.crypto.icon ? (
@@ -78,7 +78,7 @@ export default function TopGainer({
 					</div>
 				</div>
 			) : (
-				<p>Brak danych</p>
+				<p>-</p>
 			)}
 		</InfoCard>
 	);

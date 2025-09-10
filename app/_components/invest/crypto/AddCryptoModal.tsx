@@ -46,7 +46,6 @@ export default function AddCryptoModal({
 				toast.success(`Dodano kryptowalutę (${crypto.symbol}) do portfolio.`);
 			})
 			.catch((error) => {
-				console.log(error);
 				toast.error(
 					error?.data.detail ||
 						`Wystąpił błąd podczas dodawania kryptowaluty (${crypto.symbol}) do portfolio.`

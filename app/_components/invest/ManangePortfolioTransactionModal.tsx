@@ -46,7 +46,6 @@ export default function ManagePortfolioTransactionModal({
 		useUpdateCryptoPortfolioTransactionMutation();
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
-		console.log(data);
 		if (!transaction) {
 			createCryptoPortfolioTransaction({
 				portfolio_id: portfolioId,

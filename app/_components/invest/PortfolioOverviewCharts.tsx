@@ -1,8 +1,8 @@
 import { CryptoPortfolioDetails } from '@/app/_redux/features/portfiolioApiSlice';
+import EmptyList from '../EmptyList';
+import InfoCard from '../InfoCard';
 import HoldingsChangeChart from './HoldingsChangeChart';
 import TotalHoldingsChart from './TotalHoldingsChart';
-import InfoCard from '../InfoCard';
-import NoData from '../NoData';
 
 interface PortfolioOverviewChartsProps {
 	portfolioDetails?: CryptoPortfolioDetails;
@@ -21,22 +21,6 @@ export default function PortfolioOverviewCharts({
 				</InfoCard>
 				<InfoCard title='Całkowita zmiana'>
 					<div className='h-[400px] w-full rounded shimmer' />
-				</InfoCard>
-			</div>
-		);
-
-	if (!portfolioDetails)
-		return (
-			<div className='grid grid-cols-1 lg:grid-cols-2 gap-3'>
-				<InfoCard title='Całkowite udziały'>
-					<div className='h-[400px] flex items-center justify-center'>
-						<NoData message='Brak danych do wykresu' />
-					</div>
-				</InfoCard>
-				<InfoCard title='Całkowita zmiana'>
-					<div className='h-[400px] flex items-center justify-center'>
-						<NoData message='Brak danych do wykresu' />
-					</div>
 				</InfoCard>
 			</div>
 		);
@@ -63,8 +47,31 @@ export default function PortfolioOverviewCharts({
 
 	return (
 		<div className='grid grid-cols-1 lg:grid-cols-2 gap-3'>
-			<TotalHoldingsChart chartData={holdingsChartData} />
-			<HoldingsChangeChart chartData={portfolioDetails.historical_value_1m} />
+			{!portfolioDetails || portfolioDetails.current_value === 0 ? (
+				<InfoCard title='Całkowite udziały'>
+					<div className='h-[400px] flex items-center justify-center'>
+						<EmptyList
+							title='Brak danych do wykresu'
+							description='Dodaj transakcje do portfolio, aby zobaczyć statystki.'
+						/>
+					</div>
+				</InfoCard>
+			) : (
+				<TotalHoldingsChart chartData={holdingsChartData} />
+			)}
+
+			{!portfolioDetails || portfolioDetails.total_transactions === 0 ? (
+				<InfoCard title='Całkowita zmiana'>
+					<div className='h-[400px] flex items-center justify-center'>
+						<EmptyList
+							title='Brak danych do wykresu'
+							description='Dodaj aktywa do portfolio, aby zobaczyć statystki.'
+						/>
+					</div>
+				</InfoCard>
+			) : (
+				<HoldingsChangeChart chartData={portfolioDetails.historical_value_1m} />
+			)}
 		</div>
 	);
 }
