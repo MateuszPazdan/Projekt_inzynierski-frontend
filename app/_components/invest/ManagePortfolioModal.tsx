@@ -1,6 +1,7 @@
 import {
 	PortfolioInfo,
 	useCreateCryptoPortfolioMutation,
+	useCreateStockPortfolioMutation,
 	useModifyCryptoPortfolioMutation,
 } from '@/app/_redux/features/portfiolioApiSlice';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
@@ -41,6 +42,8 @@ export default function ManagePortfolioModal({
 		useCreateCryptoPortfolioMutation();
 	const [modifyCryptoPortfolio, { isLoading: isCryptoPortfolioModifying }] =
 		useModifyCryptoPortfolioMutation();
+	const [createStockPortfolio, { isLoading: isStockPortfolioCreating }] =
+		useCreateStockPortfolioMutation();
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		if (portfolioType === 'crypto') {
@@ -85,6 +88,24 @@ export default function ManagePortfolioModal({
 			}
 		}
 		if (portfolioType === 'stocks') {
+			if (!portfolio) {
+				createStockPortfolio({
+					is_public: data.is_public === 'true',
+					color: data.color,
+					description: data.description,
+					title: data.title,
+				})
+					.unwrap()
+					.then(() => {
+						toast.success('Utworzono nowe portfolio.');
+						onCloseModal();
+					})
+					.catch((error) => {
+						toast.error(
+							error.meassege || 'Wystąpił błąd przy tworzeniu portfolio.'
+						);
+					});
+			}
 			//  TODO implement stocks portfolio management
 		}
 	};
@@ -135,7 +156,11 @@ export default function ManagePortfolioModal({
 				<div className='flex justify-center pt-5'>
 					<Button
 						type='submit'
-						isLoading={isCryptoPortfolioCreating || isCryptoPortfolioModifying}
+						isLoading={
+							isCryptoPortfolioCreating ||
+							isCryptoPortfolioModifying ||
+							isStockPortfolioCreating
+						}
 					>
 						{portfolio ? 'Modyfikuj portfolio' : 'Stwórz portfolio'}
 					</Button>

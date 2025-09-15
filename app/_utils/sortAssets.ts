@@ -166,14 +166,10 @@ export function sortPortfolioAssets(
 		return list.sort((a, b) => b.crypto.price - a.crypto.price);
 	}
 	if (sort.by === 'change24h' && sort.order === 'asc') {
-		return list.sort(
-			(a, b) => a.profit_loss_24h - b.profit_loss_24h
-		);
+		return list.sort((a, b) => a.profit_loss_24h - b.profit_loss_24h);
 	}
 	if (sort.by === 'change24h' && sort.order === 'desc') {
-		return list.sort(
-			(a, b) => b.profit_loss_24h - a.profit_loss_24h
-		);
+		return list.sort((a, b) => b.profit_loss_24h - a.profit_loss_24h);
 	}
 	if (sort.by === 'total_cost' && sort.order === 'asc') {
 		return list.sort((a, b) => a.total_invested - b.total_invested);

@@ -8,10 +8,12 @@ import {
 
 interface PortfolioListElementProps {
 	portfolio: PortfolioInfo;
+	assetType: 'stocks' | 'crypto';
 }
 
 export default function PortfolioListElement({
 	portfolio,
+	assetType,
 }: PortfolioListElementProps) {
 	function getPolishNounForm(count: number): string {
 		const lastDigit = count % 10;
@@ -31,7 +33,7 @@ export default function PortfolioListElement({
 	return (
 		<Link
 			className='min-h-[90px] sm:min-w-fit flex flex-row justify-between gap-3 px-3 py-2 sm:px-5 sm:py-6 lg:px-8 lg:py-8 border border-grayThird shadow-md bg-white hover:bg-graySecond rounded-lg transition-colors duration-300'
-			href={`/app/invest/crypto/${portfolio?.id}`}
+			href={`/app/invest/${assetType}/${portfolio?.id}`}
 		>
 			<div className='flex flex-row gap-2 md:gap-3 items-center'>
 				<span
@@ -45,7 +47,7 @@ export default function PortfolioListElement({
 						{portfolio?.title}
 					</span>
 					<span className='text-blackOne/70 text-sm mb-1'>
-						{portfolio?.total_watched_cryptos}{' '}
+						{portfolio?.total_watched_cryptos || 0}{' '}
 						{getPolishNounForm(portfolio?.total_watched_cryptos || 0)}
 					</span>
 				</p>

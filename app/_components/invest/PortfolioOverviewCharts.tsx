@@ -1,6 +1,9 @@
 'use client';
 
-import { CryptoPortfolioDetails } from '@/app/_redux/features/portfiolioApiSlice';
+import {
+	CryptoPortfolioDetails,
+	PortfolioSummary,
+} from '@/app/_redux/features/portfiolioApiSlice';
 import EmptyList from '../EmptyList';
 import InfoCard from '../InfoCard';
 import HoldingsChangeChart from './HoldingsChangeChart';
@@ -9,7 +12,7 @@ import PeriodSelect from '../PeriodSelect';
 import { useState } from 'react';
 
 interface PortfolioOverviewChartsProps {
-	portfolioDetails?: CryptoPortfolioDetails;
+	portfolioDetails?: CryptoPortfolioDetails | PortfolioSummary;
 	isLoading?: boolean;
 }
 

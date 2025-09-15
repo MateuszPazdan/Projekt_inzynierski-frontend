@@ -86,8 +86,29 @@ export interface WatchedCryptoDetails {
 	price_change_percentage_24h: number;
 }
 
+export interface PortfolioSummary {
+	total_investment: number;
+	current_value: number;
+	total_percentage_profit_loss_24h: number;
+	total_profit_loss_24h: number;
+	total_profit_loss: number;
+	total_portfolios: number;
+	total_transactions: number;
+	cryptos_percentage_holdings: { [key: string]: number };
+	historical_value_7d: { date: string; value: number }[];
+	historical_value_1m: { date: string; value: number }[];
+	historical_value_1y: { date: string; value: number }[];
+}
+
 const portfolioApiSlice = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
+		retrieveCryptoPortfoliosSummary: builder.query<PortfolioSummary, void>({
+			query: () => ({
+				url: `/portfolios/cryptos/summary`,
+				method: 'GET',
+			}),
+			providesTags: ['CryptoPortfolios'],
+		}),
 		retrieveCryptoPortfolios: builder.query<
 			PaginatedResponse<PortfolioInfo>,
 			{ page: number; size: number }
@@ -128,7 +149,7 @@ const portfolioApiSlice = apiSlice.injectEndpoints({
 				url: `/portfolios/cryptos/${portfolioId}`,
 				method: 'DELETE',
 			}),
-			invalidatesTags: () => [{ type: 'CryptoPortfolios' }],
+			invalidatesTags: ['CryptoPortfolios'],
 		}),
 		deleteAllTransactionsCryptoPortfolio: builder.mutation<
 			void,
@@ -251,11 +272,40 @@ const portfolioApiSlice = apiSlice.injectEndpoints({
 				{ type: 'CryptoPortfolioTransactions', id: portfolio_id },
 			],
 		}),
+
+		retrieveStockPortfoliosSummary: builder.query<PortfolioSummary, void>({
+			query: () => ({
+				url: `/portfolios/stocks/summary`,
+				method: 'GET',
+			}),
+			providesTags: ['StockPortfolios'],
+		}),
+		retrieveStockPortfolios: builder.query<
+			PaginatedResponse<PortfolioInfo>,
+			{ page: number; size: number }
+		>({
+			query: ({ page, size }) => ({
+				url: `/portfolios/stocks?size=${size}&page=${page}`,
+				method: 'GET',
+			}),
+			providesTags: ['StockPortfolios'],
+		}),
+		createStockPortfolio: builder.mutation<PortfolioInfo, PortfolioRequestBody>(
+			{
+				query: (body) => ({
+					url: `/portfolios/stocks`,
+					method: 'POST',
+					body,
+				}),
+				invalidatesTags: ['StockPortfolios'],
+			}
+		),
 	}),
 });
 
 export const {
 	useRetrieveCryptoPortfoliosQuery,
+	useRetrieveCryptoPortfoliosSummaryQuery,
 	useCreateCryptoPortfolioMutation,
 	useModifyCryptoPortfolioMutation,
 	useDeleteCryptoPortfolioMutation,
@@ -267,4 +317,8 @@ export const {
 	useCreateCryptoPortfolioTransactionMutation,
 	useUpdateCryptoPortfolioTransactionMutation,
 	useDeleteCurrentAssetPortfolioTransactionMutationMutation,
+
+	useRetrieveStockPortfoliosSummaryQuery,
+	useRetrieveStockPortfoliosQuery,
+	useCreateStockPortfolioMutation,
 } = portfolioApiSlice;

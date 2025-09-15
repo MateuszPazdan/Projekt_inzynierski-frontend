@@ -1,18 +1,18 @@
 'use client';
 
-import { useRetrieveCryptoPortfoliosQuery } from '@/app/_redux/features/portfiolioApiSlice';
+import { useRetrieveStockPortfoliosQuery } from '@/app/_redux/features/portfiolioApiSlice';
 import { useSearchParams } from 'next/navigation';
-import PortfolioList from '../PortfolioList';
 import SearchParamsPagination from '../../SearchParamsPagination';
+import PortfolioList from '../PortfolioList';
 
-export default function CryptoPortfolioList() {
+export default function StockPortfolioList() {
 	const searchParams = useSearchParams();
 	const currPage = Number(searchParams.get('page')) || 1;
 	const {
 		data,
-		isLoading: isCryptoPortfoliosLoading,
-		isFetching: isCryptoPortfoliosFetching,
-	} = useRetrieveCryptoPortfoliosQuery({
+		isLoading: isStockPortfoliosLoading,
+		isFetching: isStockPortfoliosFetching,
+	} = useRetrieveStockPortfoliosQuery({
 		size: 10,
 		page: currPage,
 	});
@@ -21,8 +21,8 @@ export default function CryptoPortfolioList() {
 		<>
 			<PortfolioList
 				portfolioList={data?.items}
-				isLoading={isCryptoPortfoliosLoading || isCryptoPortfoliosFetching}
-				assetType='crypto'
+				isLoading={isStockPortfoliosLoading || isStockPortfoliosFetching}
+                assetType={'stocks'}
 			/>
 			<SearchParamsPagination currPage={currPage} pages={data?.pages} />
 		</>

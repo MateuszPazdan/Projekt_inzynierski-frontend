@@ -22,10 +22,7 @@ export default function TopGainer({
 
 	const topGainerCrypto = portfolioDetails?.watched_cryptos?.reduce(
 		(max, curr) =>
-			Math.abs(curr.profit_loss_percentage) >
-			Math.abs(max.profit_loss_percentage)
-				? curr
-				: max
+			curr.profit_loss_percentage > max.profit_loss_percentage ? curr : max
 	);
 
 	return (
