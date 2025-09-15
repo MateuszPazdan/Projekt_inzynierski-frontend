@@ -92,7 +92,7 @@ export default function HoldingsChangeChart({
 						dataKey={'value'}
 						axisLine={false}
 						tickLine={false}
-						domain={['dataMin', 'auto']}
+						domain={[0, (dataMax) => dataMax * 1.05]}
 						tickMargin={10}
 						scale={'sequential'}
 						orientation={'right'}

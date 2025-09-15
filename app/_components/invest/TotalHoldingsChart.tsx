@@ -4,12 +4,15 @@ import { useEffect, useState } from 'react';
 import { Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 import InfoCard from '../InfoCard';
 
-interface ChartData {
-	crypto: { symbol: string; icon?: string; name: string };
-	current_value: number;
-	portfolio_percentage: number;
-	fill?: string;
+interface CryptosPercentageHoldings {
+	[key: string]: number;
 }
+
+type Holding = {
+	symbol: string;
+	percentage: number;
+	fill?: string;
+};
 
 const colors = [
 	'#3c37ff',
@@ -22,9 +25,9 @@ const colors = [
 ];
 
 export default function TotalHoldingsChart({
-	chartData,
+	cryptosPercentageHoldings = {},
 }: {
-	chartData?: ChartData[];
+	cryptosPercentageHoldings: CryptosPercentageHoldings;
 }) {
 	const [windowWidth, setWindowWidth] = useState<number | null>(null);
 
@@ -36,30 +39,14 @@ export default function TotalHoldingsChart({
 		return () => window.removeEventListener('resize', handleResize);
 	}, []);
 
-	const biggestHoldings = chartData?.slice(0, 5) ?? [];
-	const otherHoldings = chartData?.slice(5) ?? [];
+	const holdingsList = cryptosPercentageHoldings
+		? Object.entries(cryptosPercentageHoldings).map(([symbol, percentage]) => ({
+				symbol,
+				percentage,
+		  }))
+		: [];
 
-	const otherSum = otherHoldings.reduce(
-		(acc, curr) => acc + curr.portfolio_percentage,
-		0
-	);
-
-	const displayData = [
-		...biggestHoldings,
-		...(otherHoldings.length > 0
-			? [
-					{
-						crypto: {
-							symbol: 'inne',
-							icon: undefined,
-							name: 'Inne',
-						},
-						current_value: 0,
-						portfolio_percentage: otherSum,
-					},
-			  ]
-			: []),
-	].map((el, index) => {
+	const displayData = holdingsList.map((el, index) => {
 		return { ...el, fill: colors[index] };
 	});
 
@@ -72,7 +59,7 @@ export default function TotalHoldingsChart({
 						outerRadius={110}
 						fill='#3c37ff'
 						paddingAngle={6}
-						dataKey='portfolio_percentage'
+						dataKey='percentage'
 						data={displayData}
 						animationDuration={300}
 					/>
@@ -95,7 +82,8 @@ export default function TotalHoldingsChart({
 							return (
 								<div>
 									{payload?.map((entry, index) => {
-										const entryPayload = entry.payload as ChartData;
+										const entryPayload = entry.payload as Holding;
+										console.log(entryPayload.symbol);
 										return (
 											<div
 												className='flex flex-row justify-between w-full gap-10 text-base'
@@ -107,12 +95,12 @@ export default function TotalHoldingsChart({
 														className='w-4 h-4 rounded-full'
 													></div>
 													<span className='text-gray-600 font-normal '>
-														{entryPayload.crypto.symbol === 'inne'
+														{entryPayload.symbol.toLowerCase() === 'other'
 															? 'Inne'
-															: entryPayload.crypto.symbol.toUpperCase()}
+															: entryPayload.symbol.toUpperCase()}
 													</span>
 												</div>
-												<p className=''>{entryPayload.portfolio_percentage}%</p>
+												<p className=''>{entryPayload.percentage}%</p>
 											</div>
 										);
 									})}
@@ -127,12 +115,12 @@ export default function TotalHoldingsChart({
 								return (
 									<div className='rounded-lg border border-grayThird shadow-md  bg-white px-4 py-2 text-sm'>
 										<p className='font-normal text-gray-600'>
-											{payload[0].payload.crypto.symbol === 'inne'
+											{payload[0].payload.symbol.toLowerCase() === 'other'
 												? 'Inne'
-												: payload[0].payload.crypto.symbol.toUpperCase()}
+												: payload[0].payload.symbol.toUpperCase()}
 											:{' '}
 											<span className='text-black'>
-												{payload[0].payload.portfolio_percentage}%
+												{payload[0].payload.percentage}%
 											</span>
 										</p>
 									</div>

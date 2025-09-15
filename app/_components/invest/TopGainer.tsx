@@ -36,7 +36,7 @@ export default function TopGainer({
 			}
 			isLoading={isLoading}
 		>
-			{portfolioDetails && topGainerCrypto?.profit_loss !== 0 ? (
+			{portfolioDetails && portfolioDetails.total_transactions !== 0 ? (
 				<div className='grid grid-cols-[1fr_auto] items-center gap-1'>
 					<div className='flex flex-row items-center gap-2'>
 						{topGainerCrypto?.crypto.icon ? (

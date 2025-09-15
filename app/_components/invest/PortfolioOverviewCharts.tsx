@@ -25,26 +25,6 @@ export default function PortfolioOverviewCharts({
 			</div>
 		);
 
-	const sortedWatchedAsset = portfolioDetails?.watched_cryptos
-		.slice()
-		.sort((a, b) => b.current_value - a.current_value);
-
-	const portfolioTotalValue =
-		sortedWatchedAsset?.reduce((sum, curr) => (sum += curr.current_value), 0) ||
-		0;
-
-	const holdingsChartData = sortedWatchedAsset
-		?.filter((asset) => asset.current_value > 0)
-		.map((asset) => {
-			const portfolioPercentage = Number(
-				((asset.current_value / portfolioTotalValue) * 100).toFixed(2)
-			);
-			return {
-				...asset,
-				portfolio_percentage: portfolioPercentage,
-			};
-		});
-
 	return (
 		<div className='grid grid-cols-1 lg:grid-cols-2 gap-3'>
 			{!portfolioDetails || portfolioDetails.current_value === 0 ? (
@@ -57,7 +37,11 @@ export default function PortfolioOverviewCharts({
 					</div>
 				</InfoCard>
 			) : (
-				<TotalHoldingsChart chartData={holdingsChartData} />
+				<TotalHoldingsChart
+					cryptosPercentageHoldings={
+						portfolioDetails.cryptos_percentage_holdings
+					}
+				/>
 			)}
 
 			{!portfolioDetails || portfolioDetails.total_transactions === 0 ? (
