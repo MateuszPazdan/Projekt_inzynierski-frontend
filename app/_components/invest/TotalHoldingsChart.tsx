@@ -83,7 +83,6 @@ export default function TotalHoldingsChart({
 								<div>
 									{payload?.map((entry, index) => {
 										const entryPayload = entry.payload as Holding;
-										console.log(entryPayload.symbol);
 										return (
 											<div
 												className='flex flex-row justify-between w-full gap-10 text-base'

@@ -1,18 +1,35 @@
+'use client';
+
 import { CryptoPortfolioDetails } from '@/app/_redux/features/portfiolioApiSlice';
 import EmptyList from '../EmptyList';
 import InfoCard from '../InfoCard';
 import HoldingsChangeChart from './HoldingsChangeChart';
 import TotalHoldingsChart from './TotalHoldingsChart';
+import PeriodSelect from '../PeriodSelect';
+import { useState } from 'react';
 
 interface PortfolioOverviewChartsProps {
 	portfolioDetails?: CryptoPortfolioDetails;
 	isLoading?: boolean;
 }
 
+type PeriodKey = keyof Pick<
+	CryptoPortfolioDetails,
+	'historical_value_7d' | 'historical_value_1m' | 'historical_value_1y'
+>;
+
+const periods = [
+	{ value: 'historical_value_7d', label: '1w' },
+	{ value: 'historical_value_1m', label: '1m' },
+	{ value: 'historical_value_1y', label: '1y' },
+];
+
 export default function PortfolioOverviewCharts({
 	portfolioDetails,
 	isLoading,
 }: PortfolioOverviewChartsProps) {
+	const [range, setRange] = useState<PeriodKey>('historical_value_1m');
+
 	if (isLoading)
 		return (
 			<div className='grid grid-cols-1 lg:grid-cols-2 gap-3'>
@@ -54,7 +71,14 @@ export default function PortfolioOverviewCharts({
 					</div>
 				</InfoCard>
 			) : (
-				<HoldingsChangeChart chartData={portfolioDetails.historical_value_1m} />
+				<InfoCard title='Zmiana wartości'>
+					<HoldingsChangeChart chartData={portfolioDetails?.[range]} />
+					<PeriodSelect
+						periods={periods}
+						range={range}
+						setRange={setRange as (val: string) => void}
+					/>
+				</InfoCard>
 			)}
 		</div>
 	);

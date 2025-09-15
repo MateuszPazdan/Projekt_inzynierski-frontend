@@ -4,18 +4,25 @@ import { useId } from 'react';
 interface PeriodSelectProps {
 	range: string;
 	setRange: (val: string) => void;
+	periods?: { value: string; label: string }[];
 }
 
-export default function PeriodSelect({ range, setRange }: PeriodSelectProps) {
+export default function PeriodSelect({
+	range,
+	setRange,
+	periods,
+}: PeriodSelectProps) {
 	const id = useId();
 
-	const options = [
-		{ value: '1d', label: '24h' },
-		{ value: '1w', label: '1w' },
-		{ value: '1m', label: '1m' },
-		{ value: '1y', label: '1y' },
-		{ value: 'max', label: 'Wszystko' },
-	];
+	const options = periods
+		? periods
+		: [
+				{ value: '1d', label: '24h' },
+				{ value: '1w', label: '1w' },
+				{ value: '1m', label: '1m' },
+				{ value: '1y', label: '1y' },
+				{ value: 'max', label: 'Wszystko' },
+		  ];
 
 	return (
 		<div className='flex items-center w-full gap-1 sm:gap-2 bg-grayOne border border-grayThird rounded-md p-1 text-xs sm:text-sm text-gray-600'>
