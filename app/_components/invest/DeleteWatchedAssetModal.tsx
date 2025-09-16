@@ -1,4 +1,7 @@
-import { useDeleteWatchedCryptoPortfolioMutation } from '@/app/_redux/features/portfiolioApiSlice';
+import {
+	useDeleteWatchedCryptoPortfolioMutation,
+	useDeleteWatchedStockPortfolioMutation,
+} from '@/app/_redux/features/portfiolioApiSlice';
 import toast from 'react-hot-toast';
 import Button from '../Button';
 import ModalHeader from '../ModalHeader';
@@ -8,7 +11,7 @@ interface DeleteWatchedAssetModalProps {
 	onCloseModal: () => void;
 	portfolioId: string;
 	assetSymbol: string;
-	assetType: 'crypto' | 'stock';
+	assetType: 'crypto' | 'stocks';
 }
 
 export default function DeleteWatchedAssetModal({
@@ -20,6 +23,8 @@ export default function DeleteWatchedAssetModal({
 	const router = useRouter();
 	const [deleteWatchedCrypto, { isLoading: isWatchedCryptoDeleting }] =
 		useDeleteWatchedCryptoPortfolioMutation();
+	const [deleteWatchedStock, { isLoading: isWatchedStockDeleting }] =
+		useDeleteWatchedStockPortfolioMutation();
 
 	function handleDeleteTransactions() {
 		if (assetType === 'crypto') {
@@ -32,6 +37,24 @@ export default function DeleteWatchedAssetModal({
 					toast.success('Usunięto aktywo z portfela.');
 					onCloseModal();
 					router.replace(`/app/invest/crypto/${portfolioId}`);
+				})
+				.catch((error) => {
+					toast.error(
+						error?.data?.detail || 'Wystąpił błąd przy usuwaniu transakcji.'
+					);
+					onCloseModal();
+				});
+		}
+		if (assetType === 'stocks') {
+			deleteWatchedStock({
+				portfolio_id: portfolioId,
+				stock_symbol: assetSymbol,
+			})
+				.unwrap()
+				.then(() => {
+					toast.success('Usunięto aktywo z portfela.');
+					onCloseModal();
+					router.replace(`/app/invest/stocks/${portfolioId}`);
 				})
 				.catch((error) => {
 					toast.error(
@@ -53,7 +76,7 @@ export default function DeleteWatchedAssetModal({
 					<Button
 						type='button'
 						color='danger'
-						isLoading={isWatchedCryptoDeleting}
+						isLoading={isWatchedCryptoDeleting || isWatchedStockDeleting}
 						onClick={handleDeleteTransactions}
 					>
 						Usuń aktywo

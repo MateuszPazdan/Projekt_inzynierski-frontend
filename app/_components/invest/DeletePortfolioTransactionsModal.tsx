@@ -43,6 +43,7 @@ export default function DeletePortfolioTransactionsModal({
 				});
 		}
 		if (assetType === 'stocks') {
+			console.log('sdsa');
 			deleteStockTransactions({
 				portfolioId: portfolioId,
 				stockSymbol: assetSymbol,

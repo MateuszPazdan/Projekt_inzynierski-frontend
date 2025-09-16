@@ -8,20 +8,19 @@ export interface PaginatedResponse<T> {
 	pages: number;
 }
 
-export interface PortfolioRequestBody {
+interface PortfolioRequestBody {
 	title: string;
 	is_public: boolean;
 	description: string;
 	color: string;
 }
 
-export interface PortfolioTransactionRequestBody {
+interface PortfolioTransactionRequestBody {
 	description: string;
 	transaction_type: 'buy' | 'sell';
 	amount: number;
 	price_per_unit: number;
 	transaction_date: string;
-	crypto: { symbol: string };
 }
 
 export interface PortfolioInfo {
@@ -78,6 +77,11 @@ export interface CryptoPortfolioDetails extends PortfolioInfo {
 	historical_value_1y: { date: string; value: number }[];
 }
 
+interface CryptoPortfolioTransactionRequestBody
+	extends PortfolioTransactionRequestBody {
+	crypto: { symbol: string };
+}
+
 export interface PortfolioCryptoTransaction extends PortfolioTransaction {
 	crypto: WatchedCryptoDetails;
 }
@@ -108,6 +112,11 @@ export interface StockPortfolioDetails extends PortfolioInfo {
 	historical_value_7d: { date: string; value: number }[];
 	historical_value_1m: { date: string; value: number }[];
 	historical_value_1y: { date: string; value: number }[];
+}
+
+interface StockPortfolioTransactionRequestBody
+	extends PortfolioTransactionRequestBody {
+	stock: { symbol: string };
 }
 
 export interface PortfolioStockTransaction extends PortfolioTransaction {
@@ -260,7 +269,10 @@ const portfolioApiSlice = apiSlice.injectEndpoints({
 		}),
 		createCryptoPortfolioTransaction: builder.mutation<
 			PortfolioCryptoTransaction,
-			{ portfolio_id: string; transaction: PortfolioTransactionRequestBody }
+			{
+				portfolio_id: string;
+				transaction: CryptoPortfolioTransactionRequestBody;
+			}
 		>({
 			query: ({ portfolio_id, transaction }) => ({
 				url: `/portfolios/cryptos/${portfolio_id}/transactions`,
@@ -278,7 +290,7 @@ const portfolioApiSlice = apiSlice.injectEndpoints({
 			{
 				portfolio_id: string;
 				transaction_id: string;
-				transaction: PortfolioTransactionRequestBody;
+				transaction: CryptoPortfolioTransactionRequestBody;
 			}
 		>({
 			query: ({ portfolio_id, transaction_id, transaction }) => ({
@@ -292,7 +304,7 @@ const portfolioApiSlice = apiSlice.injectEndpoints({
 				{ type: 'CryptoPortfolioTransactions', id: portfolio_id },
 			],
 		}),
-		deleteCurrentAssetPortfolioTransactionMutation: builder.mutation<
+		deleteCurrentCryptoPortfolioTransactionMutation: builder.mutation<
 			void,
 			{ portfolio_id: string; transaction_id?: string }
 		>({
@@ -396,6 +408,20 @@ const portfolioApiSlice = apiSlice.injectEndpoints({
 				{ type: 'StockPortfolios' },
 			],
 		}),
+		deleteWatchedStockPortfolio: builder.mutation<
+			void,
+			{ portfolio_id: string; stock_symbol: string }
+		>({
+			query: ({ portfolio_id, stock_symbol }) => ({
+				url: `/portfolios/stocks/${portfolio_id}/watched_stocks/${stock_symbol}`,
+				method: 'DELETE',
+			}),
+			invalidatesTags: (result, error, { portfolio_id }) => [
+				{ type: 'StockPortfolio', id: portfolio_id },
+				{ type: 'StockPortfolios' },
+				{ type: 'StockPortfolioTransactions', id: portfolio_id },
+			],
+		}),
 		retrieveStockPortfolioTransactions: builder.query<
 			PaginatedResponse<PortfolioStockTransaction>,
 			{
@@ -411,6 +437,57 @@ const portfolioApiSlice = apiSlice.injectEndpoints({
 			}),
 			providesTags: (result, error, { portfolioId }) => [
 				{ type: 'StockPortfolioTransactions', id: portfolioId },
+			],
+		}),
+		createStockPortfolioTransaction: builder.mutation<
+			PortfolioStockTransaction,
+			{
+				portfolio_id: string;
+				transaction: StockPortfolioTransactionRequestBody;
+			}
+		>({
+			query: ({ portfolio_id, transaction }) => ({
+				url: `/portfolios/stocks/${portfolio_id}/transactions`,
+				method: 'POST',
+				body: transaction,
+			}),
+			invalidatesTags: (result, error, { portfolio_id }) => [
+				{ type: 'StockPortfolio', id: portfolio_id },
+				{ type: 'StockPortfolios' },
+				{ type: 'StockPortfolioTransactions', id: portfolio_id },
+			],
+		}),
+		updateStockPortfolioTransaction: builder.mutation<
+			PortfolioCryptoTransaction,
+			{
+				portfolio_id: string;
+				transaction_id: string;
+				transaction: StockPortfolioTransactionRequestBody;
+			}
+		>({
+			query: ({ portfolio_id, transaction_id, transaction }) => ({
+				url: `/portfolios/stocks/${portfolio_id}/transactions/${transaction_id}`,
+				method: 'PATCH',
+				body: transaction,
+			}),
+			invalidatesTags: (result, error, { portfolio_id }) => [
+				{ type: 'StockPortfolio', id: portfolio_id },
+				{ type: 'StockPortfolios' },
+				{ type: 'StockPortfolioTransactions', id: portfolio_id },
+			],
+		}),
+		deleteCurrentStockPortfolioTransactionMutation: builder.mutation<
+			void,
+			{ portfolio_id: string; transaction_id?: string }
+		>({
+			query: ({ portfolio_id, transaction_id = '' }) => ({
+				url: `/portfolios/stocks/${portfolio_id}/transactions/${transaction_id}`,
+				method: 'DELETE',
+			}),
+			invalidatesTags: (result, error, { portfolio_id }) => [
+				{ type: 'StockPortfolio', id: portfolio_id },
+				{ type: 'StockPortfolios' },
+				{ type: 'StockPortfolioTransactions', id: portfolio_id },
 			],
 		}),
 	}),
@@ -429,7 +506,7 @@ export const {
 	useRetrieveCryptoPortfolioTransactionsQuery,
 	useCreateCryptoPortfolioTransactionMutation,
 	useUpdateCryptoPortfolioTransactionMutation,
-	useDeleteCurrentAssetPortfolioTransactionMutationMutation,
+	useDeleteCurrentCryptoPortfolioTransactionMutationMutation,
 
 	useRetrieveStockPortfoliosSummaryQuery,
 	useRetrieveStockPortfoliosQuery,
@@ -439,5 +516,9 @@ export const {
 	useDeleteAllTransactionsStockPortfolioMutation,
 	useRetrieveStockPortfolioDetailsQuery,
 	useAddWatchedStockPortfolioMutation,
+	useDeleteWatchedStockPortfolioMutation,
 	useRetrieveStockPortfolioTransactionsQuery,
+	useCreateStockPortfolioTransactionMutation,
+	useUpdateStockPortfolioTransactionMutation,
+	useDeleteCurrentStockPortfolioTransactionMutationMutation,
 } = portfolioApiSlice;

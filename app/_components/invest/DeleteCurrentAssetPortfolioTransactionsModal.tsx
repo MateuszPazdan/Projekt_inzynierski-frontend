@@ -4,14 +4,15 @@ import ModalHeader from '../ModalHeader';
 import {
 	PortfolioCryptoTransaction,
 	PortfolioStockTransaction,
-	useDeleteCurrentAssetPortfolioTransactionMutationMutation,
+	useDeleteCurrentCryptoPortfolioTransactionMutationMutation,
+	useDeleteCurrentStockPortfolioTransactionMutationMutation,
 } from '@/app/_redux/features/portfiolioApiSlice';
 
 interface DeleteCurrentPortfolioTransactionModalProps {
 	onCloseModal: () => void;
 	portfolioId: string;
 	assetSymbol?: string;
-	assetType: 'crypto' | 'stock';
+	assetType: 'crypto' | 'stocks';
 	transaction?: PortfolioCryptoTransaction | PortfolioStockTransaction;
 }
 
@@ -22,13 +23,34 @@ export default function DeleteCurrentPortfolioTransactionModal({
 	transaction,
 }: DeleteCurrentPortfolioTransactionModalProps) {
 	const [
-		deletePortfolioTransactions,
-		{ isLoading: isPortfolioTransactionDeleting },
-	] = useDeleteCurrentAssetPortfolioTransactionMutationMutation();
+		deleteCryptoPortfolioTransactions,
+		{ isLoading: isCryptoPortfolioTransactionDeleting },
+	] = useDeleteCurrentCryptoPortfolioTransactionMutationMutation();
+	const [
+		deleteStockPortfolioTransactions,
+		{ isLoading: isStockPortfolioTransactionDeleting },
+	] = useDeleteCurrentStockPortfolioTransactionMutationMutation();
 
 	function handleDeleteTransactions() {
 		if (assetType === 'crypto') {
-			deletePortfolioTransactions({
+			deleteCryptoPortfolioTransactions({
+				portfolio_id: portfolioId,
+				transaction_id: transaction?.id,
+			})
+				.unwrap()
+				.then(() => {
+					toast.success('Usunięto transakcje.');
+					onCloseModal();
+				})
+				.catch((error) => {
+					toast.error(
+						error?.data?.detail || 'Wystąpił błąd przy usuwaniu transakcji.'
+					);
+					onCloseModal();
+				});
+		}
+		if (assetType === 'stocks') {
+			deleteStockPortfolioTransactions({
 				portfolio_id: portfolioId,
 				transaction_id: transaction?.id,
 			})
@@ -57,7 +79,10 @@ export default function DeleteCurrentPortfolioTransactionModal({
 					<Button
 						type='button'
 						color='danger'
-						isLoading={isPortfolioTransactionDeleting}
+						isLoading={
+							isCryptoPortfolioTransactionDeleting ||
+							isStockPortfolioTransactionDeleting
+						}
 						onClick={handleDeleteTransactions}
 					>
 						Usuń transakcję

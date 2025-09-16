@@ -86,6 +86,7 @@ export default function CurrentStockPortfolioTransactions({
 											onCloseModal={() => undefined}
 											transaction={transaction}
 											portfolioId={portfolioId}
+											assetType='stocks'
 										/>
 									</Modal.Window>
 								</Modal>

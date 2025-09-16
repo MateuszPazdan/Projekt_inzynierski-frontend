@@ -85,6 +85,7 @@ export default function CurrentStockPortfolioOverview({
 								onCloseModal={() => undefined}
 								portfolioId={portfolioId}
 								cryptoSymbol={stockSymbol}
+								assetType='stocks'
 							/>
 						</Modal.Window>
 					</Modal>

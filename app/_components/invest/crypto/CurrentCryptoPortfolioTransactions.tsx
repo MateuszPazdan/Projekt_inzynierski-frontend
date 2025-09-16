@@ -86,6 +86,7 @@ export default function CurrentCryptoPortfolioTransactions({
 											onCloseModal={() => undefined}
 											transaction={transaction}
 											portfolioId={portfolioId}
+											assetType='crypto'
 										/>
 									</Modal.Window>
 								</Modal>

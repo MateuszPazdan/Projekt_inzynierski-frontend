@@ -45,7 +45,7 @@ export default function ManageAssetTransactionsBtn({
 								onCloseModal={() => undefined}
 								portfolioId={portfolioId}
 								assetSymbol={assetSymbol}
-								assetType='crypto'
+								assetType={assetType}
 							/>
 						</Modal.Window>
 					</Modal>

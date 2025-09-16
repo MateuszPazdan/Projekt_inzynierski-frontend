@@ -15,12 +15,14 @@ interface PortfolioTransactionDetailsModalProps {
 	onCloseModal: () => void;
 	transaction: PortfolioCryptoTransaction | PortfolioStockTransaction;
 	portfolioId: string;
+	assetType: 'crypto' | 'stocks';
 }
 
 export default function PortfolioTransactionDetailsModal({
 	onCloseModal,
 	transaction,
 	portfolioId,
+	assetType,
 }: PortfolioTransactionDetailsModalProps) {
 	const transactionAsset =
 		'crypto' in transaction
@@ -94,6 +96,12 @@ export default function PortfolioTransactionDetailsModal({
 							{formatTime(transaction?.transaction_date)}
 						</span>
 					</p>
+					<p className='flex flex-col  justify-between py-3'>
+						<span className='text-gray-600'>Opis</span>
+						<span className='font-medium'>
+							{transaction?.description || 'Brak opisu'}
+						</span>
+					</p>
 				</div>
 			</div>
 			<div className='grid grid-cols-2 gap-3'>
@@ -107,7 +115,7 @@ export default function PortfolioTransactionDetailsModal({
 						<DeleteCurrentAssetPortfolioTransactionsModal
 							onCloseModal={() => undefined}
 							portfolioId={portfolioId}
-							assetType='crypto'
+							assetType={assetType}
 							transaction={transaction}
 						/>
 					</Modal.Window>
@@ -123,6 +131,7 @@ export default function PortfolioTransactionDetailsModal({
 							transaction={transaction}
 							onCloseModal={() => undefined}
 							portfolioId={portfolioId}
+							assetType={assetType}
 						/>
 					</Modal.Window>
 				</Modal>

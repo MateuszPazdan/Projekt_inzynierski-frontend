@@ -53,11 +53,13 @@ export default function FormSelect({
 				disabled={disabled || !options}
 			>
 				<span>{selected || defaultValue || 'Wybierz'}</span>
-				<FaAngleDown
-					className={`transition-transform duration-300 ${
-						isOpen && 'rotate-180'
-					}`}
-				/>
+				{!disabled && (
+					<FaAngleDown
+						className={`transition-transform duration-300 ${
+							isOpen && 'rotate-180'
+						}`}
+					/>
+				)}
 			</button>
 
 			{isOpen && options && (

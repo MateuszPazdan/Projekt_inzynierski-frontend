@@ -87,6 +87,7 @@ export default function CurrentCryptoPortfolioOverview({
 								onCloseModal={() => undefined}
 								portfolioId={portfolioId}
 								cryptoSymbol={cryptoSymbol}
+								assetType='crypto'
 							/>
 						</Modal.Window>
 					</Modal>

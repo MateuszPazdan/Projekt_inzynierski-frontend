@@ -2,7 +2,9 @@ import {
 	PortfolioCryptoTransaction,
 	PortfolioStockTransaction,
 	useCreateCryptoPortfolioTransactionMutation,
+	useCreateStockPortfolioTransactionMutation,
 	useUpdateCryptoPortfolioTransactionMutation,
+	useUpdateStockPortfolioTransactionMutation,
 } from '@/app/_redux/features/portfiolioApiSlice';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Button from '../Button';
@@ -18,6 +20,7 @@ interface ManagePortfolioTransactionModalProps {
 	portfolioId: string;
 	cryptoSymbol?: string;
 	transaction?: PortfolioCryptoTransaction | PortfolioStockTransaction;
+	assetType: 'stocks' | 'crypto';
 }
 
 export default function ManagePortfolioTransactionModal({
@@ -25,6 +28,7 @@ export default function ManagePortfolioTransactionModal({
 	portfolioId,
 	cryptoSymbol,
 	transaction,
+	assetType,
 }: ManagePortfolioTransactionModalProps) {
 	const {
 		register,
@@ -41,69 +45,142 @@ export default function ManagePortfolioTransactionModal({
 			description: transaction?.description,
 		},
 	});
-	const [createCryptoPortfolioTransaction] =
-		useCreateCryptoPortfolioTransactionMutation();
-	const [updateCryptoPortfolioTransaction] =
-		useUpdateCryptoPortfolioTransactionMutation();
+	const [
+		createCryptoPortfolioTransaction,
+		{ isLoading: isCreateCryptoPortfolioTransactionLoading },
+	] = useCreateCryptoPortfolioTransactionMutation();
+	const [
+		updateCryptoPortfolioTransaction,
+		{ isLoading: isUpdateCryptoPortfolioTransactionLoading },
+	] = useUpdateCryptoPortfolioTransactionMutation();
+	const [
+		createStockPortfolioTransaction,
+		{ isLoading: isCreateStockPortfolioTransactionLoading },
+	] = useCreateStockPortfolioTransactionMutation();
+	const [
+		updateStockPortfolioTransaction,
+		{ isLoading: isUpdateStockPortfolioTransactionLoading },
+	] = useUpdateStockPortfolioTransactionMutation();
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
-		if (!transaction) {
-			createCryptoPortfolioTransaction({
-				portfolio_id: portfolioId,
-				transaction: {
-					amount: data.amount,
-					crypto: { symbol: data.crypto_symbol.toLowerCase() },
-					description: data.description,
-					price_per_unit: data.price_per_unit,
-					transaction_date: data.transaction_date,
-					transaction_type:
-						data.transaction_type === 'Kup'
-							? 'buy'
-							: data.transaction_type === 'Sprzedaj'
-							? 'sell'
-							: data.transaction_type,
-				},
-			})
-				.unwrap()
-				.then(() => {
-					toast.success('Utworzono nową transakcję.');
-					onCloseModal();
+		if (assetType === 'crypto') {
+			if (!transaction) {
+				createCryptoPortfolioTransaction({
+					portfolio_id: portfolioId,
+					transaction: {
+						amount: data.amount,
+						crypto: { symbol: data.symbol.toLowerCase() },
+						description: data.description,
+						price_per_unit: data.price_per_unit,
+						transaction_date: data.transaction_date,
+						transaction_type:
+							data.transaction_type === 'Kup'
+								? 'buy'
+								: data.transaction_type === 'Sprzedaj'
+								? 'sell'
+								: data.transaction_type,
+					},
 				})
-				.catch((error) => {
-					toast.error(
-						error.data.detail || 'Wystąpił błąd przy tworzeniu transakcji.'
-					);
-				});
-		}
+					.unwrap()
+					.then(() => {
+						toast.success('Utworzono nową transakcję.');
+						onCloseModal();
+					})
+					.catch((error) => {
+						toast.error(
+							error.data.detail || 'Wystąpił błąd przy tworzeniu transakcji.'
+						);
+					});
+			}
 
-		if (transaction) {
-			updateCryptoPortfolioTransaction({
-				portfolio_id: portfolioId,
-				transaction_id: transaction.id,
-				transaction: {
-					amount: data.amount,
-					crypto: { symbol: data.crypto_symbol.toLowerCase() },
-					description: data.description,
-					price_per_unit: data.price_per_unit,
-					transaction_date: data.transaction_date,
-					transaction_type:
-						data.transaction_type === 'Kup'
-							? 'buy'
-							: data.transaction_type === 'Sprzedaj'
-							? 'sell'
-							: data.transaction_type,
-				},
-			})
-				.unwrap()
-				.then(() => {
-					toast.success('Utworzono nową transakcję.');
-					onCloseModal();
+			if (transaction) {
+				updateCryptoPortfolioTransaction({
+					portfolio_id: portfolioId,
+					transaction_id: transaction.id,
+					transaction: {
+						amount: data.amount,
+						crypto: { symbol: data.symbol.toLowerCase() },
+						description: data.description,
+						price_per_unit: data.price_per_unit,
+						transaction_date: data.transaction_date,
+						transaction_type:
+							data.transaction_type === 'Kup'
+								? 'buy'
+								: data.transaction_type === 'Sprzedaj'
+								? 'sell'
+								: data.transaction_type,
+					},
 				})
-				.catch((error) => {
-					toast.error(
-						error.data.detail || 'Wystąpił błąd przy tworzeniu transakcji.'
-					);
-				});
+					.unwrap()
+					.then(() => {
+						toast.success('Utworzono nową transakcję.');
+						onCloseModal();
+					})
+					.catch((error) => {
+						toast.error(
+							error.data.detail || 'Wystąpił błąd przy tworzeniu transakcji.'
+						);
+					});
+			}
+		}
+		if (assetType === 'stocks') {
+			if (!transaction) {
+				createStockPortfolioTransaction({
+					portfolio_id: portfolioId,
+					transaction: {
+						amount: data.amount,
+						stock: { symbol: data.symbol.toUpperCase() },
+						description: data.description,
+						price_per_unit: data.price_per_unit,
+						transaction_date: data.transaction_date,
+						transaction_type:
+							data.transaction_type === 'Kup'
+								? 'buy'
+								: data.transaction_type === 'Sprzedaj'
+								? 'sell'
+								: data.transaction_type,
+					},
+				})
+					.unwrap()
+					.then(() => {
+						toast.success('Utworzono nową transakcję.');
+						onCloseModal();
+					})
+					.catch((error) => {
+						toast.error(
+							error.data.detail || 'Wystąpił błąd przy tworzeniu transakcji.'
+						);
+					});
+			}
+			if (transaction) {
+				updateStockPortfolioTransaction({
+					portfolio_id: portfolioId,
+					transaction_id: transaction.id,
+					transaction: {
+						amount: data.amount,
+						stock: { symbol: data.symbol.toUpperCase() },
+						description: data.description,
+						price_per_unit: data.price_per_unit,
+						transaction_date: data.transaction_date,
+						transaction_type:
+							data.transaction_type === 'Kup'
+								? 'buy'
+								: data.transaction_type === 'Sprzedaj'
+								? 'sell'
+								: data.transaction_type,
+					},
+				})
+					.unwrap()
+					.then(() => {
+						toast.success('Utworzono nową transakcję.');
+						onCloseModal();
+					})
+					.catch((error) => {
+						toast.error(
+							error.data.detail || 'Wystąpił błąd przy tworzeniu transakcji.'
+						);
+					});
+			}
 		}
 	};
 
@@ -135,10 +212,15 @@ export default function ManagePortfolioTransactionModal({
 				/>
 				<FormSelect
 					label='Aktywo'
-					name='crypto_symbol'
+					name='symbol'
 					register={register}
 					defaultValue={
-						transaction?.crypto.symbol.toUpperCase() ||
+						(transaction &&
+							'crypto' in transaction &&
+							transaction?.crypto.symbol.toUpperCase()) ||
+						(transaction &&
+							'stock' in transaction &&
+							transaction?.stock.symbol.toUpperCase()) ||
 						cryptoSymbol?.toUpperCase()
 					}
 					error={errors?.crypto_symbol?.message as string}
@@ -182,7 +264,12 @@ export default function ManagePortfolioTransactionModal({
 				<div className='flex justify-center pt-5'>
 					<Button
 						type='submit'
-						// isLoading={isTransactionCreating || isTransactionModifying}
+						isLoading={
+							isCreateCryptoPortfolioTransactionLoading ||
+							isUpdateCryptoPortfolioTransactionLoading ||
+							isCreateStockPortfolioTransactionLoading ||
+							isUpdateStockPortfolioTransactionLoading
+						}
 					>
 						{transaction ? 'Edytuj transakcję' : 'Dodaj transakcję'}
 					</Button>
