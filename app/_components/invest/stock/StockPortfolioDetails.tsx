@@ -1,8 +1,8 @@
 'use client';
 
-import { useRetrieveCryptoPortfolioDetailsQuery } from '@/app/_redux/features/portfiolioApiSlice';
-import { notFound } from 'next/navigation';
+import { useRetrieveStockPortfolioDetailsQuery } from '@/app/_redux/features/portfiolioApiSlice';
 import PortfolioOverview from '../PortfolioOverview';
+import { notFound } from 'next/navigation';
 import PortfolioOverviewCharts from '../PortfolioOverviewCharts';
 import PortfolioWatchedList from '../PortfolioWatchedList';
 
@@ -10,11 +10,11 @@ interface CryptoPortfolioDetailsProps {
 	portfolioId: string;
 }
 
-export default function CryptoPortfolioDetails({
+export default function StockPortfolioDetails({
 	portfolioId,
 }: CryptoPortfolioDetailsProps) {
 	const { data: portfolioDetails, isLoading: isPortfolioDetailsLoading } =
-		useRetrieveCryptoPortfolioDetailsQuery(portfolioId);
+		useRetrieveStockPortfolioDetailsQuery(portfolioId);
 
 	if (!portfolioDetails && !isPortfolioDetailsLoading) return notFound();
 
@@ -23,7 +23,7 @@ export default function CryptoPortfolioDetails({
 			<PortfolioOverview
 				portfolioDetails={portfolioDetails}
 				isLoading={isPortfolioDetailsLoading}
-				assetType='crypto'
+				assetType='stocks'
 			/>
 			<PortfolioOverviewCharts
 				portfolioDetails={portfolioDetails}

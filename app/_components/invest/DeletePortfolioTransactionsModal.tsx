@@ -6,7 +6,7 @@ import ModalHeader from '../ModalHeader';
 interface DeletePortfolioTransactionsModalProps {
 	onCloseModal: () => void;
 	portfolioId: string;
-	assetType: 'crypto' | 'stock';
+	assetType: 'crypto' | 'stocks';
 	assetSymbol?: string;
 }
 

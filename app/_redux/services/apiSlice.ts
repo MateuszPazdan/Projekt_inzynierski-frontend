@@ -62,6 +62,7 @@ export const apiSlice = createApi({
 		'CryptoPortfolioTransactions',
 		'CryptoPortfoliosSummary',
 		'StockPortfolios',
+		'StockPortfolio',
 	],
 	endpoints: () => ({}),
 });

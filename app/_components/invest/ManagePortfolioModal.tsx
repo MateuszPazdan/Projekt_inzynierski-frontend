@@ -16,13 +16,13 @@ import Button from '../Button';
 interface ManagePortfolioModalProps {
 	onCloseModal: () => void;
 	portfolio?: PortfolioInfo;
-	portfolioType: 'crypto' | 'stocks';
+	assetType: 'crypto' | 'stocks';
 }
 
 export default function ManagePortfolioModal({
 	onCloseModal,
 	portfolio,
-	portfolioType,
+	assetType,
 }: ManagePortfolioModalProps) {
 	const {
 		register,
@@ -46,7 +46,7 @@ export default function ManagePortfolioModal({
 		useCreateStockPortfolioMutation();
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
-		if (portfolioType === 'crypto') {
+		if (assetType === 'crypto') {
 			if (!portfolio) {
 				createCryptoPortfolio({
 					is_public: data.is_public === 'true',
@@ -87,7 +87,7 @@ export default function ManagePortfolioModal({
 					});
 			}
 		}
-		if (portfolioType === 'stocks') {
+		if (assetType === 'stocks') {
 			if (!portfolio) {
 				createStockPortfolio({
 					is_public: data.is_public === 'true',

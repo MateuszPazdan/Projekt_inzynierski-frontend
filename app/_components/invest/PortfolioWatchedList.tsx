@@ -2,13 +2,16 @@ import { useState } from 'react';
 import EmptyList from '../EmptyList';
 import PortfolioWatchedListElement from './PortfolioWatchedListElement';
 import PortfolioWachedListHeader from './PortfolioWatchedListHeader';
-import { CryptoPortfolioDetails } from '@/app/_redux/features/portfiolioApiSlice';
+import {
+	CryptoPortfolioDetails,
+	StockPortfolioDetails,
+} from '@/app/_redux/features/portfiolioApiSlice';
 import PortfolioWatchedListSkeleton from './PortfolioWatchedListSkeleton';
 import { sortPortfolioAssets } from '@/app/_utils/sortAssets';
 import InfoCard from '../InfoCard';
 
 interface PortfolioWatchedListProps {
-	portfolioDetails?: CryptoPortfolioDetails;
+	portfolioDetails?: CryptoPortfolioDetails | StockPortfolioDetails;
 	isLoading: boolean;
 }
 
@@ -22,7 +25,8 @@ export default function PortfolioWatchedList({
 
 	const watchedCryptos = sortPortfolioAssets(
 		sort,
-		portfolioDetails?.watched_cryptos
+		(portfolioDetails as CryptoPortfolioDetails)?.watched_cryptos ||
+			(portfolioDetails as StockPortfolioDetails)?.watched_stocks
 	);
 
 	const handleSort = (by: string) => {

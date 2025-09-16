@@ -3,6 +3,7 @@
 import {
 	CryptoPortfolioDetails,
 	PortfolioSummary,
+	StockPortfolioDetails,
 } from '@/app/_redux/features/portfiolioApiSlice';
 import EmptyList from '../EmptyList';
 import InfoCard from '../InfoCard';
@@ -12,7 +13,10 @@ import PeriodSelect from '../PeriodSelect';
 import { useState } from 'react';
 
 interface PortfolioOverviewChartsProps {
-	portfolioDetails?: CryptoPortfolioDetails | PortfolioSummary;
+	portfolioDetails?:
+		| CryptoPortfolioDetails
+		| StockPortfolioDetails
+		| PortfolioSummary;
 	isLoading?: boolean;
 }
 
@@ -58,9 +62,7 @@ export default function PortfolioOverviewCharts({
 				</InfoCard>
 			) : (
 				<TotalHoldingsChart
-					cryptosPercentageHoldings={
-						portfolioDetails.cryptos_percentage_holdings
-					}
+					cryptosPercentageHoldings={portfolioDetails.holdings_percentage}
 				/>
 			)}
 

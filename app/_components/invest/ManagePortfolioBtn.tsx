@@ -12,11 +12,12 @@ import DropdownMenuElement from '../DropdownMenuElement';
 interface ManagePortfolioBtnProps {
 	portfolio?: PortfolioInfo;
 	isLoading: boolean;
-	portfolioType: 'crypto' | 'stocks';
+	assetType: 'crypto' | 'stocks';
 }
 export default function ManagePortfolioBtn({
 	portfolio,
 	isLoading,
+	assetType,
 }: ManagePortfolioBtnProps) {
 	const [isExtended, setIsExtended] = useState(false);
 
@@ -41,7 +42,7 @@ export default function ManagePortfolioBtn({
 							<ManagePortfolioModal
 								onCloseModal={() => undefined}
 								portfolio={portfolio}
-								portfolioType='crypto'
+								assetType={assetType}
 							/>
 						</Modal.Window>
 					</Modal>
@@ -57,7 +58,7 @@ export default function ManagePortfolioBtn({
 							<DeletePortfolioModal
 								onCloseModal={() => undefined}
 								portfolioId={portfolio.id}
-								portfolioType='crypto'
+								assetType={assetType}
 							/>
 						</Modal.Window>
 					</Modal>
@@ -73,7 +74,7 @@ export default function ManagePortfolioBtn({
 							<DeletePortfolioTransactionsModal
 								onCloseModal={() => undefined}
 								portfolioId={portfolio.id}
-								assetType='crypto'
+								assetType={assetType}
 							/>
 						</Modal.Window>
 					</Modal>

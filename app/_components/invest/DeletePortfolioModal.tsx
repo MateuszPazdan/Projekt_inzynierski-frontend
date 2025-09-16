@@ -7,13 +7,13 @@ import toast from 'react-hot-toast';
 interface DeletePortfolioModalProps {
 	onCloseModal: () => void;
 	portfolioId: string;
-	portfolioType: 'crypto' | 'stocks';
+	assetType: 'crypto' | 'stocks';
 }
 
 export default function DeletePortfolioModal({
 	onCloseModal,
 	portfolioId,
-	portfolioType,
+	assetType,
 }: DeletePortfolioModalProps) {
 	const [deleteCryptoPortfolio, { isLoading: isCryptoPortfolioDeleting }] =
 		useDeleteCryptoPortfolioMutation();
@@ -21,7 +21,7 @@ export default function DeletePortfolioModal({
 	const router = useRouter();
 
 	function handleDeletePortfolio() {
-		if (portfolioType === 'crypto') {
+		if (assetType === 'crypto') {
 			deleteCryptoPortfolio(portfolioId)
 				.unwrap()
 				.then(() => {

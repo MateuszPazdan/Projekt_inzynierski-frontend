@@ -33,7 +33,7 @@ export interface PortfolioInfo {
 	owner_id: string;
 	created_at: string;
 	updated_at: string;
-	total_watched_cryptos: number;
+	total_watched: number;
 	total_transactions: number;
 	total_investment: number;
 	profit_loss: number;
@@ -54,9 +54,25 @@ export interface PortfolioTransaction {
 	description: string;
 }
 
+export interface PortfolioSummary {
+	total_investment: number;
+	current_value: number;
+	total_percentage_profit_loss_24h: number;
+	total_profit_loss_24h: number;
+	total_profit_loss_percentage: number;
+	total_profit_loss: number;
+	total_portfolios: number;
+	total_transactions: number;
+	holdings_percentage: { [key: string]: number };
+	historical_value_7d: { date: string; value: number }[];
+	historical_value_1m: { date: string; value: number }[];
+	historical_value_1y: { date: string; value: number }[];
+	top_gainer_24h: WatchedCryptoDetails | WatchedStockDetails;
+}
+
 export interface CryptoPortfolioDetails extends PortfolioInfo {
 	watched_cryptos: WatchedCrypto[];
-	cryptos_percentage_holdings: { [key: string]: number };
+	holdings_percentage: { [key: string]: number };
 	historical_value_7d: { date: string; value: number }[];
 	historical_value_1m: { date: string; value: number }[];
 	historical_value_1y: { date: string; value: number }[];
@@ -86,18 +102,32 @@ export interface WatchedCryptoDetails {
 	price_change_percentage_24h: number;
 }
 
-export interface PortfolioSummary {
-	total_investment: number;
-	current_value: number;
-	total_percentage_profit_loss_24h: number;
-	total_profit_loss_24h: number;
-	total_profit_loss: number;
-	total_portfolios: number;
-	total_transactions: number;
-	cryptos_percentage_holdings: { [key: string]: number };
+export interface StockPortfolioDetails extends PortfolioInfo {
+	watched_stocks: WatchedStocks[];
+	holdings_percentage: { [key: string]: number };
 	historical_value_7d: { date: string; value: number }[];
 	historical_value_1m: { date: string; value: number }[];
 	historical_value_1y: { date: string; value: number }[];
+}
+
+export interface WatchedStocks {
+	id: number;
+	stock: WatchedStockDetails;
+	percentage_profit_loss_24h: number;
+	profit_loss_24h: number;
+	profit_loss: number;
+	profit_loss_percentage: number;
+	total_invested: number;
+	avg_buy_price: number;
+	holdings: number;
+	current_value: number;
+}
+
+export interface WatchedStockDetails {
+	symbol: string;
+	name: string;
+	price: number;
+	price_change_percentage_24h: number;
 }
 
 const portfolioApiSlice = apiSlice.injectEndpoints({
@@ -300,6 +330,17 @@ const portfolioApiSlice = apiSlice.injectEndpoints({
 				invalidatesTags: ['StockPortfolios'],
 			}
 		),
+		retrieveStockPortfolioDetails: builder.query<StockPortfolioDetails, string>(
+			{
+				query: (portfolioId) => ({
+					url: `/portfolios/stocks/${portfolioId}`,
+					method: 'GET',
+				}),
+				providesTags: (result, error, portfolioId) => [
+					{ type: 'StockPortfolio', id: portfolioId },
+				],
+			}
+		),
 	}),
 });
 
@@ -321,4 +362,5 @@ export const {
 	useRetrieveStockPortfoliosSummaryQuery,
 	useRetrieveStockPortfoliosQuery,
 	useCreateStockPortfolioMutation,
+	useRetrieveStockPortfolioDetailsQuery,
 } = portfolioApiSlice;

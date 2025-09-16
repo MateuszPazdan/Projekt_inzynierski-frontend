@@ -5,6 +5,7 @@ import CurrentBalance from '../CurrentBalance';
 import PortfolioChange from '../PortfolioChange';
 import TotalPortfolioChange from '../TotalPortfolioChange';
 import PortfolioOverviewCharts from '../PortfolioOverviewCharts';
+import SummaryTopGainer from '../SummaryTopGainer';
 
 export default function CryptoPortfoliosSummary() {
 	const { data: portfolioSummary, isLoading: isCryptoPortfolioSummaryLoading } =
@@ -29,15 +30,11 @@ export default function CryptoPortfoliosSummary() {
 					profit_loss_percentage={0}
 					isLoading={isCryptoPortfolioSummaryLoading}
 				/>
-				<TotalPortfolioChange
-					profit_loss={portfolioSummary?.total_profit_loss}
-					profit_loss_percentage={0}
+
+				<SummaryTopGainer
+					topGainer={portfolioSummary?.top_gainer_24h}
 					isLoading={isCryptoPortfolioSummaryLoading}
 				/>
-				{/* <TopGainer
-					portfolioDetails={portfolioSummary}
-					isLoading={isCryptoPortfolioSummaryLoading}
-				/> */}
 			</div>
 			<PortfolioOverviewCharts
 				isLoading={isCryptoPortfolioSummaryLoading}

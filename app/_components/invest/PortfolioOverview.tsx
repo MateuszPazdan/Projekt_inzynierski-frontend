@@ -1,23 +1,41 @@
-import { CryptoPortfolioDetails } from '@/app/_redux/features/portfiolioApiSlice';
-import CurrentBalance from './CurrentBalance';
-import PortfolioChange from './PortfolioChange';
-import TopGainer from './TopGainer';
-import TotalPortfolioChange from './TotalPortfolioChange';
-import ManagePortfolioBtn from './ManagePortfolioBtn';
-import Modal from '../Modal';
-import Button from '../Button';
+import {
+	CryptoPortfolioDetails,
+	StockPortfolioDetails,
+} from '@/app/_redux/features/portfiolioApiSlice';
 import { BsPlus } from 'react-icons/bs';
-import AddCryptoModal from './crypto/AddCryptoModal';
+import Button from '../Button';
 import InfoCard from '../InfoCard';
+import Modal from '../Modal';
+import AddCryptoModal from './crypto/AddCryptoModal';
+import CryptoTopGainer from './crypto/CryptoTopGainer';
+import CurrentBalance from './CurrentBalance';
+import ManagePortfolioBtn from './ManagePortfolioBtn';
+import PortfolioChange from './PortfolioChange';
+import StockTopGainer from './stock/StockTopGainer';
+import TotalPortfolioChange from './TotalPortfolioChange';
 
 interface PortfolioOverviewProps {
-	portfolioDetails?: CryptoPortfolioDetails;
+	portfolioDetails?: CryptoPortfolioDetails | StockPortfolioDetails;
 	isLoading: boolean;
+	assetType: 'crypto' | 'stocks';
 }
+
+const isCryptoPortfolio = (
+	portfolio: CryptoPortfolioDetails | StockPortfolioDetails | undefined
+): portfolio is CryptoPortfolioDetails => {
+	return portfolio ? 'watched_cryptos' in portfolio : false;
+};
+
+const isStockPortfolio = (
+	portfolio: CryptoPortfolioDetails | StockPortfolioDetails | undefined
+): portfolio is StockPortfolioDetails => {
+	return portfolio ? 'watched_stocks' in portfolio : false;
+};
 
 export default function PortfolioOverview({
 	portfolioDetails,
 	isLoading,
+	assetType,
 }: PortfolioOverviewProps) {
 	return (
 		<>
@@ -44,7 +62,7 @@ export default function PortfolioOverview({
 					<ManagePortfolioBtn
 						portfolio={portfolioDetails}
 						isLoading={isLoading}
-						portfolioType='crypto'
+						assetType={assetType}
 					/>
 
 					<Modal>
@@ -92,7 +110,22 @@ export default function PortfolioOverview({
 					profit_loss_percentage={portfolioDetails?.profit_loss_percentage}
 					isLoading={isLoading}
 				/>
-				<TopGainer portfolioDetails={portfolioDetails} isLoading={isLoading} />
+				{!isCryptoPortfolio(portfolioDetails) &&
+					!isStockPortfolio(portfolioDetails) && (
+						<CryptoTopGainer isLoading={isLoading} />
+					)}
+				{isCryptoPortfolio(portfolioDetails) && (
+					<CryptoTopGainer
+						portfolioDetails={portfolioDetails}
+						isLoading={isLoading}
+					/>
+				)}
+				{isStockPortfolio(portfolioDetails) && (
+					<StockTopGainer
+						portfolioDetails={portfolioDetails}
+						isLoading={isLoading}
+					/>
+				)}
 			</div>
 		</>
 	);
