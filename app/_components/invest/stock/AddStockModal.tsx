@@ -1,30 +1,29 @@
 'use client';
 
+import { useDebounce } from '@/app/_hook/useDebounce';
+import { useRetrieveGlobalSearchQuery } from '@/app/_redux/features/globalApiSlice';
 import {
-	useAddWatchedCryptoPortfolioMutation,
-	useRetrieveCryptoPortfolioDetailsQuery,
+	useAddWatchedStockPortfolioMutation,
+	useRetrieveStockPortfolioDetailsQuery,
 } from '@/app/_redux/features/portfiolioApiSlice';
 import { useState } from 'react';
-import ModalHeader from '../../ModalHeader';
-import { useRetrieveGlobalSearchQuery } from '@/app/_redux/features/globalApiSlice';
-import { useDebounce } from '@/app/_hook/useDebounce';
-import Image from 'next/image';
 import toast from 'react-hot-toast';
+import ModalHeader from '../../ModalHeader';
 import Spinner from '../../Spinner';
 
-interface AddCryptoModalProps {
+interface AddStockModalProps {
 	onCloseModal: () => void;
 	portfolioId?: string;
 }
 
-export default function AddCryptoModal({
+export default function AddStockModal({
 	onCloseModal,
 	portfolioId,
-}: AddCryptoModalProps) {
+}: AddStockModalProps) {
 	const [inputValue, setInputValue] = useState('');
 	const debouncedInputValue = useDebounce(inputValue, 300);
 	const { data: portfolioDetails, isLoading: isPortfolioDetailsLoading } =
-		useRetrieveCryptoPortfolioDetailsQuery(portfolioId || '');
+		useRetrieveStockPortfolioDetailsQuery(portfolioId || '');
 	const {
 		data: globalSearch,
 		isLoading: isGlobalSearchLoading,
@@ -32,23 +31,23 @@ export default function AddCryptoModal({
 	} = useRetrieveGlobalSearchQuery({
 		search: debouncedInputValue,
 	});
-	const [addWatchedCrypto, { isLoading: isAddwatchedCryptoLoading }] =
-		useAddWatchedCryptoPortfolioMutation();
+	const [addWatchedStock, { isLoading: isAddwatchedStockLoading }] =
+		useAddWatchedStockPortfolioMutation();
 
-	function handleAddCrypto(crypto: { name: string; symbol: string }) {
-		addWatchedCrypto({
+	function handleAddStock(stock: { name: string; symbol: string }) {
+		addWatchedStock({
 			portfolioId: portfolioId || '',
-			crypto_symbol: crypto.symbol,
+			stock_symbol: stock.symbol,
 		})
 			.unwrap()
 			.then(() => {
 				onCloseModal();
-				toast.success(`Dodano kryptowalutę (${crypto.symbol}) do portfolio.`);
+				toast.success(`Dodano akcję (${stock.symbol}) do portfolio.`);
 			})
 			.catch((error) => {
 				toast.error(
 					error?.data.detail ||
-						`Wystąpił błąd podczas dodawania kryptowaluty (${crypto.symbol}) do portfolio.`
+						`Wystąpił błąd podczas dodawania kryptowaluty (${stock.symbol}) do portfolio.`
 				);
 			});
 		onCloseModal();
@@ -57,7 +56,7 @@ export default function AddCryptoModal({
 	const isLoading =
 		isPortfolioDetailsLoading ||
 		isGlobalSearchLoading ||
-		isAddwatchedCryptoLoading ||
+		isAddwatchedStockLoading ||
 		isGlobalSearchFetching;
 
 	return (
@@ -78,35 +77,33 @@ export default function AddCryptoModal({
 				</span>
 			) : (
 				<>
-					{globalSearch && globalSearch?.cryptos.length > 0 ? (
+					{globalSearch && globalSearch?.stocks.length > 0 ? (
 						<div className='max-h-[300px] overflow-y-auto'>
-							{globalSearch?.cryptos.map((crypto) => {
-								const isAlreadyWatched = portfolioDetails?.watched_cryptos.some(
-									(c) => c.crypto.symbol === crypto.symbol
+							{globalSearch?.stocks.map((stock) => {
+								const isAlreadyWatched = portfolioDetails?.watched_stocks.some(
+									(s) => s.stock.symbol === stock.symbol
 								);
 								return (
 									<div
-										key={crypto.name}
+										key={stock.name}
 										className={`grid grid-cols-[1fr_auto] gap-1 text-sm p-2 rounded-md transition-colors duration-300 ${
 											isAlreadyWatched
 												? ' text-gray-400 '
 												: 'hover:bg-grayOne cursor-pointer'
 										}`}
 										onClick={() => {
-											if (!isAlreadyWatched) handleAddCrypto(crypto);
+											if (!isAlreadyWatched) handleAddStock(stock);
 										}}
 									>
 										<div className='flex flex-row items-center gap-2'>
-											<Image
-												src={`${crypto.icon}`}
-												alt={crypto.name}
-												width={24}
-												height={24}
-												style={{
-													filter: isAlreadyWatched ? 'grayscale(1)' : 'none',
-												}}
-											/>
-											<p className={`font-medium truncate`}>{crypto.name}</p>
+											<p
+												className={`flex items-center justify-center w-6 h-6 text-xs aspect-square bg-main text-white rounded-full`}
+											>
+												{stock.name.trimStart().charAt(0).toUpperCase()}
+											</p>
+											<p className='font-medium truncate'>
+												{stock.name}
+											</p>
 										</div>
 									</div>
 								);

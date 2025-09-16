@@ -11,7 +11,7 @@ interface ManageAssetTransactionsBtnProps {
 	portfolioId: string;
 	assetSymbol: string;
 	isLoading: boolean;
-	assetType: 'crypto' | 'stock';
+	assetType: 'crypto' | 'stocks';
 }
 export default function ManageAssetTransactionsBtn({
 	portfolioId,

@@ -1,35 +1,34 @@
 'use client';
 
-import { useRetrieveCryptoPortfolioDetailsQuery } from '@/app/_redux/features/portfiolioApiSlice';
+import { useRetrieveStockPortfolioDetailsQuery } from '@/app/_redux/features/portfiolioApiSlice';
 import { formatFullPrice } from '@/app/_utils/formatAmountOfMoney';
-import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { BsPlus } from 'react-icons/bs';
 import Button from '../../Button';
 import InfoCard from '../../InfoCard';
 import Modal from '../../Modal';
 import ManagePortfolioTransactionModal from '../ManangePortfolioTransactionModal';
-import ManageAssetTransactionsBtn from './ManageCryptoTransactionsBtn';
+import ManageAssetTransactionsBtn from '../crypto/ManageCryptoTransactionsBtn';
 
-interface CurrentCryptoPortfolioOverviewProps {
+interface CurrentStockPortfolioOverviewProps {
 	portfolioId: string;
-	cryptoSymbol: string;
+	stockSymbol: string;
 }
 
-export default function CurrentCryptoPortfolioOverview({
+export default function CurrentStockPortfolioOverview({
 	portfolioId,
-	cryptoSymbol,
-}: CurrentCryptoPortfolioOverviewProps) {
+	stockSymbol,
+}: CurrentStockPortfolioOverviewProps) {
 	const { data: portfolioDetails, isLoading: isPortfolioDetailsLoading } =
-		useRetrieveCryptoPortfolioDetailsQuery(portfolioId);
+		useRetrieveStockPortfolioDetailsQuery(portfolioId);
 
 	if (!portfolioDetails && !isPortfolioDetailsLoading) return notFound();
 
-	const currentCrypto = portfolioDetails?.watched_cryptos.find(
-		(crypto) => crypto.crypto.symbol === cryptoSymbol
+	const currentStock = portfolioDetails?.watched_stocks.find(
+		(stock) => stock.stock.symbol === stockSymbol
 	);
 
-	if (!currentCrypto && !isPortfolioDetailsLoading) return notFound();
+	if (!currentStock && !isPortfolioDetailsLoading) return notFound();
 
 	return (
 		<>
@@ -38,20 +37,19 @@ export default function CurrentCryptoPortfolioOverview({
 					{!isPortfolioDetailsLoading ? (
 						<>
 							<div className='flex flex-row items-center gap-1 md:items-start'>
-								<Image
-									alt={`${currentCrypto?.crypto.symbol}-logo`}
-									src={`${currentCrypto?.crypto.icon ?? ''}`}
-									width={28}
-									height={28}
-								/>
+								<p
+									className={`flex items-center justify-center w-7 h-7 text-xs aspect-square bg-main text-white rounded-full`}
+								>
+									{currentStock?.stock.name.trimStart().charAt(0).toUpperCase()}
+								</p>
 								<div className='flex flex-col items-start justify-center '>
 									<span className='text-lg font-medium'>
-										{currentCrypto?.crypto.name}
+										{currentStock?.stock.name}
 									</span>
 								</div>
 							</div>
 							<p className='text-lg md:text-3xl font-semibold'>
-								{formatFullPrice(currentCrypto?.crypto.price)}
+								{formatFullPrice(currentStock?.stock.price)}
 							</p>
 						</>
 					) : (
@@ -64,9 +62,9 @@ export default function CurrentCryptoPortfolioOverview({
 				<div className='flex flex-row gap-3 w-full md:w-fit'>
 					<ManageAssetTransactionsBtn
 						portfolioId={portfolioId}
-						assetSymbol={cryptoSymbol}
+						assetSymbol={stockSymbol}
 						isLoading={isPortfolioDetailsLoading}
-						assetType='crypto'
+						assetType='stocks'
 					/>
 
 					<Modal>
@@ -86,7 +84,7 @@ export default function CurrentCryptoPortfolioOverview({
 							<ManagePortfolioTransactionModal
 								onCloseModal={() => undefined}
 								portfolioId={portfolioId}
-								cryptoSymbol={cryptoSymbol}
+								cryptoSymbol={stockSymbol}
 							/>
 						</Modal.Window>
 					</Modal>
@@ -95,34 +93,33 @@ export default function CurrentCryptoPortfolioOverview({
 			<div className='grid xl:grid-cols-5 gap-2'>
 				<InfoCard
 					title='Wartość aktywów'
-					text={formatFullPrice(currentCrypto?.current_value)}
+					text={formatFullPrice(currentStock?.current_value)}
 				/>
 				<InfoCard title='Zasoby'>
 					<p className='text-nowrap'>
-						{currentCrypto?.holdings}{' '}
-						{currentCrypto?.crypto.symbol.toUpperCase()}
+						{currentStock?.holdings} {currentStock?.stock.symbol.toUpperCase()}
 					</p>
 				</InfoCard>
 				<InfoCard
 					title='Koszt całkowity'
-					text={formatFullPrice(currentCrypto?.total_invested)}
+					text={formatFullPrice(currentStock?.total_invested)}
 				/>
 				<InfoCard
 					title='Średni koszt'
-					text={formatFullPrice(currentCrypto?.avg_buy_price)}
+					text={formatFullPrice(currentStock?.avg_buy_price)}
 				/>
 				<InfoCard title='Całkowity zysk / strata'>
 					<p
 						className={`${
-							currentCrypto &&
-							(currentCrypto?.profit_loss > 0
+							currentStock &&
+							(currentStock?.profit_loss > 0
 								? 'text-green-500'
-								: currentCrypto?.profit_loss < 0
+								: currentStock?.profit_loss < 0
 								? 'text-red-500'
 								: '')
 						}`}
 					>
-						{formatFullPrice(currentCrypto?.profit_loss)}
+						{formatFullPrice(currentStock?.profit_loss)}
 					</p>
 				</InfoCard>
 			</div>

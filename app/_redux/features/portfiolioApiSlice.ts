@@ -110,6 +110,10 @@ export interface StockPortfolioDetails extends PortfolioInfo {
 	historical_value_1y: { date: string; value: number }[];
 }
 
+export interface PortfolioStockTransaction extends PortfolioTransaction {
+	stock: WatchedStockDetails;
+}
+
 export interface WatchedStocks {
 	id: number;
 	stock: WatchedStockDetails;
@@ -330,6 +334,44 @@ const portfolioApiSlice = apiSlice.injectEndpoints({
 				invalidatesTags: ['StockPortfolios'],
 			}
 		),
+		modifyStockPortfolio: builder.mutation<
+			PortfolioInfo,
+			{ portfolioId: string; portfolio: PortfolioRequestBody }
+		>({
+			query: ({ portfolio, portfolioId }) => ({
+				url: `/portfolios/stocks/${portfolioId}`,
+				method: 'PATCH',
+				body: portfolio,
+			}),
+			invalidatesTags: (result, error, { portfolioId }) => [
+				{ type: 'StockPortfolio', id: portfolioId },
+				{ type: 'StockPortfolios' },
+			],
+		}),
+		deleteStockPortfolio: builder.mutation<void, string>({
+			query: (portfolioId) => ({
+				url: `/portfolios/stocks/${portfolioId}`,
+				method: 'DELETE',
+			}),
+			invalidatesTags: ['StockPortfolios'],
+		}),
+		deleteAllTransactionsStockPortfolio: builder.mutation<
+			void,
+			{
+				portfolioId: string;
+				stockSymbol?: string;
+			}
+		>({
+			query: ({ portfolioId, stockSymbol = '' }) => ({
+				url: `/portfolios/stocks/${portfolioId}/transactions?stock_symbol=${stockSymbol}`,
+				method: 'DELETE',
+			}),
+			invalidatesTags: (result, error, { portfolioId }) => [
+				{ type: 'StockPortfolios' },
+				{ type: 'StockPortfolio', id: portfolioId },
+				{ type: 'StockPortfolioTransactions', id: portfolioId },
+			],
+		}),
 		retrieveStockPortfolioDetails: builder.query<StockPortfolioDetails, string>(
 			{
 				query: (portfolioId) => ({
@@ -341,6 +383,36 @@ const portfolioApiSlice = apiSlice.injectEndpoints({
 				],
 			}
 		),
+		addWatchedStockPortfolio: builder.mutation<
+			void,
+			{ portfolioId: string; stock_symbol: string }
+		>({
+			query: ({ portfolioId, stock_symbol }) => ({
+				url: `/portfolios/stocks/${portfolioId}/watched_stocks/${stock_symbol}`,
+				method: 'POST',
+			}),
+			invalidatesTags: (result, error, { portfolioId }) => [
+				{ type: 'StockPortfolio', id: portfolioId },
+				{ type: 'StockPortfolios' },
+			],
+		}),
+		retrieveStockPortfolioTransactions: builder.query<
+			PaginatedResponse<PortfolioStockTransaction>,
+			{
+				portfolioId: string;
+				stockSymbol: string;
+				page?: number;
+				size?: number;
+			}
+		>({
+			query: ({ portfolioId, stockSymbol, page = 1, size = 30 }) => ({
+				url: `/portfolios/stocks/${portfolioId}/transactions?stock_symbol=${stockSymbol}&page=${page}&size=${size}`,
+				method: 'GET',
+			}),
+			providesTags: (result, error, { portfolioId }) => [
+				{ type: 'StockPortfolioTransactions', id: portfolioId },
+			],
+		}),
 	}),
 });
 
@@ -362,5 +434,10 @@ export const {
 	useRetrieveStockPortfoliosSummaryQuery,
 	useRetrieveStockPortfoliosQuery,
 	useCreateStockPortfolioMutation,
+	useModifyStockPortfolioMutation,
+	useDeleteStockPortfolioMutation,
+	useDeleteAllTransactionsStockPortfolioMutation,
 	useRetrieveStockPortfolioDetailsQuery,
+	useAddWatchedStockPortfolioMutation,
+	useRetrieveStockPortfolioTransactionsQuery,
 } = portfolioApiSlice;

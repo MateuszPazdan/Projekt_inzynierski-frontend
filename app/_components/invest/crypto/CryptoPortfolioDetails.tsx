@@ -4,7 +4,7 @@ import { useRetrieveCryptoPortfolioDetailsQuery } from '@/app/_redux/features/po
 import { notFound } from 'next/navigation';
 import PortfolioOverview from '../PortfolioOverview';
 import PortfolioOverviewCharts from '../PortfolioOverviewCharts';
-import PortfolioWatchedList from '../PortfolioWatchedList';
+import PortfolioWatchedList from './PortfolioWatchedCryptoList';
 
 interface CryptoPortfolioDetailsProps {
 	portfolioId: string;

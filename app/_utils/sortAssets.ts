@@ -1,5 +1,8 @@
 import { Crypto, Stock } from '../_redux/features/marketApiSlice';
-import { WatchedCrypto } from '../_redux/features/portfiolioApiSlice';
+import {
+	WatchedCrypto,
+	WatchedStocks,
+} from '../_redux/features/portfiolioApiSlice';
 
 export function sortStocks(
 	sort: { by: string; order: string },
@@ -145,7 +148,7 @@ export function sortCryptos(
 	return list;
 }
 
-export function sortPortfolioAssets(
+export function sortPortfolioCrypto(
 	sort: { by: string; order: string },
 	portfolioList?: WatchedCrypto[]
 ) {
@@ -164,6 +167,66 @@ export function sortPortfolioAssets(
 	}
 	if (sort.by === 'price' && sort.order === 'desc') {
 		return list.sort((a, b) => b.crypto.price - a.crypto.price);
+	}
+	if (sort.by === 'change24h' && sort.order === 'asc') {
+		return list.sort((a, b) => a.profit_loss_24h - b.profit_loss_24h);
+	}
+	if (sort.by === 'change24h' && sort.order === 'desc') {
+		return list.sort((a, b) => b.profit_loss_24h - a.profit_loss_24h);
+	}
+	if (sort.by === 'total_cost' && sort.order === 'asc') {
+		return list.sort((a, b) => a.total_invested - b.total_invested);
+	}
+	if (sort.by === 'total_cost' && sort.order === 'desc') {
+		return list.sort((a, b) => b.total_invested - a.total_invested);
+	}
+	if (sort.by === 'average_cost' && sort.order === 'asc') {
+		return list.sort((a, b) => a.avg_buy_price - b.avg_buy_price);
+	}
+	if (sort.by === 'average_cost' && sort.order === 'desc') {
+		return list.sort((a, b) => b.avg_buy_price - a.avg_buy_price);
+	}
+	if (sort.by === 'total_profit_loss' && sort.order === 'asc') {
+		return list.sort((a, b) => a.profit_loss - b.profit_loss);
+	}
+	if (sort.by === 'total_profit_loss' && sort.order === 'desc') {
+		return list.sort((a, b) => b.profit_loss - a.profit_loss);
+	}
+	if (sort.by === 'resources' && sort.order === 'asc') {
+		return list.sort((a, b) => a.holdings - b.holdings);
+	}
+	if (sort.by === 'resources' && sort.order === 'desc') {
+		return list.sort((a, b) => b.holdings - a.holdings);
+	}
+	if (sort.by === 'current_value' && sort.order === 'asc') {
+		return list.sort((a, b) => a.current_value - b.current_value);
+	}
+	if (sort.by === 'current_value' && sort.order === 'desc') {
+		return list.sort((a, b) => b.current_value - a.current_value);
+	}
+
+	return list;
+}
+
+export function sortPortfolioStock(
+	sort: { by: string; order: string },
+	portfolioList?: WatchedStocks[]
+) {
+	if (!portfolioList) return;
+
+	const list = [...portfolioList];
+
+	if (sort.by === 'currency' && sort.order === 'asc') {
+		return list.sort((a, b) => a.stock.name.localeCompare(b.stock.name));
+	}
+	if (sort.by === 'currency' && sort.order === 'desc') {
+		return list.sort((a, b) => b.stock.name.localeCompare(a.stock.name));
+	}
+	if (sort.by === 'price' && sort.order === 'asc') {
+		return list.sort((a, b) => a.stock.price - b.stock.price);
+	}
+	if (sort.by === 'price' && sort.order === 'desc') {
+		return list.sort((a, b) => b.stock.price - a.stock.price);
 	}
 	if (sort.by === 'change24h' && sort.order === 'asc') {
 		return list.sort((a, b) => a.profit_loss_24h - b.profit_loss_24h);

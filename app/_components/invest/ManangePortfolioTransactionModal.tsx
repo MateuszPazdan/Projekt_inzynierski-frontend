@@ -1,5 +1,6 @@
 import {
 	PortfolioCryptoTransaction,
+	PortfolioStockTransaction,
 	useCreateCryptoPortfolioTransactionMutation,
 	useUpdateCryptoPortfolioTransactionMutation,
 } from '@/app/_redux/features/portfiolioApiSlice';
@@ -16,7 +17,7 @@ interface ManagePortfolioTransactionModalProps {
 	onCloseModal: () => void;
 	portfolioId: string;
 	cryptoSymbol?: string;
-	transaction?: PortfolioCryptoTransaction;
+	transaction?: PortfolioCryptoTransaction | PortfolioStockTransaction;
 }
 
 export default function ManagePortfolioTransactionModal({

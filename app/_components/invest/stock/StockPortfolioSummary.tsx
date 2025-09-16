@@ -5,6 +5,7 @@ import CurrentBalance from '../CurrentBalance';
 import PortfolioChange from '../PortfolioChange';
 import PortfolioOverviewCharts from '../PortfolioOverviewCharts';
 import TotalPortfolioChange from '../TotalPortfolioChange';
+import SummaryTopGainer from '../SummaryTopGainer';
 
 export default function StockPortfolioSummary() {
 	const { data: portfolioSummary, isLoading: isStockPortfolioSummaryLoading } =
@@ -28,15 +29,10 @@ export default function StockPortfolioSummary() {
 					profit_loss_percentage={0}
 					isLoading={isStockPortfolioSummaryLoading}
 				/>
-				<TotalPortfolioChange
-					profit_loss={portfolioSummary?.total_profit_loss}
-					profit_loss_percentage={0}
+				<SummaryTopGainer
+					topGainer={portfolioSummary?.top_gainer_24h}
 					isLoading={isStockPortfolioSummaryLoading}
 				/>
-				{/* <TopGainer
-                    portfolioDetails={portfolioSummary}
-                    isLoading={isStockPortfolioSummaryLoading}
-                /> */}
 			</div>
 			<PortfolioOverviewCharts
 				isLoading={isStockPortfolioSummaryLoading}

@@ -22,7 +22,7 @@ export default function StockPortfolioHeader() {
 				<Modal.Window name='createStockPortfolio'>
 					<ManagePortfolioModal
 						onCloseModal={() => undefined}
-						portfolioType='stocks'
+						assetType='stocks'
 					/>
 				</Modal.Window>
 			</Modal>

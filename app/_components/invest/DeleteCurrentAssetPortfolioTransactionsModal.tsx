@@ -3,6 +3,7 @@ import Button from '../Button';
 import ModalHeader from '../ModalHeader';
 import {
 	PortfolioCryptoTransaction,
+	PortfolioStockTransaction,
 	useDeleteCurrentAssetPortfolioTransactionMutationMutation,
 } from '@/app/_redux/features/portfiolioApiSlice';
 
@@ -11,7 +12,7 @@ interface DeleteCurrentPortfolioTransactionModalProps {
 	portfolioId: string;
 	assetSymbol?: string;
 	assetType: 'crypto' | 'stock';
-	transaction?: PortfolioCryptoTransaction;
+	transaction?: PortfolioCryptoTransaction | PortfolioStockTransaction;
 }
 
 export default function DeleteCurrentPortfolioTransactionModal({

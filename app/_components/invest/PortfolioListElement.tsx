@@ -47,8 +47,8 @@ export default function PortfolioListElement({
 						{portfolio?.title}
 					</span>
 					<span className='text-blackOne/70 text-sm mb-1'>
-						{portfolio?.total_watched_cryptos || 0}{' '}
-						{getPolishNounForm(portfolio?.total_watched_cryptos || 0)}
+						{portfolio?.total_watched || 0}{' '}
+						{getPolishNounForm(portfolio?.total_watched || 0)}
 					</span>
 				</p>
 			</div>

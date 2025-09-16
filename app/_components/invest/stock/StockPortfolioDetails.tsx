@@ -1,10 +1,10 @@
 'use client';
 
 import { useRetrieveStockPortfolioDetailsQuery } from '@/app/_redux/features/portfiolioApiSlice';
-import PortfolioOverview from '../PortfolioOverview';
 import { notFound } from 'next/navigation';
+import PortfolioOverview from '../PortfolioOverview';
 import PortfolioOverviewCharts from '../PortfolioOverviewCharts';
-import PortfolioWatchedList from '../PortfolioWatchedList';
+import PortfolioWatchedStockList from './PortfolioWatchedStockList';
 
 interface CryptoPortfolioDetailsProps {
 	portfolioId: string;
@@ -29,7 +29,7 @@ export default function StockPortfolioDetails({
 				portfolioDetails={portfolioDetails}
 				isLoading={isPortfolioDetailsLoading}
 			/>
-			<PortfolioWatchedList
+			<PortfolioWatchedStockList
 				portfolioDetails={portfolioDetails}
 				isLoading={isPortfolioDetailsLoading}
 			/>

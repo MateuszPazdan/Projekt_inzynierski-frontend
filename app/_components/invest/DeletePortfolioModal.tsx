@@ -1,4 +1,7 @@
-import { useDeleteCryptoPortfolioMutation } from '@/app/_redux/features/portfiolioApiSlice';
+import {
+	useDeleteCryptoPortfolioMutation,
+	useDeleteStockPortfolioMutation,
+} from '@/app/_redux/features/portfiolioApiSlice';
 import { useRouter } from 'next/navigation';
 import ModalHeader from '../ModalHeader';
 import Button from '../Button';
@@ -17,6 +20,8 @@ export default function DeletePortfolioModal({
 }: DeletePortfolioModalProps) {
 	const [deleteCryptoPortfolio, { isLoading: isCryptoPortfolioDeleting }] =
 		useDeleteCryptoPortfolioMutation();
+	const [deleteStockPortfolio, { isLoading: isStockPortfolioDeleting }] =
+		useDeleteStockPortfolioMutation();
 
 	const router = useRouter();
 
@@ -31,7 +36,21 @@ export default function DeletePortfolioModal({
 				})
 				.catch((error) => {
 					toast.error(
-						error?.data?.detail || 'Wystąpił błąd przy usuwaniu budżetu.'
+						error?.data?.detail || 'Wystąpił błąd przy usuwaniu portfolio.'
+					);
+				});
+		}
+		if (assetType === 'stocks') {
+			deleteStockPortfolio(portfolioId)
+				.unwrap()
+				.then(() => {
+					toast.success('Usunięto portfolio.');
+					onCloseModal();
+					router.push('/app/invest/stocks');
+				})
+				.catch((error) => {
+					toast.error(
+						error?.data?.detail || 'Wystąpił błąd przy usuwaniu portfolio.'
 					);
 				});
 		}
@@ -48,7 +67,7 @@ export default function DeletePortfolioModal({
 					<Button
 						type='button'
 						color='danger'
-						isLoading={isCryptoPortfolioDeleting}
+						isLoading={isCryptoPortfolioDeleting || isStockPortfolioDeleting}
 						onClick={handleDeletePortfolio}
 					>
 						Usuń portfolio

@@ -1,4 +1,7 @@
-import { useDeleteAllTransactionsCryptoPortfolioMutation } from '@/app/_redux/features/portfiolioApiSlice';
+import {
+	useDeleteAllTransactionsCryptoPortfolioMutation,
+	useDeleteAllTransactionsStockPortfolioMutation,
+} from '@/app/_redux/features/portfiolioApiSlice';
 import toast from 'react-hot-toast';
 import Button from '../Button';
 import ModalHeader from '../ModalHeader';
@@ -16,14 +19,33 @@ export default function DeletePortfolioTransactionsModal({
 	assetType,
 	assetSymbol,
 }: DeletePortfolioTransactionsModalProps) {
-	const [deleteTransactions, { isLoading: isTransactionDeleting }] =
+	const [deleteCryptoTransactions, { isLoading: isCryptoTransactionDeleting }] =
 		useDeleteAllTransactionsCryptoPortfolioMutation();
+	const [deleteStockTransactions, { isLoading: isStockTransactionDeleting }] =
+		useDeleteAllTransactionsStockPortfolioMutation();
 
 	function handleDeleteTransactions() {
 		if (assetType === 'crypto') {
-			deleteTransactions({
+			deleteCryptoTransactions({
 				portfolioId: portfolioId,
 				cryptoSymbol: assetSymbol,
+			})
+				.unwrap()
+				.then(() => {
+					toast.success('Usunięto transakcje.');
+					onCloseModal();
+				})
+				.catch((error) => {
+					toast.error(
+						error?.data?.detail || 'Wystąpił błąd przy usuwaniu transakcji.'
+					);
+					onCloseModal();
+				});
+		}
+		if (assetType === 'stocks') {
+			deleteStockTransactions({
+				portfolioId: portfolioId,
+				stockSymbol: assetSymbol,
 			})
 				.unwrap()
 				.then(() => {
@@ -53,7 +75,9 @@ export default function DeletePortfolioTransactionsModal({
 					<Button
 						type='button'
 						color='danger'
-						isLoading={isTransactionDeleting}
+						isLoading={
+							isCryptoTransactionDeleting || isStockTransactionDeleting
+						}
 						onClick={handleDeleteTransactions}
 					>
 						Wyczyść transakcje

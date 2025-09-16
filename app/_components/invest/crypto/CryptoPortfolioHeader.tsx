@@ -22,7 +22,7 @@ export default function CryptoPortfolioHeader() {
 				<Modal.Window name='createCryptoPortfolio'>
 					<ManagePortfolioModal
 						onCloseModal={() => undefined}
-						portfolioType='crypto'
+						assetType='crypto'
 					/>
 				</Modal.Window>
 			</Modal>

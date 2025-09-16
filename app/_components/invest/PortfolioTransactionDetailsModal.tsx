@@ -1,4 +1,7 @@
-import { PortfolioCryptoTransaction } from '@/app/_redux/features/portfiolioApiSlice';
+import {
+	PortfolioCryptoTransaction,
+	PortfolioStockTransaction,
+} from '@/app/_redux/features/portfiolioApiSlice';
 import { formatFullPrice } from '@/app/_utils/formatAmountOfMoney';
 import { formatDateLabel, formatTime } from '@/app/_utils/formatDate';
 import Image from 'next/image';
@@ -10,7 +13,7 @@ import ManagePortfolioTransactionModal from './ManangePortfolioTransactionModal'
 
 interface PortfolioTransactionDetailsModalProps {
 	onCloseModal: () => void;
-	transaction?: PortfolioCryptoTransaction;
+	transaction: PortfolioCryptoTransaction | PortfolioStockTransaction;
 	portfolioId: string;
 }
 
@@ -19,21 +22,40 @@ export default function PortfolioTransactionDetailsModal({
 	transaction,
 	portfolioId,
 }: PortfolioTransactionDetailsModalProps) {
+	const transactionAsset =
+		'crypto' in transaction
+			? {
+					...transaction.crypto,
+			  }
+			: {
+					...transaction.stock,
+					icon: '',
+			  };
+
 	return (
 		<div className='space-y-6'>
 			<ModalHeader onCloseModal={onCloseModal} title='Transakcja' />
 			<div className='flex flex-col gap-3 mx-auto'>
 				<div className='flex flex-col gap-1 items-center'>
-					<Image
-						alt={`${transaction?.crypto.name}-logo`}
-						src={`${transaction?.crypto.icon}`}
-						width={48}
-						height={48}
-					/>
+					{'crypto' in transaction && (
+						<Image
+							alt={`${transactionAsset.name}-logo`}
+							src={`${transactionAsset.icon}`}
+							width={48}
+							height={48}
+						/>
+					)}
+					{'stock' in transaction && (
+						<p
+							className={`flex items-center justify-center w-12 h-12 text-lg aspect-square bg-main text-white rounded-full`}
+						>
+							{transactionAsset?.name.trimStart().charAt(0).toUpperCase()}
+						</p>
+					)}
 					<p className='text-xl font-medium'>
 						{transaction?.transaction_type === 'buy' && 'Kup'}
 						{transaction?.transaction_type === 'sell' && 'Sprzedaj'}{' '}
-						{transaction?.crypto.name}
+						{transactionAsset.name}
 					</p>
 					<p
 						className={`text-3xl font-medium ${
@@ -42,7 +64,7 @@ export default function PortfolioTransactionDetailsModal({
 					>
 						{transaction?.transaction_type === 'buy' && '+'}
 						{transaction?.transaction_type === 'sell' && '-'}{' '}
-						{transaction?.amount} {transaction?.crypto.symbol.toUpperCase()}
+						{transaction?.amount} {transactionAsset.symbol.toUpperCase()}
 					</p>
 					<p className='text-xl font-normal text-gray-600'>
 						Wartość{' '}

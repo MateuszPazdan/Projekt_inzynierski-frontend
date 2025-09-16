@@ -13,6 +13,7 @@ import ManagePortfolioBtn from './ManagePortfolioBtn';
 import PortfolioChange from './PortfolioChange';
 import StockTopGainer from './stock/StockTopGainer';
 import TotalPortfolioChange from './TotalPortfolioChange';
+import AddStockModal from './stock/AddStockModal';
 
 interface PortfolioOverviewProps {
 	portfolioDetails?: CryptoPortfolioDetails | StockPortfolioDetails;
@@ -76,12 +77,20 @@ export default function PortfolioOverview({
 								disabled={isLoading}
 							>
 								<BsPlus className='text-3xl' />
-								<span className='mr-3'>Dodaj walutę</span>
+								<span className='mr-3'>
+									Dodaj {assetType === 'crypto' && 'kryptowalutę'}
+									{assetType === 'stocks' && 'akcję'}
+								</span>
 							</Button>
 						</Modal.Open>
 						<Modal.Window name='addCoin'>
-							{portfolioDetails && (
+							{assetType === 'crypto' ? (
 								<AddCryptoModal
+									onCloseModal={() => undefined}
+									portfolioId={portfolioDetails?.id}
+								/>
+							) : (
+								<AddStockModal
 									onCloseModal={() => undefined}
 									portfolioId={portfolioDetails?.id}
 								/>
