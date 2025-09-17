@@ -1,10 +1,5 @@
 import StockPortfolioDetails from '@/app/_components/invest/stock/StockPortfolioDetails';
-import { Metadata } from 'next';
 
-export const metadata: Metadata = {
-	title: 'Portfolio | Asset Flow',
-	description: 'Zarządzaj swoim portfolio akcyjnym.',
-};
 
 export default function page({ params }: { params: { portfolioId: string } }) {
 	return (

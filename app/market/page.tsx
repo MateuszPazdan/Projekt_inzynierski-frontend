@@ -5,6 +5,11 @@ import StockOverview from '../_components/market/stock/StockOverview';
 import StockOverviewChart from '../_components/market/stock/StockOverviewChart';
 import CryptoOverviewChart from '../_components/market/crypto/CryptoOverviewChart';
 import CryptoOverview from '../_components/market/crypto/CryptoOverview';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+	title: 'Kursy kryptowalut i akcji polskich',
+};
 
 export default function page() {
 	return (

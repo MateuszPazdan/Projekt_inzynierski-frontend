@@ -3,7 +3,7 @@ import ResetPasswordForm from '@/app/_components/auth/ResetPasswordForm';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-	title: 'Resetowanie hasła | Asset Flow',
+	title: 'Resetowanie hasła',
 };
 
 type Params = { token: string };

@@ -25,14 +25,14 @@ export async function generateMetadata({
 	const crypto = await getCryptoDetailsBySymbol(cryptoSymbol);
 
 	if (!crypto) {
-		return { title: 'Nie znaleziono kryptowaluty | Asset Flow' };
+		return { title: 'Nie znaleziono kryptowaluty' };
 	}
 
 	return {
-		title: `${crypto.name} | Asset Flow`,
+		title: `${crypto.name}`,
 		description: `Sprawdź aktualne dane, cenę i szczegóły kryptowaluty ${crypto.name}.`,
 		openGraph: {
-			title: `${crypto.name} | Asset Flow`,
+			title: `${crypto.name}`,
 			description: `Aktualne dane i wykresy dla ${crypto.name}.`,
 		},
 	};

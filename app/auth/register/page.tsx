@@ -2,9 +2,7 @@ import RegisterForm from '@/app/_components/auth/RegisterForm';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-	title: 'Rejestracja | Asset Flow',
-	description:
-		'Zarejestruj się i poznaj pełne możliwości aplikacji do kontroli finansów',
+	title: 'Rejestracja',
 };
 
 export default function page() {

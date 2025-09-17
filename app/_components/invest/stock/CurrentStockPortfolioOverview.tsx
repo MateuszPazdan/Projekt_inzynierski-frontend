@@ -9,6 +9,7 @@ import InfoCard from '../../InfoCard';
 import Modal from '../../Modal';
 import ManagePortfolioTransactionModal from '../ManangePortfolioTransactionModal';
 import ManageAssetTransactionsBtn from '../crypto/ManageCryptoTransactionsBtn';
+import { useEffect } from 'react';
 
 interface CurrentStockPortfolioOverviewProps {
 	portfolioId: string;
@@ -21,6 +22,12 @@ export default function CurrentStockPortfolioOverview({
 }: CurrentStockPortfolioOverviewProps) {
 	const { data: portfolioDetails, isLoading: isPortfolioDetailsLoading } =
 		useRetrieveStockPortfolioDetailsQuery(portfolioId);
+
+	useEffect(() => {
+		document.title = `${stockSymbol.toUpperCase()} | ${
+			portfolioDetails?.title || 'Przegląd portfela'
+		} | Asset Flow`;
+	}, [portfolioDetails, stockSymbol]);
 
 	if (!portfolioDetails && !isPortfolioDetailsLoading) return notFound();
 

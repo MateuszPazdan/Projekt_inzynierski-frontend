@@ -1,6 +1,11 @@
+import { Metadata } from 'next';
 import ChangePassword from '../_components/settings/ChangePassword';
 import DeleteAccount from '../_components/settings/DeleteAccount';
 import UserSettings from '../_components/settings/UserSettings';
+
+export const metadata: Metadata = {
+	title: 'Konto',
+};
 
 export default function page() {
 	return (

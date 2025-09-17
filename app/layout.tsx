@@ -6,8 +6,12 @@ import TopNav from './_components/navigation/TopNav';
 import LeftNav from './_components/navigation/LeftNav';
 
 export const metadata: Metadata = {
-	title: 'Asset Flow',
-	description: 'Aplikacja do kontroli finansów',
+	title: {
+		default: 'Asset Flow',
+		template: '%s | Asset Flow',
+	},
+	description:
+		'Śledź aktualne kursy kryptowalut i akcji polskich spółek. Analizuj wykresy, sprawdzaj historyczne dane i zarządzaj swoim portfolio inwestycyjnym w jednym miejscu. Asset Flow - Twój kompleksowy portal do śledzenia rynków finansowych.',
 };
 
 const roboto = Roboto({

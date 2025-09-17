@@ -1,10 +1,4 @@
 import CryptoPortfolioDetails from '@/app/_components/invest/crypto/CryptoPortfolioDetails';
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-	title: 'Portfolio | Asset Flow',
-	description: 'Zarządzaj swoim portfolio kryptowalutowym.',
-};
 
 export default function page({ params }: { params: { portfolioId: string } }) {
 	return (

@@ -1,5 +1,10 @@
+import { Metadata } from 'next';
 import Converter from '../_components/converter/Converter';
 import SectionHeader from '../_components/SectionHeader';
+
+export const metadata: Metadata = {
+	title: 'Przelicznik cen aktywów',
+};
 
 export default function page() {
 	return (

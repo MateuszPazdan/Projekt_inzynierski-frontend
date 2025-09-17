@@ -24,14 +24,14 @@ export async function generateMetadata({
 	const stock = await getStockDetailsBySymbol(stockSymbol);
 
 	if (!stock) {
-		return { title: 'Nie znaleziono akcji | Asset Flow' };
+		return { title: 'Nie znaleziono akcji' };
 	}
 
 	return {
-		title: `${stock.name} | Asset Flow`,
+		title: `${stock.name}`,
 		description: `Sprawdź aktualne dane, cenę i szczegóły akcji ${stock.name}.`,
 		openGraph: {
-			title: `${stock.name} | Asset Flow`,
+			title: `${stock.name}`,
 			description: `Aktualne dane i wykresy dla ${stock.name}.`,
 		},
 	};

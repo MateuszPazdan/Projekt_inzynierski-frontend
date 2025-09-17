@@ -1,11 +1,5 @@
 import CurrentCryptoPortfolioOverview from '@/app/_components/invest/crypto/CurrentCryptoPortfolioOverview';
 import CurrentCryptoPortfolioTransactions from '@/app/_components/invest/crypto/CurrentCryptoPortfolioTransactions';
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-	title: 'Crypto | Portfolio | Asset Flow',
-	description: 'Zarządzaj transakcjami w swoim portfelu.',
-};
 
 export default function page({
 	params,

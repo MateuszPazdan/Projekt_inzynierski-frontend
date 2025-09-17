@@ -4,9 +4,7 @@ import SectionHeader from '@/app/_components/SectionHeader';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-	title: 'Akcje | Asset Flow',
-	description:
-		'Śledź aktualne dane giełdowe i podstawowe informacje o notowanych spółkach na rynku akcji.',
+	title: 'Kursy akcji',
 };
 
 export default async function page() {

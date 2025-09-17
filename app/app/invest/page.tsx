@@ -1,8 +1,13 @@
 import CryptoPortfoliosSummary from '@/app/_components/invest/crypto/CryptoPortfoliosSummary';
 import StockPortfolioSummary from '@/app/_components/invest/stock/StockPortfolioSummary';
 import SectionHeader from '@/app/_components/SectionHeader';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { FaAngleRight } from 'react-icons/fa6';
+
+export const metadata: Metadata = {
+	title: 'Przegląd inwestycji',
+};
 
 export default function page() {
 	return (

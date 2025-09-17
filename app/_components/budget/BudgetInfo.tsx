@@ -9,6 +9,7 @@ import { formatShortPrice } from '@/app/_utils/formatAmountOfMoney';
 import ManageBudgetBtn from './ManageBudgetBtn';
 import { notFound } from 'next/navigation';
 import { BsPlus } from 'react-icons/bs';
+import { useEffect } from 'react';
 
 interface BudgetInfoProps {
 	budgetId: string;
@@ -19,6 +20,10 @@ export default function BudgetInfo({ budgetId }: BudgetInfoProps) {
 		useRetrieveBudgetQuery(budgetId);
 
 	if (!budget && !isBudgetLoading) notFound();
+
+	useEffect(() => {
+		document.title = `${budget?.title || 'Przegląd budżetu'} | Asset Flow`;
+	}, [budget]);
 
 	return (
 		<div className='flex flex-col gap-3'>

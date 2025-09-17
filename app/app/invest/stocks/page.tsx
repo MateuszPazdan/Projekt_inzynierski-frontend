@@ -2,6 +2,11 @@ import StockPortfolioHeader from '@/app/_components/invest/stock/StockPortfolioH
 import StockPortfolioList from '@/app/_components/invest/stock/StockPortfolioList';
 import StockPortfolioSummary from '@/app/_components/invest/stock/StockPortfolioSummary';
 import SectionHeader from '@/app/_components/SectionHeader';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+	title: 'Przegląd inwestycji akcyjnych',
+};
 
 export default function page() {
 	return (

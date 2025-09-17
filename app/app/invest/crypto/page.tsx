@@ -2,6 +2,11 @@ import CryptoPortfolioHeader from '@/app/_components/invest/crypto/CryptoPortfol
 import CryptoPortfolioList from '@/app/_components/invest/crypto/CryptoPortfolioList';
 import CryptoPortfoliosSummary from '@/app/_components/invest/crypto/CryptoPortfoliosSummary';
 import SectionHeader from '@/app/_components/SectionHeader';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+	title: 'Przegląd inwestycji kryptowalutowych',
+};
 
 export default function page() {
 	return (

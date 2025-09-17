@@ -2,7 +2,7 @@ import VerifyEmailForm from '@/app/_components/auth/VerifyEmailForm';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-	title: 'Potwierdzanie e-maila | Asset Flow',
+	title: 'Potwierdzanie e-maila',
 };
 
 type Params = { token: string };

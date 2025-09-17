@@ -4,9 +4,7 @@ import SectionHeader from '@/app/_components/SectionHeader';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-	title: 'Kryptowaluty | Asset Flow',
-	description:
-		'Śledź ceny cyfrowych aktywów i ich zmiany w czasie na rynku kryptowalut.',
+	title: 'Kursy kryptowalut',
 };
 
 export default async function page() {

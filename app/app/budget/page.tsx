@@ -1,5 +1,10 @@
 import BudgetList from '@/app/_components/budget/BudgetList';
 import BudgetsHeader from '@/app/_components/budget/BudgetsHeader';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+	title: 'Przegląd budżetów',
+};
 
 export default function page() {
 	return (

@@ -2,9 +2,7 @@ import LoginForm from '@/app/_components/auth/LoginForm';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-	title: 'Logowanie | Asset Flow',
-	description:
-		'Zaloguj się i korzystaj z pełni możliwości aplikacji do kontroli finansów',
+	title: 'Logowanie',
 };
 
 export default function page() {
