@@ -12,17 +12,17 @@ import {
 } from '@/app/_redux/features/budgetApiSlice';
 import toast from 'react-hot-toast';
 
-interface ManageTransactionModalProps {
+interface BudgetManageTransactionModalProps {
 	onCloseModal: () => void;
 	budgetId: string;
 	transaction?: Transaction;
 }
 
-export default function ManageTransactionModal({
+export default function BudgetManageTransactionModal({
 	onCloseModal,
 	budgetId,
 	transaction,
-}: ManageTransactionModalProps) {
+}: BudgetManageTransactionModalProps) {
 	const {
 		register,
 		handleSubmit,

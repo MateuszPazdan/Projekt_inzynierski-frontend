@@ -3,7 +3,7 @@
 import { BsPlus } from 'react-icons/bs';
 import Button from '../Button';
 import Modal from '../Modal';
-import ManageBudgetModal from './ManageBudgetModal';
+import BudgetManageModal from './BudgetManageModal';
 import SectionHeader from '../SectionHeader';
 
 export default function BudgetsHeader() {
@@ -23,7 +23,7 @@ export default function BudgetsHeader() {
 					</Button>
 				</Modal.Open>
 				<Modal.Window name='createBudget'>
-					<ManageBudgetModal onCloseModal={() => undefined} />
+					<BudgetManageModal onCloseModal={() => undefined} />
 				</Modal.Window>
 			</Modal>
 		</div>

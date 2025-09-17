@@ -4,8 +4,8 @@ import { formatDateLabel, formatTime } from '@/app/_utils/formatDate';
 import Button from '../Button';
 import Modal from '../Modal';
 import ModalHeader from '../ModalHeader';
-import DeleteTransactionModal from './DeleteTransactionModal';
-import ManageTransactionModal from './ManageTransactionModal';
+import BudgetDeleteTransactionModal from './BudgetDeleteTransactionModal';
+import BudgetManageTransactionModal from './BudgetManageTransactionModal';
 
 interface BudgetTransactionDetailsModalProps {
 	onCloseModal: () => void;
@@ -57,7 +57,7 @@ export default function BudgetTransactionDetailsModal({
 						</Button>
 					</Modal.Open>
 					<Modal.Window name='deletePortfolioTransaction'>
-						<DeleteTransactionModal
+						<BudgetDeleteTransactionModal
 							onCloseModal={() => undefined}
 							transaction={transaction}
 						/>
@@ -70,7 +70,7 @@ export default function BudgetTransactionDetailsModal({
 						</Button>
 					</Modal.Open>
 					<Modal.Window name='editPortfolioTransaction'>
-						<ManageTransactionModal
+						<BudgetManageTransactionModal
 							budgetId={transaction.budget_id}
 							transaction={transaction}
 							onCloseModal={() => undefined}

@@ -2,24 +2,24 @@ import { useRef } from 'react';
 import { useClickOutside } from '@/app/_hook/useClickOutside';
 import Button from './Button';
 
-interface BaseManageBudgetBtnProps {
+interface BaseDropdownMenuProps {
 	disabled?: boolean;
 	children: React.ReactNode;
 	isExtended: boolean;
 	setIsExtended: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-interface WithOpenIcon extends BaseManageBudgetBtnProps {
+interface WithOpenIcon extends BaseDropdownMenuProps {
 	openIcon: React.ReactNode;
 	customOpenIcon?: never;
 }
 
-interface WithCustomOpenIcon extends BaseManageBudgetBtnProps {
+interface WithCustomOpenIcon extends BaseDropdownMenuProps {
 	customOpenIcon: React.ReactNode;
 	openIcon?: never;
 }
 
-type ManageBudgetBtnProps = WithOpenIcon | WithCustomOpenIcon;
+type DropdownMenuProps = WithOpenIcon | WithCustomOpenIcon;
 
 export default function DropdownMenu({
 	disabled,
@@ -28,7 +28,7 @@ export default function DropdownMenu({
 	children,
 	isExtended,
 	setIsExtended,
-}: ManageBudgetBtnProps) {
+}: DropdownMenuProps) {
 	const buttonRef = useRef<HTMLDivElement>(null);
 	const dropdownRef = useRef<HTMLDivElement>(null);
 

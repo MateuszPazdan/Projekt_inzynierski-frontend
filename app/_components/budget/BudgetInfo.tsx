@@ -9,8 +9,8 @@ import Button from '../Button';
 import InfoCard from '../InfoCard';
 import Modal from '../Modal';
 import BudgetTransactionList from './BudgetTransactionList';
-import ManageBudgetBtn from './ManageBudgetBtn';
-import ManageTransactionModal from './ManageTransactionModal';
+import BudgetManageBtn from './BudgetManageBtn';
+import BudgetManageTransactionModal from './BudgetManageTransactionModal';
 
 interface BudgetInfoProps {
 	budgetId: string;
@@ -48,7 +48,7 @@ export default function BudgetInfo({ budgetId }: BudgetInfoProps) {
 					)}
 				</div>
 				<div className='flex flex-row gap-3 w-full md:w-fit'>
-					<ManageBudgetBtn budget={budget} isLoading={isBudgetLoading} />
+					<BudgetManageBtn budget={budget} isLoading={isBudgetLoading} />
 
 					<Modal>
 						<Modal.Open opens='addTransaction'>
@@ -60,7 +60,7 @@ export default function BudgetInfo({ budgetId }: BudgetInfoProps) {
 							</Button>
 						</Modal.Open>
 						<Modal.Window name='addTransaction'>
-							<ManageTransactionModal
+							<BudgetManageTransactionModal
 								onCloseModal={() => undefined}
 								budgetId={budgetId}
 							/>

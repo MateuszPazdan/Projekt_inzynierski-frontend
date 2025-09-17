@@ -7,15 +7,15 @@ import {
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 
-interface DeleteBudgetModalProps {
+interface BudgetDeleteModalProps {
 	onCloseModal: () => void;
 	budget: Budget;
 }
 
-export default function DeleteBudgetModal({
+export default function BudgetDeleteModal({
 	onCloseModal,
 	budget,
-}: DeleteBudgetModalProps) {
+}: BudgetDeleteModalProps) {
 	const [deleteBudget, { isLoading: isBudgetDeleting }] =
 		useDeleteBudgetMutation();
 

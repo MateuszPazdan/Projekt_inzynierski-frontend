@@ -6,15 +6,15 @@ import {
 } from '@/app/_redux/features/budgetApiSlice';
 import toast from 'react-hot-toast';
 
-interface DeleteTransactionModalProps {
+interface BudgetDeleteTransactionModalProps {
 	onCloseModal: () => void;
 	transaction: Transaction;
 }
 
-export default function DeleteTransactionModal({
+export default function BudgetDeleteTransactionModal({
 	onCloseModal,
 	transaction,
-}: DeleteTransactionModalProps) {
+}: BudgetDeleteTransactionModalProps) {
 	const [deleteTransaction, { isLoading: isTransactionDeleting }] =
 		useDeleteTransactionMutation();
 

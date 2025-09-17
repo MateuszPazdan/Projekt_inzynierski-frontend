@@ -5,18 +5,18 @@ import { FaBrush, FaTrashAlt } from 'react-icons/fa';
 import DropdownMenu from '../DropdownMenu';
 import DropdownMenuElement from '../DropdownMenuElement';
 import Modal from '../Modal';
-import DeleteAllTransactionsModal from './DeleteAllTransactionsModal';
-import DeleteBudgetModal from './DeleteBudgetModal';
-import ModifyBudgetModal from './ManageBudgetModal';
+import BudgetDeleteAllTransactionsModal from './BudgetDeleteAllTransactionsModal';
+import BudgetDeleteModal from './BudgetDeleteModal';
+import ModifyBudgetModal from './BudgetManageModal';
 
-interface ManageBudgetBtnProps {
+interface BudgetManageBtnProps {
 	budget?: Budget;
 	isLoading: boolean;
 }
-export default function ManageBudgetBtn({
+export default function BudgetManageBtn({
 	budget,
 	isLoading,
-}: ManageBudgetBtnProps) {
+}: BudgetManageBtnProps) {
 	const [isExtended, setIsExtended] = useState(false);
 
 	return (
@@ -52,7 +52,7 @@ export default function ManageBudgetBtn({
 							/>
 						</Modal.Open>
 						<Modal.Window name='deleteBudget'>
-							<DeleteBudgetModal
+							<BudgetDeleteModal
 								onCloseModal={() => undefined}
 								budget={budget}
 							/>
@@ -67,7 +67,7 @@ export default function ManageBudgetBtn({
 							/>
 						</Modal.Open>
 						<Modal.Window name='deleeteTransactions'>
-							<DeleteAllTransactionsModal
+							<BudgetDeleteAllTransactionsModal
 								onCloseModal={() => undefined}
 								budget={budget}
 							/>
