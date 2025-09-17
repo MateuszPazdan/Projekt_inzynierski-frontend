@@ -10,8 +10,6 @@ import CryptoListHeader from './CryptoListHeader';
 import { useSearchParams } from 'next/navigation';
 import SearchParamsPagination from '../../SearchParamsPagination';
 
-export const thStyles = 'group px-3 py-2 ';
-
 export default function CryptoList() {
 	const searchParams = useSearchParams();
 	const currPage = Number(searchParams.get('page')) || 1;
@@ -47,11 +45,7 @@ export default function CryptoList() {
 	return (
 		<div className='overflow-x-auto rounded-lg border border-grayThird shadow-md bg-white p-3 px-4 '>
 			<table className='text-right divide-y divide-grayThird text-xs md:text-sm w-full min-w-[700px] bg-white'>
-				<CryptoListHeader
-					handleSort={handleSort}
-					sort={sort}
-					thStyles={thStyles}
-				/>
+				<CryptoListHeader handleSort={handleSort} sort={sort} />
 				<tbody className='divide-y divide-grayThird'>
 					{cryptoList.map((crypto) => (
 						<CryptoListElement key={crypto.name} crypto={crypto} />

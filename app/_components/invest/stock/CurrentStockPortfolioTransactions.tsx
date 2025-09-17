@@ -15,7 +15,6 @@ import PortfolioTransactionListElement from '../PortfolioTransactionListElement'
 import PortfolioTransactionListHeader from '../PortfolioTransactionListHeader';
 import PortfolioTransactionListSkeleton from '../PortfolioTransactionListSkeleton';
 
-export const thStyles = 'group px-3 py-2 ';
 interface CurrentStockPortfolioTransactionsProps {
 	portfolioId: string;
 	stockSymbol: string;

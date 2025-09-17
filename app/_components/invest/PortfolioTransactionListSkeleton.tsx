@@ -1,4 +1,4 @@
-import { thStyles } from './crypto/CurrentCryptoPortfolioTransactions';
+import { thStyles } from '../SortableTh';
 import PortfolioTransactionListHeader from './PortfolioTransactionListHeader';
 
 export default function PortfolioTransactionListSkeleton() {

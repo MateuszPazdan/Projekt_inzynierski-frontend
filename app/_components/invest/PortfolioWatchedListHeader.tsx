@@ -3,13 +3,11 @@ import SortableTh from '../SortableTh';
 interface PortfolioWachedListHeaderProps {
 	sort: { by: string; order: string };
 	handleSort: (sortItem: string) => void;
-	thStyles: string;
 }
 
 export default function PortfolioWachedListHeader({
 	sort,
 	handleSort,
-	thStyles,
 }: PortfolioWachedListHeaderProps) {
 	return (
 		<thead>
@@ -18,7 +16,6 @@ export default function PortfolioWachedListHeader({
 					sortKey='currency'
 					sort={sort}
 					handleSort={handleSort}
-					thStyles={thStyles}
 					textAlignment='left'
 					additionalStyles='text-left'
 				>
@@ -29,7 +26,6 @@ export default function PortfolioWachedListHeader({
 					sortKey='price'
 					sort={sort}
 					handleSort={handleSort}
-					thStyles={thStyles}
 					textAlignment='right'
 				>
 					Kurs
@@ -39,7 +35,6 @@ export default function PortfolioWachedListHeader({
 					sortKey='change24h'
 					sort={sort}
 					handleSort={handleSort}
-					thStyles={thStyles}
 					textAlignment='right'
 				>
 					Zysk / Strata (24h)
@@ -49,7 +44,6 @@ export default function PortfolioWachedListHeader({
 					sortKey='total_cost'
 					sort={sort}
 					handleSort={handleSort}
-					thStyles={thStyles}
 					textAlignment='right'
 				>
 					Całkowity koszt
@@ -59,7 +53,6 @@ export default function PortfolioWachedListHeader({
 					sortKey='average_cost'
 					sort={sort}
 					handleSort={handleSort}
-					thStyles={thStyles}
 					textAlignment='right'
 				>
 					Średni koszt
@@ -69,7 +62,6 @@ export default function PortfolioWachedListHeader({
 					sortKey='total_profit_loss'
 					sort={sort}
 					handleSort={handleSort}
-					thStyles={thStyles}
 					textAlignment='right'
 				>
 					Całkowity zysk / strata
@@ -79,7 +71,6 @@ export default function PortfolioWachedListHeader({
 					sortKey='current_value'
 					sort={sort}
 					handleSort={handleSort}
-					thStyles={thStyles}
 					textAlignment='right'
 				>
 					Zasoby

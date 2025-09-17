@@ -10,8 +10,6 @@ import StockListHeader from './StockListHeader';
 import { useSearchParams } from 'next/navigation';
 import SearchParamsPagination from '../../SearchParamsPagination';
 
-export const thStyles = 'group px-3 py-2 ';
-
 export default function StockList() {
 	const searchParams = useSearchParams();
 	const currPage = Number(searchParams.get('page')) || 1;
@@ -49,11 +47,7 @@ export default function StockList() {
 			className={`overflow-x-auto rounded-lg border border-grayThird shadow-md bg-white p-3 px-4`}
 		>
 			<table className='text-right divide-y divide-grayThird text-xs md:text-sm w-full min-w-[700px] bg-white'>
-				<StockListHeader
-					handleSort={handleSort}
-					sort={sort}
-					thStyles={thStyles}
-				/>
+				<StockListHeader handleSort={handleSort} sort={sort} />
 				<tbody className='divide-y divide-grayThird'>
 					{stockList?.map((stock) => (
 						<StockListElement stock={stock} key={stock.name} />

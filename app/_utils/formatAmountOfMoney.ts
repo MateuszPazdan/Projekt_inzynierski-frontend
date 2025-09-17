@@ -3,6 +3,8 @@ export function formatShortPrice(amount: number): string {
 		minimumFractionDigits: 2,
 		maximumFractionDigits: 2,
 		notation: 'compact',
+		currency: 'PLN',
+		style: 'currency',
 	});
 
 	return `${formatter.format(amount)}`;

@@ -4,17 +4,17 @@ interface SortableThProps {
 	sortKey?: string;
 	sort?: { by: string; order: string };
 	handleSort?: (sortItem: string) => void;
-	thStyles: string;
 	textAlignment?: 'left' | 'right' | 'center';
 	additionalStyles?: string;
 	children: React.ReactNode;
 }
 
+export const thStyles = ' group px-3 py-2 ';
+
 export default function SortableTh({
 	sortKey,
 	sort,
 	handleSort,
-	thStyles,
 	textAlignment = 'left',
 	additionalStyles,
 	children,

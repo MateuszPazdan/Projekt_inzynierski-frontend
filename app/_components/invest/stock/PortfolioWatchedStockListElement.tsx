@@ -5,7 +5,7 @@ import { formatFullPrice } from '@/app/_utils/formatAmountOfMoney';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import PercentageChange from '../../market/PercentageChange';
-import { thStyles } from './PortfolioWatchedStockList';
+import { thStyles } from '../../SortableTh';
 
 interface PortfolioWatchedStockListElementProps {
 	watchedElement?: WatchedStocks;

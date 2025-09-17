@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import PercentageChange from '../../market/PercentageChange';
-import { thStyles } from './PortfolioWatchedCryptoList';
+import { thStyles } from '../../SortableTh';
 
 interface PortfolioWatchedListElementProps {
 	watchedElement?: WatchedCrypto;

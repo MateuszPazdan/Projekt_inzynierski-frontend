@@ -6,7 +6,7 @@ import { formatFullPrice } from '@/app/_utils/formatAmountOfMoney';
 import { formatTime } from '@/app/_utils/formatDate';
 import Image from 'next/image';
 import PercentageChange from '../market/PercentageChange';
-import { thStyles } from './crypto/CurrentCryptoPortfolioTransactions';
+import { thStyles } from '../SortableTh';
 
 interface PortfolioTransactionListElementProps {
 	transaction: PortfolioCryptoTransaction | PortfolioStockTransaction;

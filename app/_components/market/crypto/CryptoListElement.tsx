@@ -1,15 +1,15 @@
 'use client';
 
-import Image from 'next/image';
-import { PiStar } from 'react-icons/pi';
-import { thStyles } from './CryptoList';
-import { useRouter } from 'next/navigation';
-import { BsArrowDownShort, BsArrowUpShort } from 'react-icons/bs';
+import { Crypto } from '@/app/_redux/features/marketApiSlice';
 import {
 	formatFullPrice,
 	formatShortPrice,
 } from '@/app/_utils/formatAmountOfMoney';
-import { Crypto } from '@/app/_redux/features/marketApiSlice';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { BsArrowDownShort, BsArrowUpShort } from 'react-icons/bs';
+import { PiStar } from 'react-icons/pi';
+import { thStyles } from '../../SortableTh';
 
 interface CryptoListElementProps {
 	crypto: Crypto;

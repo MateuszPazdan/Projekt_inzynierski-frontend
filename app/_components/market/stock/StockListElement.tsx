@@ -1,11 +1,11 @@
 'use client';
 
 import { PiStar } from 'react-icons/pi';
-import { thStyles } from './StockList';
 import { useRouter } from 'next/navigation';
 import { BsArrowDownShort, BsArrowUpShort } from 'react-icons/bs';
 import { formatShortPrice } from '@/app/_utils/formatAmountOfMoney';
 import { Stock } from '@/app/_redux/features/marketApiSlice';
+import { thStyles } from '../../SortableTh';
 
 interface StockListElementProps {
 	stock: Stock;

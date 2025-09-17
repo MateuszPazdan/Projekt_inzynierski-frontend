@@ -1,15 +1,16 @@
 'use client';
 
 import { useRetrieveBudgetQuery } from '@/app/_redux/features/budgetApiSlice';
-import Button from '../Button';
-import TransactionsList from './TransactionsList';
-import Modal from '../Modal';
-import ManageTransactionModal from './ManageTransactionModal';
-import { formatShortPrice } from '@/app/_utils/formatAmountOfMoney';
-import ManageBudgetBtn from './ManageBudgetBtn';
+import { formatFullPrice } from '@/app/_utils/formatAmountOfMoney';
 import { notFound } from 'next/navigation';
-import { BsPlus } from 'react-icons/bs';
 import { useEffect } from 'react';
+import { BsPlus } from 'react-icons/bs';
+import Button from '../Button';
+import InfoCard from '../InfoCard';
+import Modal from '../Modal';
+import BudgetTransactionList from './BudgetTransactionList';
+import ManageBudgetBtn from './ManageBudgetBtn';
+import ManageTransactionModal from './ManageTransactionModal';
 
 interface BudgetInfoProps {
 	budgetId: string;
@@ -67,31 +68,17 @@ export default function BudgetInfo({ budgetId }: BudgetInfoProps) {
 					</Modal>
 				</div>
 			</div>
-
-			<div className='grid grid-cols-1 md:grid-cols-[1fr_auto] gap-3'>
-				<div className='rounded-lg border border-grayThird shadow-md bg-white p-3 px-4 space-y-1'>
-					<p className='text-gray-600 font-medium'>Opis</p>
-					{!isBudgetLoading ? (
-						<p className='font-medium text-lg'>
-							{budget?.description || 'Brak opisu'}
-						</p>
-					) : (
-						<div className='h-[28px] w-2/3 sm:w-1/3 rounded shimmer' />
-					)}
-				</div>
-				<div className='min-w-[250px] md:w-fit rounded-lg border border-grayThird shadow-md bg-white p-3 px-4 space-y-1'>
-					<p className='text-gray-600 font-medium'>Balans</p>
-					{!isBudgetLoading ? (
-						<p className='font-medium text-lg'>
-							{formatShortPrice(budget?.total_amount || 0)} PLN
-						</p>
-					) : (
-						<div className='h-[28px] w-2/3 sm:w-1/2 rounded shimmer' />
-					)}
-				</div>
-			</div>
-
-			<TransactionsList budgetId={budgetId} />
+			<InfoCard
+				title='Opis'
+				isLoading={isBudgetLoading}
+				text={budget?.description || 'Brak opisu'}
+			/>
+			<InfoCard
+				title='Balans'
+				isLoading={isBudgetLoading}
+				text={formatFullPrice(budget?.total_amount) || 'Brak opisu'}
+			/>
+			<BudgetTransactionList budgetId={budgetId} />
 		</div>
 	);
 }

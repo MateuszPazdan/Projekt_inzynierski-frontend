@@ -12,8 +12,6 @@ interface PortfolioWatchedStockListProps {
 	isLoading: boolean;
 }
 
-export const thStyles = 'group px-3 py-2 ';
-
 export default function PortfolioWatchedStockList({
 	portfolioDetails,
 	isLoading,
@@ -49,11 +47,7 @@ export default function PortfolioWatchedStockList({
 	return (
 		<InfoCard title='Twoje aktywa'>
 			<table className='text-right divide-y divide-grayThird text-xs md:text-sm w-full min-w-[700px] bg-white'>
-				<PortfolioWachedListHeader
-					handleSort={handleSort}
-					sort={sort}
-					thStyles={thStyles}
-				/>
+				<PortfolioWachedListHeader handleSort={handleSort} sort={sort} />
 				<tbody className='divide-y divide-grayThird'>
 					{watchedStocks.map((watchedElement) => (
 						<PortfolioWatchedStockListElement

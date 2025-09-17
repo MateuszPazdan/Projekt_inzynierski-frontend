@@ -129,7 +129,7 @@ export default function ManageTransactionModal({
 					options={list}
 					register={register}
 					required
-					defaultValue='Wybierz kategorię'
+					defaultValue={transaction?.category.name || 'Wybierz kategorię'}
 					error={errors?.category?.message as string}
 					setValue={setValue}
 				/>

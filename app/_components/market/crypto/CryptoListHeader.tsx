@@ -3,13 +3,11 @@ import SortableTh from '../../SortableTh';
 interface CryptoListHeaderProps {
 	sort: { by: string; order: string };
 	handleSort: (sortItem: string) => void;
-	thStyles: string;
 }
 
 export default function CryptoListHeader({
 	sort,
 	handleSort,
-	thStyles,
 }: CryptoListHeaderProps) {
 	return (
 		<thead>
@@ -19,7 +17,6 @@ export default function CryptoListHeader({
 					sortKey='rank'
 					sort={sort}
 					handleSort={handleSort}
-					thStyles='px-2 py-2 text-center group'
 					textAlignment='center'
 					additionalStyles='text-center'
 				>
@@ -30,7 +27,6 @@ export default function CryptoListHeader({
 					sortKey='currency'
 					sort={sort}
 					handleSort={handleSort}
-					thStyles={thStyles}
 					textAlignment='left'
 					additionalStyles='text-left'
 				>
@@ -41,7 +37,6 @@ export default function CryptoListHeader({
 					sortKey='price'
 					sort={sort}
 					handleSort={handleSort}
-					thStyles={thStyles}
 					textAlignment='right'
 				>
 					Kurs
@@ -51,7 +46,6 @@ export default function CryptoListHeader({
 					sortKey='change1h'
 					sort={sort}
 					handleSort={handleSort}
-					thStyles={thStyles}
 					textAlignment='right'
 				>
 					1h
@@ -61,7 +55,6 @@ export default function CryptoListHeader({
 					sortKey='change24h'
 					sort={sort}
 					handleSort={handleSort}
-					thStyles={thStyles}
 					textAlignment='right'
 				>
 					24h
@@ -71,7 +64,6 @@ export default function CryptoListHeader({
 					sortKey='change7d'
 					sort={sort}
 					handleSort={handleSort}
-					thStyles={thStyles}
 					textAlignment='right'
 				>
 					7d
@@ -81,7 +73,6 @@ export default function CryptoListHeader({
 					sortKey='volume_24h'
 					sort={sort}
 					handleSort={handleSort}
-					thStyles={thStyles}
 					textAlignment='right'
 				>
 					Wolumen 24h
@@ -91,7 +82,6 @@ export default function CryptoListHeader({
 					sortKey='market_cap'
 					sort={sort}
 					handleSort={handleSort}
-					thStyles={thStyles}
 					textAlignment='right'
 				>
 					Kapitalizacja
