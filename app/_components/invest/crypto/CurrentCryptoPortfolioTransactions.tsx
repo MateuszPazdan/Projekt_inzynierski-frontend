@@ -62,7 +62,7 @@ export default function CurrentCryptoPortfolioTransactions({
 	return (
 		<InfoCard title='Lista transakcji'>
 			<div className='overflow-x-auto'>
-				<table className='text-right divide-y divide-grayThird text-xs md:text-sm w-full min-w-[700px] bg-white'>
+				<table className='text-right divide-y overflow-x-auto divide-grayThird text-xs md:text-sm w-full min-w-[700px] bg-white'>
 					<PortfolioTransactionListHeader />
 					<tbody className='divide-y divide-grayThird'>
 						{sortedDates.flatMap((date) => [

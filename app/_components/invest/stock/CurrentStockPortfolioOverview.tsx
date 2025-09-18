@@ -102,8 +102,9 @@ export default function CurrentStockPortfolioOverview({
 				<InfoCard
 					title='Wartość aktywów'
 					text={formatFullPrice(currentStock?.current_value)}
+					isLoading={isPortfolioDetailsLoading}
 				/>
-				<InfoCard title='Zasoby'>
+				<InfoCard title='Zasoby' isLoading={isPortfolioDetailsLoading}>
 					<p className='text-nowrap'>
 						{currentStock?.holdings} {currentStock?.stock.symbol.toUpperCase()}
 					</p>
@@ -111,12 +112,17 @@ export default function CurrentStockPortfolioOverview({
 				<InfoCard
 					title='Koszt całkowity'
 					text={formatFullPrice(currentStock?.total_invested)}
+					isLoading={isPortfolioDetailsLoading}
 				/>
 				<InfoCard
 					title='Średni koszt'
 					text={formatFullPrice(currentStock?.avg_buy_price)}
+					isLoading={isPortfolioDetailsLoading}
 				/>
-				<InfoCard title='Całkowity zysk / strata'>
+				<InfoCard
+					title='Całkowity zysk / strata'
+					isLoading={isPortfolioDetailsLoading}
+				>
 					<p
 						className={`${
 							currentStock &&

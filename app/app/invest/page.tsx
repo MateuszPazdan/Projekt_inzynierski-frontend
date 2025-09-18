@@ -1,9 +1,8 @@
 import CryptoPortfoliosSummary from '@/app/_components/invest/crypto/CryptoPortfoliosSummary';
 import StockPortfolioSummary from '@/app/_components/invest/stock/StockPortfolioSummary';
+import PageLink from '@/app/_components/PageLink';
 import SectionHeader from '@/app/_components/SectionHeader';
 import { Metadata } from 'next';
-import Link from 'next/link';
-import { FaAngleRight } from 'react-icons/fa6';
 
 export const metadata: Metadata = {
 	title: 'Przegląd inwestycji',
@@ -16,26 +15,12 @@ export default function page() {
 				title='Przegląd inwestycji'
 				description='Śledź swoje inwestycje w kryptowaluty i akcje w jednym miejscu.'
 			/>
-
-			{/* <PortfolioOverview /> */}
 			<div className='space-y-3'>
-				<Link
-					href={'/app/invest/crypto'}
-					className='text-2xl flex flex-row w-fit items-center gap-1 hover:text-second transition-colors duration-300'
-				>
-					<span className='font-medium'>Kryptowaluty</span>
-					<FaAngleRight className='text-xl' />
-				</Link>
+				<PageLink href='/app/invest/crypto' title='Kryptowaluty' />
 				<CryptoPortfoliosSummary />
 			</div>
 			<div className='space-y-3'>
-				<Link
-					href={'/app/invest/stocks'}
-					className='text-2xl flex flex-row w-fit items-center gap-1 hover:text-second transition-colors duration-300'
-				>
-					<span className='font-medium'>Akcje</span>
-					<FaAngleRight className='text-xl' />
-				</Link>
+				<PageLink href='/app/invest/stocks' title='Akcje' />
 				<StockPortfolioSummary />
 			</div>
 		</div>

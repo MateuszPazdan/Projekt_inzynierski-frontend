@@ -9,6 +9,7 @@ import EmptyList from '../../EmptyList';
 import StockListHeader from './StockListHeader';
 import { useSearchParams } from 'next/navigation';
 import SearchParamsPagination from '../../SearchParamsPagination';
+import InfoCard from '../../InfoCard';
 
 export default function StockList() {
 	const searchParams = useSearchParams();
@@ -43,18 +44,18 @@ export default function StockList() {
 		return <EmptyList description='Nie odnaleziono żadnych akcji.' />;
 
 	return (
-		<div
-			className={`overflow-x-auto rounded-lg border border-grayThird shadow-md bg-white p-3 px-4`}
-		>
-			<table className='text-right divide-y divide-grayThird text-xs md:text-sm w-full min-w-[700px] bg-white'>
-				<StockListHeader handleSort={handleSort} sort={sort} />
-				<tbody className='divide-y divide-grayThird'>
-					{stockList?.map((stock) => (
-						<StockListElement stock={stock} key={stock.name} />
-					))}
-				</tbody>
-			</table>
+		<InfoCard title='Akcje'>
+			<div className='overflow-x-auto'>
+				<table className='text-right divide-y divide-grayThird text-xs md:text-sm w-full min-w-[700px] bg-white'>
+					<StockListHeader handleSort={handleSort} sort={sort} />
+					<tbody className='divide-y divide-grayThird'>
+						{stockList?.map((stock) => (
+							<StockListElement stock={stock} key={stock.name} />
+						))}
+					</tbody>
+				</table>
+			</div>
 			<SearchParamsPagination currPage={currPage} pages={stocks?.pages} />
-		</div>
+		</InfoCard>
 	);
 }

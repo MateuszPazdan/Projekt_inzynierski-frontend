@@ -1,11 +1,10 @@
-import Link from 'next/link';
-import SectionHeader from '../_components/SectionHeader';
-import { FaAngleRight } from 'react-icons/fa6';
+import { Metadata } from 'next';
+import CryptoOverview from '../_components/market/crypto/CryptoOverview';
+import CryptoOverviewChart from '../_components/market/crypto/CryptoOverviewChart';
 import StockOverview from '../_components/market/stock/StockOverview';
 import StockOverviewChart from '../_components/market/stock/StockOverviewChart';
-import CryptoOverviewChart from '../_components/market/crypto/CryptoOverviewChart';
-import CryptoOverview from '../_components/market/crypto/CryptoOverview';
-import { Metadata } from 'next';
+import PageLink from '../_components/PageLink';
+import SectionHeader from '../_components/SectionHeader';
 
 export const metadata: Metadata = {
 	title: 'Kursy kryptowalut i akcji polskich',
@@ -20,24 +19,12 @@ export default function page() {
 			/>
 
 			<div className='space-y-3'>
-				<Link
-					href={'/market/crypto'}
-					className='text-2xl flex flex-row w-fit items-center gap-1 hover:text-second transition-colors duration-300'
-				>
-					<span className='font-medium'>Kryptowaluty</span>
-					<FaAngleRight className='text-xl' />
-				</Link>
+				<PageLink href='/market/crypto' title='Kryptowaluty' />
 				<CryptoOverview />
 				<CryptoOverviewChart />
 			</div>
 			<div className='space-y-3'>
-				<Link
-					href={'/market/stocks'}
-					className='text-2xl flex flex-row w-fit items-center gap-1 hover:text-second transition-colors duration-300'
-				>
-					<span className='font-medium'>Akcje</span>
-					<FaAngleRight className='text-xl' />
-				</Link>
+				<PageLink href='/market/stocks' title='Akcje' />
 				<StockOverview />
 				<StockOverviewChart />
 			</div>

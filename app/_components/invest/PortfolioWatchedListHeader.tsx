@@ -28,7 +28,7 @@ export default function PortfolioWachedListHeader({
 					handleSort={handleSort}
 					textAlignment='right'
 				>
-					Kurs
+					Kurs / 24h
 				</SortableTh>
 
 				<SortableTh

@@ -46,17 +46,19 @@ export default function PortfolioWatchedCryptoList({
 
 	return (
 		<InfoCard title='Twoje aktywa'>
-			<table className='text-right divide-y divide-grayThird text-xs md:text-sm w-full min-w-[700px] bg-white'>
-				<PortfolioWachedListHeader handleSort={handleSort} sort={sort} />
-				<tbody className='divide-y divide-grayThird'>
-					{watchedCryptos.map((watchedElement) => (
-						<PortfolioWatchedCryptoListElement
-							key={watchedElement.id}
-							watchedElement={watchedElement}
-						/>
-					))}
-				</tbody>
-			</table>
+			<div className='overflow-x-auto'>
+				<table className='text-right divide-y divide-grayThird text-xs md:text-sm w-full min-w-[700px] bg-white'>
+					<PortfolioWachedListHeader handleSort={handleSort} sort={sort} />
+					<tbody className='divide-y divide-grayThird'>
+						{watchedCryptos.map((watchedElement) => (
+							<PortfolioWatchedCryptoListElement
+								key={watchedElement.id}
+								watchedElement={watchedElement}
+							/>
+						))}
+					</tbody>
+				</table>
+			</div>
 		</InfoCard>
 	);
 }

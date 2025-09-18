@@ -96,8 +96,8 @@ export default function PortfolioTransactionDetailsModal({
 							{formatTime(transaction?.transaction_date)}
 						</span>
 					</p>
-					<p className='flex flex-col  justify-between py-3'>
-						<span className='text-gray-600'>Opis</span>
+					<p className='flex flex-col md:flex-row flex-wrap justify-between py-3'>
+						<span className='text-gray-600 pr-2'>Opis</span>
 						<span className='font-medium'>
 							{transaction?.description || 'Brak opisu'}
 						</span>

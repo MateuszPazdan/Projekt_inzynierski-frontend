@@ -9,6 +9,7 @@ import EmptyList from '../../EmptyList';
 import CryptoListHeader from './CryptoListHeader';
 import { useSearchParams } from 'next/navigation';
 import SearchParamsPagination from '../../SearchParamsPagination';
+import InfoCard from '../../InfoCard';
 
 export default function CryptoList() {
 	const searchParams = useSearchParams();
@@ -43,16 +44,18 @@ export default function CryptoList() {
 		return <EmptyList description='Nie odnaleziono żadnych kryptowalut.' />;
 
 	return (
-		<div className='overflow-x-auto rounded-lg border border-grayThird shadow-md bg-white p-3 px-4 '>
-			<table className='text-right divide-y divide-grayThird text-xs md:text-sm w-full min-w-[700px] bg-white'>
-				<CryptoListHeader handleSort={handleSort} sort={sort} />
-				<tbody className='divide-y divide-grayThird'>
-					{cryptoList.map((crypto) => (
-						<CryptoListElement key={crypto.name} crypto={crypto} />
-					))}
-				</tbody>
-			</table>
+		<InfoCard title='Kryptowaluty'>
+			<div className='overflow-x-auto'>
+				<table className='text-right divide-y divide-grayThird text-xs md:text-sm w-full min-w-[700px] bg-white'>
+					<CryptoListHeader handleSort={handleSort} sort={sort} />
+					<tbody className='divide-y divide-grayThird'>
+						{cryptoList.map((crypto) => (
+							<CryptoListElement key={crypto.name} crypto={crypto} />
+						))}
+					</tbody>
+				</table>
+			</div>
 			<SearchParamsPagination currPage={currPage} pages={cryptos?.pages} />
-		</div>
+		</InfoCard>
 	);
 }

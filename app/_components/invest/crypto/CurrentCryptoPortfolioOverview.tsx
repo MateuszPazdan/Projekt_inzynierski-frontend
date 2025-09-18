@@ -104,8 +104,9 @@ export default function CurrentCryptoPortfolioOverview({
 				<InfoCard
 					title='Wartość aktywów'
 					text={formatFullPrice(currentCrypto?.current_value)}
+					isLoading={isPortfolioDetailsLoading}
 				/>
-				<InfoCard title='Zasoby'>
+				<InfoCard title='Zasoby' isLoading={isPortfolioDetailsLoading}>
 					<p className='text-nowrap'>
 						{currentCrypto?.holdings}{' '}
 						{currentCrypto?.crypto.symbol.toUpperCase()}
@@ -114,12 +115,17 @@ export default function CurrentCryptoPortfolioOverview({
 				<InfoCard
 					title='Koszt całkowity'
 					text={formatFullPrice(currentCrypto?.total_invested)}
+					isLoading={isPortfolioDetailsLoading}
 				/>
 				<InfoCard
 					title='Średni koszt'
 					text={formatFullPrice(currentCrypto?.avg_buy_price)}
+					isLoading={isPortfolioDetailsLoading}
 				/>
-				<InfoCard title='Całkowity zysk / strata'>
+				<InfoCard
+					title='Całkowity zysk / strata'
+					isLoading={isPortfolioDetailsLoading}
+				>
 					<p
 						className={`${
 							currentCrypto &&
