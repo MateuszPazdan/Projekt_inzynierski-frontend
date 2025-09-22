@@ -31,7 +31,7 @@ export default function BudgetTransactionList({
 		});
 
 	const groupedTransactions = transactions?.items?.reduce((acc, tx) => {
-		const date = tx.created_at.split('T')[0];
+		const date = tx.transaction_date.split('T')[0];
 		if (!acc[date]) acc[date] = [];
 		acc[date].push(tx);
 		return acc;

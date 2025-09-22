@@ -38,8 +38,8 @@ export default function BudgetTransactionDetailsModal({
 				<p className='flex flex-col md:flex-row justify-between py-3'>
 					<span className='text-gray-600'>Data</span>
 					<span className='font-medium'>
-						{formatDateLabel(transaction?.created_at)}{' '}
-						{formatTime(transaction?.created_at)}
+						{formatDateLabel(transaction?.transaction_date)}{' '}
+						{formatTime(transaction?.transaction_date)}
 					</span>
 				</p>
 				<p className='flex flex-col md:flex-row flex-wrap justify-between py-3'>

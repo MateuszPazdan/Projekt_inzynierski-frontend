@@ -11,6 +11,7 @@ import {
 	useRetrieveTransactionCategoriesQuery,
 } from '@/app/_redux/features/budgetApiSlice';
 import toast from 'react-hot-toast';
+import { formatDateForInput } from '@/app/_utils/formatDate';
 
 interface BudgetManageTransactionModalProps {
 	onCloseModal: () => void;
@@ -37,6 +38,9 @@ export default function BudgetManageTransactionModal({
 					? transaction?.amount
 					: -Number(transaction?.amount),
 			description: transaction?.description,
+			transaction_date: formatDateForInput(
+				transaction?.transaction_date ?? new Date()
+			),
 		},
 	});
 	const [createTransaction, { isLoading: isTransactionCreating }] =
@@ -55,6 +59,7 @@ export default function BudgetManageTransactionModal({
 				budgetId,
 				transaction: {
 					title: data.title,
+					transaction_date: data.transaction_date,
 					transaction_type: parseFloat(data.value) < 0 ? '-' : '+',
 					amount: Math.abs(parseFloat(data.value)),
 					description: data.description || '',
@@ -82,6 +87,7 @@ export default function BudgetManageTransactionModal({
 				transactionId: transaction.id,
 				transaction: {
 					title: data.title,
+					transaction_date: data.transaction_date,
 					transaction_type: parseFloat(data.value) < 0 ? '-' : '+',
 					amount: Math.abs(parseFloat(data.value)),
 					description: data.description || '',
@@ -148,6 +154,14 @@ export default function BudgetManageTransactionModal({
 					name='description'
 					error={errors?.description?.message as string}
 					maxLength={255}
+				/>
+				<FormInput
+					label='Data transakcji'
+					register={register}
+					name='transaction_date'
+					error={errors?.transaction_date?.message as string}
+					type='datetime-local'
+					required
 				/>
 
 				<div className='flex justify-center pt-5'>

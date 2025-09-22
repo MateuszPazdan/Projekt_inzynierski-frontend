@@ -28,14 +28,15 @@ export interface TransactionRequestBody {
 	amount: number;
 	description: string;
 	category_id: number;
+	transaction_date: string;
 }
 
 export interface Transaction {
-	id: string;
 	title: string;
 	transaction_type: string;
 	amount: number;
 	description: string;
+	id: string;
 	created_at: string;
 	updated_at: string;
 	budget_id: string;
@@ -44,6 +45,7 @@ export interface Transaction {
 		name: string;
 		icon: string;
 	};
+	transaction_date: string;
 }
 
 export interface TransactionCategory {
