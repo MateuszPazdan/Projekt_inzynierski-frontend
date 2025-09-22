@@ -66,7 +66,26 @@ export interface PortfolioSummary {
 	historical_value_7d: { date: string; value: number }[];
 	historical_value_1m: { date: string; value: number }[];
 	historical_value_1y: { date: string; value: number }[];
-	top_gainer_24h: WatchedCryptoDetails | WatchedStockDetails;
+	top_gainer_24h: CryptoTopGainer | StockTopGainer;
+}
+
+interface PortfolioSummaryTopGainer {
+	percentage_profit_loss_24h: number;
+	profit_loss_24h: number;
+	profit_loss: number;
+	profit_loss_percentage: number;
+	current_value: number;
+	total_invested: number;
+	avg_buy_price: number;
+	holdings: number;
+}
+
+export interface CryptoTopGainer extends PortfolioSummaryTopGainer {
+	crypto: WatchedCryptoDetails;
+}
+
+export interface StockTopGainer extends PortfolioSummaryTopGainer {
+	stock: WatchedStockDetails;
 }
 
 export interface CryptoPortfolioDetails extends PortfolioInfo {

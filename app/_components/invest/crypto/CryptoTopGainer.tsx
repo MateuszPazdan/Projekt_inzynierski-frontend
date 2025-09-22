@@ -27,7 +27,11 @@ export default function CryptoTopGainer({
 
 	return (
 		<InfoCard
-			title='Największy zysk'
+			title={`${
+				topGainerCrypto && topGainerCrypto?.profit_loss > 0
+					? 'Największy zysk'
+					: 'Najmniejsza strata'
+			}`}
 			additionalInfo={
 				<PercentageChange change={topGainerCrypto?.profit_loss_percentage} />
 			}

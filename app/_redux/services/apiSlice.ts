@@ -51,7 +51,7 @@ const baseQueryWithReauth: BaseQueryFn<
 export const apiSlice = createApi({
 	reducerPath: 'api',
 	baseQuery: baseQueryWithReauth,
-	keepUnusedDataFor: 600,
+	keepUnusedDataFor: 60,
 	tagTypes: [
 		'Budgets',
 		'Budget',

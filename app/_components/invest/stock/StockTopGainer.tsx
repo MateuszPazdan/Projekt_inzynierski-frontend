@@ -25,7 +25,11 @@ export default function StockTopGainer({
 
 	return (
 		<InfoCard
-			title='Największy zysk'
+			title={`${
+				topGainerStock && topGainerStock?.profit_loss > 0
+					? 'Największy zysk'
+					: 'Najmniejsza strata'
+			}`}
 			additionalInfo={
 				<PercentageChange change={topGainerStock?.profit_loss_percentage} />
 			}
