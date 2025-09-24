@@ -5,6 +5,8 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
 	title: 'Kursy kryptowalut',
+	description:
+		'Śledź aktualne kursy kryptowalut, analizuj wykresy i sprawdzaj dane historyczne',
 };
 
 export default async function page() {

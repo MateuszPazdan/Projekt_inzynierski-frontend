@@ -56,9 +56,9 @@ export default function CoinAndValueInput({
 	if (isLoading) return <div className='h-[58px] w-full shimmer rounded-md' />;
 	if (!selectedAsset && !isLoading)
 		return (
-			<p className='w-full'>
+			<div className='w-full flex items-center justify-center'>
 				<NoData message='Brak danych' />
-			</p>
+			</div>
 		);
 	return (
 		<div className='relative w-full'>

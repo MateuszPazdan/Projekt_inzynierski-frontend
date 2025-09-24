@@ -4,6 +4,8 @@ import SectionHeader from '../_components/SectionHeader';
 
 export const metadata: Metadata = {
 	title: 'Przelicznik cen aktywów',
+	description:
+		'Konwertuj ceny akcji, kryptowalut i walut w czasie rzeczywistym. Szybko sprawdzaj przeliczenia i porównuj aktywa.',
 };
 
 export default function page() {

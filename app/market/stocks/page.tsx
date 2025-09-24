@@ -5,6 +5,8 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
 	title: 'Kursy akcji',
+	description:
+		'Śledź aktualne kursy akcji polskich spółek, analizuj wykresy i sprawdzaj dane historyczne.',
 };
 
 export default async function page() {
