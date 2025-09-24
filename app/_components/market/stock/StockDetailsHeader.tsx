@@ -1,13 +1,18 @@
 import { StockDetails } from '@/app/_actions/stockActions';
-import { BsPlus, BsThreeDotsVertical } from 'react-icons/bs';
+import { useAppSelector } from '@/app/_redux/hooks';
+import { BsPlus } from 'react-icons/bs';
 import { PiStar } from 'react-icons/pi';
 import Button from '../../Button';
+import Modal from '../../Modal';
+import AddAssetToPortfolioModal from '../AddAssetToPortfolioModal';
 
 export default function StockDetailsHeader({
 	stockDetails,
 }: {
 	stockDetails: StockDetails;
 }) {
+	const { isAuthenticated } = useAppSelector((state) => state.auth);
+
 	return (
 		<div className='flex flex-row justify-between gap-5 items-center pb-5'>
 			<div className='flex flex-row gap-2 md:gap-4 items-center'>
@@ -28,27 +33,33 @@ export default function StockDetailsHeader({
 					</span>
 				</p>
 			</div>
-			<>
-				<div className='md:hidden'>
-					<Button size='icon' color='light'>
-						<BsThreeDotsVertical />
-					</Button>
-				</div>
-				<div className='hidden md:flex gap-2 '>
+			{isAuthenticated && (
+				<div className='flex gap-2'>
 					<Button size='icon' color='light' onClick={() => {}}>
 						<PiStar className='text-yellow-500 text-2xl' />
 					</Button>
-					<Button
-						size='large'
-						additionalClasses='h-12'
-						color='dark'
-						onClick={() => {}}
-					>
-						<BsPlus className='text-3xl' />
-						<span className='mr-3'>Dodaj do inwestycji</span>
-					</Button>
+					<Modal>
+						<Modal.Open opens='addCryptoToPortfolio'>
+							<Button
+								size='large'
+								additionalClasses='h-12'
+								color='dark'
+								stretch
+							>
+								<BsPlus className='text-3xl' />
+								<span className='mr-3'>Dodaj do portfela</span>
+							</Button>
+						</Modal.Open>
+						<Modal.Window name='addCryptoToPortfolio'>
+							<AddAssetToPortfolioModal
+								onCloseModal={() => undefined}
+								assetSymbol={stockDetails.symbol}
+								assetType='stocks'
+							/>
+						</Modal.Window>
+					</Modal>
 				</div>
-			</>
+			)}
 		</div>
 	);
 }

@@ -3,7 +3,9 @@
 import {
 	PortfolioHoldingCryptoInfo,
 	useAddWatchedCryptoPortfolioMutation,
+	useAddWatchedStockPortfolioMutation,
 	useRetrievePortfoliosHoldingCryptoQuery,
+	useRetrievePortfoliosHoldingStockQuery,
 } from '@/app/_redux/features/portfiolioApiSlice';
 import { AnimatePresence, motion } from 'framer-motion';
 import toast from 'react-hot-toast';
@@ -11,12 +13,12 @@ import { BsCheck, BsPlus, BsX } from 'react-icons/bs';
 import Modal from '../Modal';
 import ModalHeader from '../ModalHeader';
 import DeleteWatchedAssetModal from '../invest/DeleteWatchedAssetModal';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 interface AddAssetToPortfolioModalProps {
 	onCloseModal: () => void;
 	assetSymbol: string;
-	assetType: 'crypto' | 'stock';
+	assetType: 'crypto' | 'stocks';
 }
 
 export default function AddAssetToPortfolioModal({
@@ -32,8 +34,20 @@ export default function AddAssetToPortfolioModal({
 		{ symbol: assetSymbol },
 		{ skip: assetType !== 'crypto' }
 	);
+	const {
+		data: portfoliosHoldingStock,
+		isLoading: isPortfoliosHoldingStockLoading,
+		isFetching: isPortfoliosHoldingStockFetching,
+	} = useRetrievePortfoliosHoldingStockQuery(
+		{ symbol: assetSymbol },
+		{ skip: assetType !== 'stocks' }
+	);
 	const [addWatchedCrypto, { isLoading: isAddwatchedCryptoLoading }] =
 		useAddWatchedCryptoPortfolioMutation();
+	const [addWatchedStock, { isLoading: isAddwatchedStockLoading }] =
+		useAddWatchedStockPortfolioMutation();
+
+	const holdingAssets = portfoliosHoldingStock || portfoliosHoldingCrypto || [];
 
 	function handleAddAssetToPortfolio({
 		portfolio,
@@ -58,6 +72,24 @@ export default function AddAssetToPortfolioModal({
 					);
 				});
 		}
+		if (assetType === 'stocks') {
+			addWatchedStock({
+				portfolioId: portfolio.id,
+				stock_symbol: assetSymbol,
+			})
+				.unwrap()
+				.then(() => {
+					toast.success(
+						`Dodano akcję ${assetSymbol.toUpperCase()} do portfolio.`
+					);
+				})
+				.catch((error) => {
+					toast.error(
+						error?.data.detail ||
+							`Wystąpił błąd podczas dodawania kryptowaluty ${assetSymbol.toUpperCase()} do portfolio.`
+					);
+				});
+		}
 	}
 
 	return (
@@ -65,7 +97,12 @@ export default function AddAssetToPortfolioModal({
 			<ModalHeader onCloseModal={onCloseModal} title='Dodaj do portfela' />
 
 			<div className='pt-5'>
-				{isPortfoliosHoldingCryptoLoading || isPortfoliosHoldingCryptoFetching
+				{isPortfoliosHoldingCryptoLoading ||
+				isPortfoliosHoldingCryptoFetching ||
+				isPortfoliosHoldingStockLoading ||
+				isPortfoliosHoldingStockFetching ||
+				isAddwatchedCryptoLoading ||
+				isAddwatchedStockLoading
 					? Array.from({ length: 3 }).map((_, i) => (
 							<div
 								key={i}
@@ -75,20 +112,21 @@ export default function AddAssetToPortfolioModal({
 								<div className='h-[20px] w-[70px] rounded-md shimmer' />
 							</div>
 					  ))
-					: portfoliosHoldingCrypto?.map((portfolio, index) => (
-							<>
+					: holdingAssets?.map((portfolio, index) => (
+							<React.Fragment key={`${index}-${portfolio.id}`}>
 								{portfolio.in_portfolio ? (
 									<RemoveAssetBtn
 										assetSymbol={assetSymbol}
 										portfolio={portfolio}
-										key={index}
+										assetType={assetType}
 									/>
 								) : (
 									<button
 										className='grid grid-cols-[1fr_auto] gap-1 text-sm p-3 rounded-md hover:bg-grayOne disabled:hover:bg-white transition-colors duration-300 w-full group'
 										onClick={() => handleAddAssetToPortfolio({ portfolio })}
-										disabled={isAddwatchedCryptoLoading}
-										key={index}
+										disabled={
+											isAddwatchedCryptoLoading || isAddwatchedStockLoading
+										}
 									>
 										<div className='flex flex-row items-center gap-2'>
 											<p className='flex items-center justify-center w-6 h-6 text-xs aspect-square bg-main text-white rounded-full'>
@@ -101,7 +139,7 @@ export default function AddAssetToPortfolioModal({
 										</span>
 									</button>
 								)}
-							</>
+							</React.Fragment>
 					  ))}
 			</div>
 		</div>
@@ -111,9 +149,11 @@ export default function AddAssetToPortfolioModal({
 function RemoveAssetBtn({
 	portfolio,
 	assetSymbol,
+	assetType,
 }: {
 	portfolio: PortfolioHoldingCryptoInfo;
 	assetSymbol: string;
+	assetType: 'stocks' | 'crypto';
 }) {
 	const [hovered, setHovered] = useState(false);
 	return (
@@ -162,7 +202,7 @@ function RemoveAssetBtn({
 				<DeleteWatchedAssetModal
 					skipRedirect
 					assetSymbol={assetSymbol}
-					assetType='crypto'
+					assetType={assetType}
 					onCloseModal={() => undefined}
 					portfolioId={portfolio?.id}
 				/>

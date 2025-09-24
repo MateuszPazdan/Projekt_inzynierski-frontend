@@ -526,6 +526,16 @@ const portfolioApiSlice = apiSlice.injectEndpoints({
 				{ type: 'StockPortfolioTransactions', id: portfolio_id },
 			],
 		}),
+		retrievePortfoliosHoldingStock: builder.query<
+			PortfolioHoldingCryptoInfo[],
+			{ symbol: string }
+		>({
+			query: ({ symbol }) => ({
+				url: `/assets/stocks/${symbol}/portfolios`,
+				method: 'GET',
+			}),
+			providesTags: ['StockPortfolios'],
+		}),
 	}),
 });
 
@@ -558,4 +568,5 @@ export const {
 	useCreateStockPortfolioTransactionMutation,
 	useUpdateStockPortfolioTransactionMutation,
 	useDeleteCurrentStockPortfolioTransactionMutationMutation,
+	useRetrievePortfoliosHoldingStockQuery,
 } = portfolioApiSlice;
