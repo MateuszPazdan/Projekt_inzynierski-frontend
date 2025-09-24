@@ -10,15 +10,19 @@ export function formatShortPrice(amount: number): string {
 	return `${formatter.format(amount)}`;
 }
 
-export function formatFullPrice(amount: number | undefined): string {
-	if (!amount) return '0 zł';
-	const formatterr = new Intl.NumberFormat('pl-PL', {
+export function formatFullPrice(
+	amount: number | undefined,
+	withCurrency: boolean = true
+): string {
+	if (!amount) return withCurrency ? '0 zł' : '0';
+
+	const formatter = new Intl.NumberFormat('pl-PL', {
 		minimumSignificantDigits: amount < 1 ? 2 : undefined,
 		maximumSignificantDigits: amount < 1 ? 4 : undefined,
 		minimumFractionDigits: amount >= 1 ? 2 : undefined,
-		currency: 'PLN',
-		style: 'currency',
+		style: withCurrency ? 'currency' : undefined,
+		currency: withCurrency ? 'PLN' : undefined,
 	});
 
-	return `${formatterr.format(amount)}`;
+	return formatter.format(amount);
 }

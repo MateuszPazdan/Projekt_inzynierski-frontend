@@ -171,4 +171,3 @@ function NavSearchAsset({
 	);
 }
 
-export { NavSearchAsset };

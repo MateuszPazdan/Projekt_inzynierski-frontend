@@ -14,6 +14,18 @@ export interface GlobalSearchResult {
 	cryptos: Crypto[];
 }
 
+export interface AssetsInConverterResponse {
+	stocks: ConverterAssetDetails[];
+	cryptos: ConverterAssetDetails[];
+	currencies: ConverterAssetDetails[];
+}
+
+export interface ConverterAssetDetails {
+	symbol: string;
+	name: string;
+	icon?: string;
+}
+
 const globalApiSlice = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
 		retrieveGlobalSearch: builder.query<GlobalSearchResult, { search: string }>(
@@ -24,7 +36,27 @@ const globalApiSlice = apiSlice.injectEndpoints({
 				}),
 			}
 		),
+		retrieveAssetsInConverter: builder.query<AssetsInConverterResponse, void>({
+			query: () => ({
+				url: `assets/global-assets-in-converter`,
+				method: 'GET',
+			}),
+		}),
+		convertAssets: builder.query<
+			{ converted_amount: number },
+			{ convert_from: string; convert_to: string; amount: number }
+		>({
+			query: ({ convert_from, convert_to, amount }) => ({
+				url: `assets/global-converter?convert_from=${convert_from}&convert_to=${convert_to}&amount=${amount}`,
+				method: 'GET',
+			}),
+		}),
 	}),
 });
 
-export const { useRetrieveGlobalSearchQuery, useLazyRetrieveGlobalSearchQuery } = globalApiSlice;
+export const {
+	useRetrieveGlobalSearchQuery,
+	useLazyRetrieveGlobalSearchQuery,
+	useRetrieveAssetsInConverterQuery,
+	useConvertAssetsQuery,
+} = globalApiSlice;

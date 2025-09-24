@@ -1,98 +1,70 @@
 'use client';
 
-import { BsArrowDownUp } from 'react-icons/bs';
+import {
+	ConverterAssetDetails,
+	useConvertAssetsQuery,
+} from '@/app/_redux/features/globalApiSlice';
+import { formatFullPrice } from '@/app/_utils/formatAmountOfMoney';
 import { useState } from 'react';
+import { BsArrowDownUp } from 'react-icons/bs';
+import Spinner from '../Spinner';
 import CoinAndValueInput from './CoinAndValueInput';
-
-const cryptoList = [
-	{
-		name: 'Bitcoin',
-		symbol: 'BTC',
-		logo: '/bitcoin-logo-svgrepo-com.svg',
-		price: 67000,
-	},
-	{
-		name: 'Ethereum',
-		symbol: 'ETH',
-		logo: '/eth-svgrepo-com.svg',
-		price: 3500,
-	},
-	{
-		name: 'Chainlink',
-		symbol: 'LINK',
-		logo: '/chainlink-svgrepo-com.svg',
-		price: 14,
-	},
-	{
-		name: 'Litecoin',
-		symbol: 'LTC',
-		logo: '/litecoin-svgrepo-com.svg',
-		price: 80,
-	},
-	{
-		name: 'Ripple',
-		symbol: 'XRP',
-		logo: '/ripple-svgrepo-com.svg',
-		price: 0.5,
-	},
-	{
-		name: 'Dogecoin',
-		symbol: 'DOGE',
-		logo: '/doge-svgrepo-com.svg',
-		price: 0.15,
-	},
-];
-
-export interface CryptoElement {
-	name: string;
-	symbol: string;
-	logo: string;
-	price: number;
-}
+import { useDebounce } from '@/app/_hook/useDebounce';
 
 export default function Converter() {
-	const [selectedCrypto, setSelectedCrypto] = useState(cryptoList[0]);
-	const [secondSelectedCrytpo, setSecondSelectedCrypto] = useState(
-		cryptoList[1]
+	const [selectedAsset, setSelectedAsset] = useState<ConverterAssetDetails>();
+	const [secondSelectedAsset, setSeconSelectedAsset] =
+		useState<ConverterAssetDetails>();
+	const [amount, setAmount] = useState<number | string>(1);
+	const deboundedAmount = useDebounce(amount, 500);
+	const { data, isLoading } = useConvertAssetsQuery(
+		{
+			convert_from: selectedAsset?.symbol ?? '',
+			convert_to: secondSelectedAsset?.symbol ?? '',
+			amount: Number(deboundedAmount) || 1,
+		},
+		{
+			skip: !selectedAsset || !secondSelectedAsset,
+		}
 	);
+
 	return (
 		<div className=' flex flex-col gap-5 rounded-lg sm:border border-grayThird sm:shadow-md sm:bg-white sm:p-5 w-full'>
-			<div className='relative flex flex-col md:flex-row items-center gap-2 sm:gap-5'>
+			<div className='relative flex flex-col md:flex-row items-center gap-5'>
 				<CoinAndValueInput
-					cryptoList={cryptoList}
-					selectedCrypto={selectedCrypto}
-					setSelectedCrypto={setSelectedCrypto}
+					selectedAsset={selectedAsset}
+					setSelectedAsset={setSelectedAsset}
+					amount={amount}
+					setAmount={setAmount}
 				/>
+
 				<button
 					type='button'
 					className='flex items-center justify-center w-10 h-10 aspect-square bg-main rounded-full p-2 hover:cursor-pointer hover:bg-second transition-colors duration-300 z-[5]'
 					onClick={() => {
-						const temp = selectedCrypto;
-						setSelectedCrypto(secondSelectedCrytpo);
-						setSecondSelectedCrypto(temp);
+						const temp = selectedAsset;
+						setSelectedAsset(secondSelectedAsset);
+						setSeconSelectedAsset(temp);
 					}}
 				>
 					<BsArrowDownUp className='text-white font-bold text-xl sm:rotate-90' />
 				</button>
 				<CoinAndValueInput
-					cryptoList={cryptoList}
-					selectedCrypto={secondSelectedCrytpo}
-					setSelectedCrypto={setSecondSelectedCrypto}
+					selectedAsset={secondSelectedAsset}
+					setSelectedAsset={setSeconSelectedAsset}
+					amount={data?.converted_amount}
 					disabled
 				/>
 			</div>
-			<p className='font-medium text-xl sm:text-xl flex flex-col gap-1 '>
-				1 {selectedCrypto.symbol} ≈{' '}
-				{selectedCrypto.price / secondSelectedCrytpo.price > 0
-					? parseFloat(
-							(selectedCrypto.price / secondSelectedCrytpo.price).toFixed(10)
-					  ).toString()
-					: '0'}{' '}
-				{secondSelectedCrytpo.symbol}{' '}
-				<span className='text-gray-600 font-normal text-xs sm:text-sm text-nowrap'>
-					Ostatnia aktualizacja: 08:56AM UTC 04.06.2024
-				</span>
-			</p>
+			{isLoading || !data ? (
+				<Spinner size='small' />
+			) : (
+				<p className='font-medium text-xl sm:text-xl flex flex-col gap-1 '>
+					{deboundedAmount || 1} {selectedAsset?.symbol.toUpperCase()} ≈{' '}
+					{formatFullPrice(data?.converted_amount, false)}{' '}
+					{secondSelectedAsset?.symbol.toUpperCase()}{' '}
+				</p>
+			)}
 		</div>
 	);
 }
