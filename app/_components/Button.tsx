@@ -41,7 +41,7 @@ function Button({
 					: size === 'large'
 					? ' px-5 py-3 font-medium text-base '
 					: size === 'icon'
-					? ' w-12 aspect-square '
+					? ' w-12 h-12 aspect-square '
 					: ''
 			} rounded-lg text-nowrap flex flex-row items-center justify-center disabled:cursor-not-allowed ${
 				stretch && ' w-full '

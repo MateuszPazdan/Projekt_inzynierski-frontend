@@ -69,6 +69,13 @@ export interface PortfolioSummary {
 	top_gainer_24h: CryptoTopGainer | StockTopGainer;
 }
 
+export interface PortfolioHoldingCryptoInfo {
+	id: string;
+	title: string;
+	color: string;
+	in_portfolio: boolean;
+}
+
 interface PortfolioSummaryTopGainer {
 	percentage_profit_loss_24h: number;
 	profit_loss_24h: number;
@@ -337,6 +344,16 @@ const portfolioApiSlice = apiSlice.injectEndpoints({
 				{ type: 'CryptoPortfolioTransactions', id: portfolio_id },
 			],
 		}),
+		retrievePortfoliosHoldingCrypto: builder.query<
+			PortfolioHoldingCryptoInfo[],
+			{ symbol: string }
+		>({
+			query: ({ symbol }) => ({
+				url: `/assets/cryptos/${symbol}/portfolios`,
+				method: 'GET',
+			}),
+			providesTags: ['CryptoPortfolios'],
+		}),
 
 		retrieveStockPortfoliosSummary: builder.query<PortfolioSummary, void>({
 			query: () => ({
@@ -526,6 +543,7 @@ export const {
 	useCreateCryptoPortfolioTransactionMutation,
 	useUpdateCryptoPortfolioTransactionMutation,
 	useDeleteCurrentCryptoPortfolioTransactionMutationMutation,
+	useRetrievePortfoliosHoldingCryptoQuery,
 
 	useRetrieveStockPortfoliosSummaryQuery,
 	useRetrieveStockPortfoliosQuery,

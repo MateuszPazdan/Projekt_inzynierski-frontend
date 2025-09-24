@@ -12,6 +12,7 @@ interface DeleteWatchedAssetModalProps {
 	portfolioId: string;
 	assetSymbol: string;
 	assetType: 'crypto' | 'stocks';
+	skipRedirect?: boolean;
 }
 
 export default function DeleteWatchedAssetModal({
@@ -19,6 +20,7 @@ export default function DeleteWatchedAssetModal({
 	portfolioId,
 	assetSymbol,
 	assetType,
+	skipRedirect = false,
 }: DeleteWatchedAssetModalProps) {
 	const router = useRouter();
 	const [deleteWatchedCrypto, { isLoading: isWatchedCryptoDeleting }] =
@@ -36,7 +38,8 @@ export default function DeleteWatchedAssetModal({
 				.then(() => {
 					toast.success('Usunięto aktywo z portfela.');
 					onCloseModal();
-					router.replace(`/app/invest/crypto/${portfolioId}`);
+					if (!skipRedirect)
+						router.replace(`/app/invest/crypto/${portfolioId}`);
 				})
 				.catch((error) => {
 					toast.error(
@@ -54,7 +57,8 @@ export default function DeleteWatchedAssetModal({
 				.then(() => {
 					toast.success('Usunięto aktywo z portfela.');
 					onCloseModal();
-					router.replace(`/app/invest/stocks/${portfolioId}`);
+					if (!skipRedirect)
+						router.replace(`/app/invest/stocks/${portfolioId}`);
 				})
 				.catch((error) => {
 					toast.error(
