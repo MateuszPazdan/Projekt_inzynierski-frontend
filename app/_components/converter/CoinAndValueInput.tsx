@@ -6,7 +6,7 @@ import {
 	ConverterAssetDetails,
 	useRetrieveAssetsInConverterQuery,
 } from '@/app/_redux/features/globalApiSlice';
-import Spinner from '../Spinner';
+import NoData from '../NoData';
 
 interface CoinAndValueInputProps {
 	selectedAsset: ConverterAssetDetails | undefined;
@@ -53,8 +53,13 @@ export default function CoinAndValueInput({
 		else setSelectedAsset(assetList?.cryptos[0]);
 	}, [assetList, setSelectedAsset, disabled]);
 
-	if (!selectedAsset) return <Spinner size='small' />;
-
+	if (isLoading) return <div className='h-[58px] w-full shimmer rounded-md' />;
+	if (!selectedAsset && !isLoading)
+		return (
+			<p className='w-full'>
+				<NoData message='Brak danych' />
+			</p>
+		);
 	return (
 		<div className='relative w-full'>
 			<div className='flex flex-row gap-2 items-center p-2 bg-white border-grayThird border rounded-md'>
@@ -64,7 +69,8 @@ export default function CoinAndValueInput({
 					className='flex flex-row items-center gap-2 min-w-fit hover:cursor-pointer group'
 					onClick={() => setIsOpen(!isOpen)}
 				>
-					{'icon' in selectedAsset &&
+					{selectedAsset &&
+					'icon' in selectedAsset &&
 					selectedAsset?.icon !== '' &&
 					selectedAsset.icon ? (
 						<Image
@@ -80,18 +86,16 @@ export default function CoinAndValueInput({
 					)}
 					<p className='flex flex-col justify-center items-start'>
 						<span className='text-sm font-semibold'>
-							{selectedAsset.symbol.toUpperCase()}
+							{selectedAsset?.symbol.toUpperCase()}
 						</span>
-						<span className='text-xs text-gray-500'>{selectedAsset.name}</span>
+						<span className='text-xs text-gray-500'>{selectedAsset?.name}</span>
 					</p>
 					<span className='text-gray-500 group-hover:text-second transition-colors duration-300'>
 						<FaAngleDown />
 					</span>
 				</button>
 				<input
-					placeholder='1.00'
 					min={0}
-					step={0.000001}
 					type='number'
 					className='p-2 text-right bg-transparent outline-none appearance-none m-0 w-full'
 					disabled={disabled}
@@ -106,9 +110,7 @@ export default function CoinAndValueInput({
 				} rounded-md border border-grayThird shadow-md bg-white left-0 top-[110%] transition-all duration-300 overflow-x-hidden max-h-[300px] md:max-h-[500px] overflow-y-auto`}
 			>
 				{isLoading ? (
-					<span className='p-5'>
-						<Spinner size='small' color='text-main' />
-					</span>
+					<div className='h-4 w-[240px] shimmer rounded' />
 				) : assetList?.cryptos.length === 0 &&
 				  assetList?.stocks.length === 0 &&
 				  assetList.currencies.length === 0 ? (

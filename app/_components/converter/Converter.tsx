@@ -7,7 +7,6 @@ import {
 import { formatFullPrice } from '@/app/_utils/formatAmountOfMoney';
 import { useState } from 'react';
 import { BsArrowDownUp } from 'react-icons/bs';
-import Spinner from '../Spinner';
 import CoinAndValueInput from './CoinAndValueInput';
 import { useDebounce } from '@/app/_hook/useDebounce';
 
@@ -57,7 +56,7 @@ export default function Converter() {
 				/>
 			</div>
 			{isLoading || !data ? (
-				<Spinner size='small' />
+				<div className='h-[28px] w-40 shimmer rounded-md' />
 			) : (
 				<p className='font-medium text-xl sm:text-xl flex flex-col gap-1 '>
 					{deboundedAmount || 1} {selectedAsset?.symbol.toUpperCase()} ≈{' '}
