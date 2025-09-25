@@ -83,7 +83,7 @@ export default function StockPriceSection({
 							<>
 								<span className='hidden sm:inline text-gray-500'>Minimum</span>{' '}
 								<span className='font-medium text-gray-500 sm:text-black'>
-									{formatFullPrice(minPrice)} {stockDetails?.currency}
+									{formatFullPrice(minPrice)}
 								</span>
 							</>
 						)}
@@ -98,7 +98,7 @@ export default function StockPriceSection({
 							<>
 								<span className='hidden sm:inline text-gray-500'>Maksimum</span>{' '}
 								<span className='font-medium text-gray-500 sm:text-black'>
-									{formatFullPrice(maxPrice)} {stockDetails?.currency}
+									{formatFullPrice(maxPrice)}
 								</span>
 							</>
 						)}

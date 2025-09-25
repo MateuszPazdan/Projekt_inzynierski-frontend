@@ -54,6 +54,7 @@ export default function SimpleChart({
 			}
 		})
 		.map((item) => item.date);
+		
 	return (
 		<ResponsiveContainer width='100%' className={'min-h-[300px]'}>
 			<AreaChart data={historicalData} margin={{ right: 0, left: 0 }}>
