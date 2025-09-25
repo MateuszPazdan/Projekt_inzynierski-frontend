@@ -135,7 +135,7 @@ export default function BudgetManageTransactionModal({
 					options={list}
 					register={register}
 					required
-					defaultValue={transaction?.category.name || 'Wybierz kategorię'}
+					defaultValue={transaction?.category.name}
 					error={errors?.category?.message as string}
 					setValue={setValue}
 				/>

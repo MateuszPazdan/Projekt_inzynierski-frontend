@@ -108,7 +108,7 @@ export default function CurrentCryptoPortfolioOverview({
 				/>
 				<InfoCard title='Zasoby' isLoading={isPortfolioDetailsLoading}>
 					<p className='text-nowrap'>
-						{currentCrypto?.holdings}{' '}
+						{formatFullPrice(currentCrypto?.holdings, false)}{' '}
 						{currentCrypto?.crypto.symbol.toUpperCase()}
 					</p>
 				</InfoCard>
