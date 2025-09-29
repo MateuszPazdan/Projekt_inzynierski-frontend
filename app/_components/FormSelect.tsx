@@ -5,7 +5,7 @@ import { FieldValues, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import { FaAngleDown } from 'react-icons/fa6';
 
 interface FormSelectProps {
-	label: string;
+	label?: string;
 	name: string;
 	options?: string[] | [];
 	register: UseFormRegister<FieldValues>;

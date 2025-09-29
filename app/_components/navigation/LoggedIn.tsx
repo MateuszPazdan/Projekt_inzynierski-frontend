@@ -1,45 +1,78 @@
+import { useLogout } from '@/app/_hook/useLogout';
 import { useRetrieveUserQuery } from '@/app/_redux/features/authApiSlice';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
+import { CiLogout, CiSettings } from 'react-icons/ci';
+import { FaCoins } from 'react-icons/fa';
+import DropdownMenu from '../DropdownMenu';
 import Spinner from '../Spinner';
 import UserImage from './UserImage';
-import UserNav from './UserNav';
+import UserInfo from './UserInfo';
+import UserNavElement from './UserNavElement';
+import InvestDropdownMenu from './InvestDropdownMenu';
 
 export default function LoggedIn() {
+	const [isDropdownMenuOpen, setIsDropdownMenuOpen] = useState(false);
 	const [isAvatarClicked, setIsAvatarClicked] = useState(false);
+
 	const { data: user, isLoading } = useRetrieveUserQuery();
-	const buttonRef = useRef<HTMLButtonElement>(null);
+	const { logoutHookFn } = useLogout();
+
 	return (
 		<div className='relative flex flex-row items-center gap-5'>
-			{/* <Link
-				href='/watchlist'
-				className='text-3xl text-grayThird hover:bg-grayOne hover:text-yellow-400 p-1 rounded-lg transition-colors duration-300 cursor-pointer'
-			>
-				<PiStar />
-			</Link> */}
 			{isLoading ? (
 				<Spinner size='small' />
 			) : (
-				<button
-					ref={buttonRef}
-					onClick={() => {
-						setIsAvatarClicked((isClicked) => !isClicked);
-					}}
-					className={`relative w-10 h-10 rounded-full transition-all duration-300 overflow-hidden ${
-						isAvatarClicked ? 'ring-main' : 'ring-transparent'
-					} ring-2 ring-offset-2 hover:ring-main cursor-pointer`}
-				>
-					<UserImage
-						imageAlt={`Awatar ${user?.username}`}
-						imageUrl={user?.avatar_image}
-					/>
-				</button>
-			)}
-			{isAvatarClicked && (
-				<UserNav
-					user={user}
-					setIsAvatarClicked={setIsAvatarClicked}
-					buttonRef={buttonRef}
-				/>
+				<>
+					<DropdownMenu
+						customOpenIcon={
+							<div className='flex items-center justify-center gap-2 p-2 px-0 text-gray-600 hover:text-second transition-colors duration-300'>
+								<FaCoins className='text-base' />
+								<span className='text-sm'>Inwestycje</span>
+							</div>
+						}
+						distanceFromTop={160}
+						isExtended={isDropdownMenuOpen}
+						setIsExtended={setIsDropdownMenuOpen}
+					>
+						<InvestDropdownMenu />
+					</DropdownMenu>
+					<DropdownMenu
+						customOpenIcon={
+							<div
+								className={`relative w-10 h-10 rounded-full transition-all duration-300 overflow-hidden ${
+									isAvatarClicked ? 'ring-main' : 'ring-transparent'
+								} ring-2 ring-offset-2 hover:ring-main cursor-pointer`}
+							>
+								<UserImage
+									imageAlt={`Awatar ${user?.username}`}
+									imageUrl={user?.avatar_image}
+								/>
+							</div>
+						}
+						distanceFromTop={150}
+						isExtended={isAvatarClicked}
+						setIsExtended={setIsAvatarClicked}
+					>
+						<div className='min-w-[250px]'>
+							<UserInfo
+								email={user?.email}
+								username={user?.username}
+								imageUrl={user?.avatar_image}
+							/>
+
+							<UserNavElement
+								href='/settings'
+								title='Ustawienia konta'
+								icon={<CiSettings />}
+							/>
+							<UserNavElement
+								onClick={() => logoutHookFn()}
+								title='Wyloguj się'
+								icon={<CiLogout />}
+							/>
+						</div>
+					</DropdownMenu>
+				</>
 			)}
 		</div>
 	);

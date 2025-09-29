@@ -1,12 +1,16 @@
+'use client';
+
 import { useRef } from 'react';
 import { useClickOutside } from '@/app/_hook/useClickOutside';
 import Button from './Button';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface BaseDropdownMenuProps {
 	disabled?: boolean;
 	children: React.ReactNode;
 	isExtended: boolean;
 	setIsExtended: React.Dispatch<React.SetStateAction<boolean>>;
+	distanceFromTop?: number;
 }
 
 interface WithOpenIcon extends BaseDropdownMenuProps {
@@ -28,6 +32,7 @@ export default function DropdownMenu({
 	children,
 	isExtended,
 	setIsExtended,
+	distanceFromTop,
 }: DropdownMenuProps) {
 	const buttonRef = useRef<HTMLDivElement>(null);
 	const dropdownRef = useRef<HTMLDivElement>(null);
@@ -39,7 +44,7 @@ export default function DropdownMenu({
 	useClickOutside(dropdownRef, closeModal, buttonRef);
 
 	return (
-		<div className='relative flex' ref={buttonRef}>
+		<div className='relative flex w-fit' ref={buttonRef}>
 			{openIcon && (
 				<Button
 					size='icon'
@@ -61,14 +66,21 @@ export default function DropdownMenu({
 					{customOpenIcon}
 				</button>
 			)}
-			<div
-				ref={dropdownRef}
-				className={`absolute rounded-lg border p-2 gap-1 border-grayThird shadow-md bg-white left-0 md:left-auto md:right-0 top-[110%] text-nowrap z-10 ${
-					isExtended ? 'flex' : 'hidden'
-				} flex-col text-sm overflow-hidden`}
-			>
-				{children}
-			</div>
+			<AnimatePresence>
+				{isExtended && (
+					<motion.div
+						ref={dropdownRef}
+						className={`absolute rounded-lg p-2 gap-1  shadow-md bg-white left-0 md:left-auto md:right-0 top-[110%] text-nowrap z-10 flex flex-col text-sm `}
+						style={{ top: `${distanceFromTop}%` || '110%' }}
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						exit={{ opacity: 0, y: 20 }}
+						transition={{ duration: 0.3, ease: 'easeOut' }}
+					>
+						{children}
+					</motion.div>
+				)}
+			</AnimatePresence>
 		</div>
 	);
 }

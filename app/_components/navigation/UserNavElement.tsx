@@ -25,7 +25,7 @@ export default function UserNavElement({
 		return (
 			<button
 				onClick={onClick}
-				className='grid grid-cols-[auto_1fr] items-center gap-2 p-2 hover:bg-grayOne rounded-lg  duration-300 transition-colors'
+				className='grid grid-cols-[auto_1fr] w-full items-center gap-2 p-2 hover:bg-grayOne rounded-lg  duration-300 transition-colors'
 			>
 				<span className='text-2xl'>{icon}</span>
 				<p className='text-base text-left'>{title}</p>
