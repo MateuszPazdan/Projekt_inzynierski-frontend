@@ -94,7 +94,7 @@ export default function PortfolioWatchedCryptoListElement({
 				<span className='flex flex-col items-end'>
 					<span>{formatFullPrice(watchedElement?.current_value)}</span>
 					<span className='text-gray-600'>
-						{watchedElement?.holdings}{' '}
+						{formatFullPrice(watchedElement?.holdings, false)}{' '}
 						{watchedElement?.crypto.symbol.toUpperCase()}
 					</span>
 				</span>

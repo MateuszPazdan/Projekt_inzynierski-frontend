@@ -92,7 +92,7 @@ export default function PortfolioWatchedStockListElement({
 				<span className='flex flex-col items-end'>
 					<span>{formatFullPrice(watchedElement?.current_value)}</span>
 					<span className='text-gray-600'>
-						{watchedElement?.holdings}{' '}
+						{formatFullPrice(watchedElement?.holdings, false)}{' '}
 						{watchedElement?.stock.symbol.toUpperCase()}
 					</span>
 				</span>

@@ -59,12 +59,12 @@ export default function ManagePortfolioModal({
 				})
 					.unwrap()
 					.then(() => {
-						toast.success('Utworzono nowe portfolio.');
+						toast.success('Utworzono nowy portfel.');
 						onCloseModal();
 					})
 					.catch((error) => {
 						toast.error(
-							error.meassege || 'Wystąpił błąd przy tworzeniu portfolio.'
+							error.meassege || 'Wystąpił błąd przy tworzeniu portfela.'
 						);
 					});
 			}
@@ -80,12 +80,12 @@ export default function ManagePortfolioModal({
 				})
 					.unwrap()
 					.then(() => {
-						toast.success('Zmodyfikowano portfolio.');
+						toast.success('Zmodyfikowano portfel.');
 						onCloseModal();
 					})
 					.catch((error) => {
 						toast.error(
-							error.meassege || 'Wystąpił błąd przy modyfikacji portfolio.'
+							error.meassege || 'Wystąpił błąd przy modyfikacji portfela.'
 						);
 					});
 			}
@@ -100,12 +100,12 @@ export default function ManagePortfolioModal({
 				})
 					.unwrap()
 					.then(() => {
-						toast.success('Utworzono nowe portfolio.');
+						toast.success('Utworzono nowy portfel.');
 						onCloseModal();
 					})
 					.catch((error) => {
 						toast.error(
-							error.meassege || 'Wystąpił błąd przy tworzeniu portfolio.'
+							error.meassege || 'Wystąpił błąd przy tworzeniu portfela.'
 						);
 					});
 			}
@@ -121,12 +121,12 @@ export default function ManagePortfolioModal({
 				})
 					.unwrap()
 					.then(() => {
-						toast.success('Zmodyfikowano portfolio.');
+						toast.success('Zmodyfikowano portfel.');
 						onCloseModal();
 					})
 					.catch((error) => {
 						toast.error(
-							error.meassege || 'Wystąpił błąd przy modyfikacji portfolio.'
+							error.meassege || 'Wystąpił błąd przy modyfikacji portfela.'
 						);
 					});
 			}
@@ -136,7 +136,7 @@ export default function ManagePortfolioModal({
 	return (
 		<div>
 			<ModalHeader
-				title={`${portfolio ? 'Mofyfikacja portfolio' : 'Tworzenie portfolio'}`}
+				title={`${portfolio ? 'Mofyfikacja portfela' : 'Tworzenie portfela'}`}
 				onCloseModal={onCloseModal}
 			/>
 			<form
@@ -144,7 +144,7 @@ export default function ManagePortfolioModal({
 				className='flex flex-col gap-6 py-5'
 			>
 				<FormInput
-					label='Tytuł portfolio'
+					label='Tytuł portfela'
 					register={register}
 					name='title'
 					error={errors?.title?.message as string}
@@ -153,7 +153,7 @@ export default function ManagePortfolioModal({
 					maxLength={64}
 				/>
 				<FormTextarea
-					label='Opis portfolio (opcjonalny)'
+					label='Opis portfela (opcjonalny)'
 					register={register}
 					name='description'
 					error={errors?.description?.message as string}
@@ -170,7 +170,7 @@ export default function ManagePortfolioModal({
 					name='is_public'
 					options={[
 						{
-							label: 'Portfolio widoczne dla innych użytkowników Asset Flow',
+							label: 'Portfel widoczny dla innych użytkowników Asset Flow',
 							value: true,
 						},
 					]}
@@ -186,7 +186,7 @@ export default function ManagePortfolioModal({
 							isStockPortfolioModifying
 						}
 					>
-						{portfolio ? 'Modyfikuj portfolio' : 'Stwórz portfolio'}
+						{portfolio ? 'Modyfikuj portfel' : 'Stwórz portfel'}
 					</Button>
 				</div>
 			</form>

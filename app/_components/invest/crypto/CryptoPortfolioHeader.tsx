@@ -16,7 +16,7 @@ export default function CryptoPortfolioHeader() {
 						<span className='text-3xl'>
 							<BsPlus />
 						</span>
-						<span className='pr-3'>Dodaj portfolio</span>
+						<span className='pr-3'>Dodaj portfel</span>
 					</Button>
 				</Modal.Open>
 				<Modal.Window name='createCryptoPortfolio'>

@@ -34,7 +34,7 @@ export default function ManagePortfolioBtn({
 						<Modal.Open opens='modifyPortfolio'>
 							<DropdownMenuElement
 								icon={<BsFillPencilFill />}
-								text='Modyfikuj portfolio'
+								text='Modyfikuj portfel'
 								onClick={() => setIsExtended(false)}
 							/>
 						</Modal.Open>
@@ -50,7 +50,7 @@ export default function ManagePortfolioBtn({
 						<Modal.Open opens='deletePortfolio'>
 							<DropdownMenuElement
 								icon={<FaTrashAlt />}
-								text='Usuń portfolio'
+								text='Usuń portfel'
 								onClick={() => setIsExtended(false)}
 							/>
 						</Modal.Open>

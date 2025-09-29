@@ -30,13 +30,13 @@ export default function DeletePortfolioModal({
 			deleteCryptoPortfolio(portfolioId)
 				.unwrap()
 				.then(() => {
-					toast.success('Usunięto portfolio.');
+					toast.success('Usunięto portfel.');
 					onCloseModal();
 					router.push('/app/invest/crypto');
 				})
 				.catch((error) => {
 					toast.error(
-						error?.data?.detail || 'Wystąpił błąd przy usuwaniu portfolio.'
+						error?.data?.detail || 'Wystąpił błąd przy usuwaniu portfela.'
 					);
 				});
 		}
@@ -44,13 +44,13 @@ export default function DeletePortfolioModal({
 			deleteStockPortfolio(portfolioId)
 				.unwrap()
 				.then(() => {
-					toast.success('Usunięto portfolio.');
+					toast.success('Usunięto portfel.');
 					onCloseModal();
 					router.push('/app/invest/stocks');
 				})
 				.catch((error) => {
 					toast.error(
-						error?.data?.detail || 'Wystąpił błąd przy usuwaniu portfolio.'
+						error?.data?.detail || 'Wystąpił błąd przy usuwaniu portfela.'
 					);
 				});
 		}
@@ -58,10 +58,10 @@ export default function DeletePortfolioModal({
 
 	return (
 		<div>
-			<ModalHeader title={'Usuwanie portfolio'} onCloseModal={onCloseModal} />
+			<ModalHeader title={'Usuwanie portfela'} onCloseModal={onCloseModal} />
 			<div className='gap-6 py-5'>
 				<p className='text-gray-700 md:text-center md:flex flex-col md:mx-auto text-lg'>
-					Na pewno chcesz usunąć portfolio? Tego nie da się cofnąć.
+					Na pewno chcesz usunąć portfel? Tego nie da się cofnąć.
 				</p>
 				<div className='flex justify-center pt-10'>
 					<Button
@@ -70,7 +70,7 @@ export default function DeletePortfolioModal({
 						isLoading={isCryptoPortfolioDeleting || isStockPortfolioDeleting}
 						onClick={handleDeletePortfolio}
 					>
-						Usuń portfolio
+						Usuń portfel
 					</Button>
 				</div>
 			</div>

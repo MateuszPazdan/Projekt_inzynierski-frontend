@@ -42,12 +42,12 @@ export default function AddStockModal({
 			.unwrap()
 			.then(() => {
 				onCloseModal();
-				toast.success(`Dodano akcję (${stock.symbol}) do portfolio.`);
+				toast.success(`Dodano akcję (${stock.symbol}) do portfela.`);
 			})
 			.catch((error) => {
 				toast.error(
 					error?.data.detail ||
-						`Wystąpił błąd podczas dodawania kryptowaluty (${stock.symbol}) do portfolio.`
+						`Wystąpił błąd podczas dodawania kryptowaluty (${stock.symbol}) do portfela.`
 				);
 			});
 		onCloseModal();

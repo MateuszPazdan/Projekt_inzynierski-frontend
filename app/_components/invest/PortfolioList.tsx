@@ -32,8 +32,8 @@ export default function PortfolioList({
 				</>
 			) : (
 				<EmptyList
-					description='Dodaj nowe portfolio, aby je tutaj zobaczyć.'
-					title='Nie odnaleziono żadnych portfolio.'
+					description='Dodaj nowy portfel, aby go tutaj zobaczyć.'
+					title='Nie odnaleziono żadnego portfela.'
 				/>
 			)}
 		</div>

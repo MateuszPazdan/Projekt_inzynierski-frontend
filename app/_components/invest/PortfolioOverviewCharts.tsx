@@ -56,7 +56,7 @@ export default function PortfolioOverviewCharts({
 					<div className='h-[400px] flex items-center justify-center'>
 						<EmptyList
 							title='Brak danych do wykresu'
-							description='Dodaj transakcje do portfolio, aby zobaczyć statystki.'
+							description='Dodaj transakcje do portfela, aby zobaczyć statystki.'
 						/>
 					</div>
 				</InfoCard>
@@ -71,7 +71,7 @@ export default function PortfolioOverviewCharts({
 					<div className='h-[400px] flex items-center justify-center'>
 						<EmptyList
 							title='Brak danych do wykresu'
-							description='Dodaj aktywa do portfolio, aby zobaczyć statystki.'
+							description='Dodaj aktywa do portfela, aby zobaczyć statystki.'
 						/>
 					</div>
 				</InfoCard>

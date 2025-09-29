@@ -43,12 +43,12 @@ export default function AddCryptoModal({
 			.unwrap()
 			.then(() => {
 				onCloseModal();
-				toast.success(`Dodano kryptowalutę (${crypto.symbol}) do portfolio.`);
+				toast.success(`Dodano kryptowalutę (${crypto.symbol}) do portfela.`);
 			})
 			.catch((error) => {
 				toast.error(
 					error?.data.detail ||
-						`Wystąpił błąd podczas dodawania kryptowaluty (${crypto.symbol}) do portfolio.`
+						`Wystąpił błąd podczas dodawania kryptowaluty (${crypto.symbol}) do portfela.`
 				);
 			});
 		onCloseModal();

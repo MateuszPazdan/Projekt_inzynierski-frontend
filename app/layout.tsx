@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 		template: '%s | Asset Flow',
 	},
 	description:
-		'Śledź aktualne kursy kryptowalut i akcji polskich spółek. Analizuj wykresy, sprawdzaj historyczne dane i zarządzaj swoim portfolio inwestycyjnym w jednym miejscu. Asset Flow - Twój kompleksowy portal do śledzenia rynków finansowych.',
+		'Śledź aktualne kursy kryptowalut i akcji polskich spółek. Analizuj wykresy, sprawdzaj historyczne dane i zarządzaj swoim portfelem inwestycyjnym w jednym miejscu. Asset Flow - Twój kompleksowy portal do śledzenia rynków finansowych.',
 };
 
 const roboto = Roboto({

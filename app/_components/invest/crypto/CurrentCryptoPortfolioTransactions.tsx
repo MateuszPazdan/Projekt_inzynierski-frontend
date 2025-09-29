@@ -53,7 +53,7 @@ export default function CurrentCryptoPortfolioTransactions({
 		return (
 			<InfoCard title='Lista transakcji'>
 				<EmptyList
-					description='Dodaj nowe transakcje do portfolio, aby je tutaj zobaczyć.'
+					description='Dodaj nowe transakcje do portfela, aby je tutaj zobaczyć.'
 					title='Brak transakcji'
 				/>
 			</InfoCard>

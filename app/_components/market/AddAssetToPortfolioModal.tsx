@@ -62,13 +62,13 @@ export default function AddAssetToPortfolioModal({
 				.unwrap()
 				.then(() => {
 					toast.success(
-						`Dodano kryptowalutę ${assetSymbol.toUpperCase()} do portfolio.`
+						`Dodano kryptowalutę ${assetSymbol.toUpperCase()} do portfela.`
 					);
 				})
 				.catch((error) => {
 					toast.error(
 						error?.data.detail ||
-							`Wystąpił błąd podczas dodawania kryptowaluty ${assetSymbol.toUpperCase()} do portfolio.`
+							`Wystąpił błąd podczas dodawania kryptowaluty ${assetSymbol.toUpperCase()} do portfela.`
 					);
 				});
 		}
@@ -80,13 +80,13 @@ export default function AddAssetToPortfolioModal({
 				.unwrap()
 				.then(() => {
 					toast.success(
-						`Dodano akcję ${assetSymbol.toUpperCase()} do portfolio.`
+						`Dodano akcję ${assetSymbol.toUpperCase()} do portfela.`
 					);
 				})
 				.catch((error) => {
 					toast.error(
 						error?.data.detail ||
-							`Wystąpił błąd podczas dodawania kryptowaluty ${assetSymbol.toUpperCase()} do portfolio.`
+							`Wystąpił błąd podczas dodawania kryptowaluty ${assetSymbol.toUpperCase()} do portfela.`
 					);
 				});
 		}

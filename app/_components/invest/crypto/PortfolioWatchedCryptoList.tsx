@@ -39,7 +39,7 @@ export default function PortfolioWatchedCryptoList({
 			<InfoCard title='Twoje aktywa'>
 				<EmptyList
 					title='Brak aktyw'
-					description='Dodaj aktywa do portfolio, aby je tutaj zobaczyć.'
+					description='Dodaj aktywa do portfela, aby je tutaj zobaczyć.'
 				/>
 			</InfoCard>
 		);
