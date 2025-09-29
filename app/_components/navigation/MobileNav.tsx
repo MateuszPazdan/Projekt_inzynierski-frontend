@@ -8,7 +8,6 @@ import {
 	FaChartArea,
 	FaChartBar,
 	FaCoins,
-	FaEye,
 	FaNewspaper,
 	FaWallet,
 } from 'react-icons/fa';
@@ -121,12 +120,6 @@ export default function MobileNav({
 					title='Konwerter'
 					icon={<SiBetfair />}
 					href='/convert'
-				/>
-				<NavElement
-					onClick={handleCloseNav}
-					title='Obserwowane'
-					icon={<FaEye />}
-					href='/watchlist'
 				/>
 			</div>
 			<div className='px-2 sm600:px-5 py-2 sm600:py-5'>

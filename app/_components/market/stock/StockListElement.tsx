@@ -1,10 +1,9 @@
 'use client';
 
-import { PiStar } from 'react-icons/pi';
+import { Stock } from '@/app/_redux/features/marketApiSlice';
+import { formatShortPrice } from '@/app/_utils/formatAmountOfMoney';
 import { useRouter } from 'next/navigation';
 import { BsArrowDownShort, BsArrowUpShort } from 'react-icons/bs';
-import { formatShortPrice } from '@/app/_utils/formatAmountOfMoney';
-import { Stock } from '@/app/_redux/features/marketApiSlice';
 import { thStyles } from '../../SortableTh';
 
 interface StockListElementProps {
@@ -18,24 +17,11 @@ export default function StockListElement({ stock }: StockListElementProps) {
 		router.push(`/market/stocks/${stock.symbol}`);
 	}
 
-	function hadnleClick(e: React.MouseEvent) {
-		e.stopPropagation();
-		console.log('favorite clicked');
-	}
-
 	return (
 		<tr
 			onClick={() => handleNavigate()}
 			className='hover:bg-grayOne transition-colors duration-300 hover:cursor-pointer'
 		>
-			<td className={`${thStyles} `}>
-				<button
-					onClick={hadnleClick}
-					className='text-xl p-2 hover:bg-graySecond transition-colors duration-300  rounded-lg'
-				>
-					<PiStar />
-				</button>
-			</td>
 			<td className={`${thStyles} text-center`}>{stock.market_cap_rank}</td>
 			<td className={`${thStyles} flex flex-row items-center gap-2`}>
 				<p

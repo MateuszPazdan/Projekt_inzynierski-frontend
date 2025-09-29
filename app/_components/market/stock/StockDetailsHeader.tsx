@@ -1,7 +1,6 @@
 import { StockDetails } from '@/app/_actions/stockActions';
 import { useAppSelector } from '@/app/_redux/hooks';
 import { BsPlus } from 'react-icons/bs';
-import { PiStar } from 'react-icons/pi';
 import Button from '../../Button';
 import Modal from '../../Modal';
 import AddAssetToPortfolioModal from '../AddAssetToPortfolioModal';
@@ -14,10 +13,10 @@ export default function StockDetailsHeader({
 	const { isAuthenticated } = useAppSelector((state) => state.auth);
 
 	return (
-		<div className='flex flex-row justify-between gap-5 items-center pb-5'>
-			<div className='flex flex-row gap-2 md:gap-4 items-center'>
+		<div className='flex flex-col sm:flex-row sm:justify-between gap-3 sm:items-center pb-5'>
+			<div className='flex flex-row gap-2 sm:gap-4 items-center'>
 				<p
-					className={`flex items-center justify-center w-12 h-12 md:w-14 md:h-14 text-2xl aspect-square bg-main text-white rounded-full`}
+					className={`flex items-center justify-center w-12 h-12 text-2xl aspect-square bg-main text-white rounded-full`}
 				>
 					{stockDetails?.name.trimStart().charAt(0).toUpperCase()}
 				</p>
@@ -35,9 +34,6 @@ export default function StockDetailsHeader({
 			</div>
 			{isAuthenticated && (
 				<div className='flex gap-2'>
-					<Button size='icon' color='light' onClick={() => {}}>
-						<PiStar className='text-yellow-500 text-2xl' />
-					</Button>
 					<Modal>
 						<Modal.Open opens='addCryptoToPortfolio'>
 							<Button

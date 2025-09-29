@@ -1,24 +1,23 @@
-import SortableTh from '../../SortableTh';
+import SortableTh from '../SortableTh';
 
-interface StockListHeaderProps {
-	sort: { by: string; order: string };
-	handleSort: (sortItem: string) => void;
+interface AssetListHeaderProps {
+	sort?: { by: string; order: string };
+	handleSort?: (sortItem: string) => void;
 }
 
-export default function StockListHeader({
+export default function AssetListHeader({
 	sort,
 	handleSort,
-}: StockListHeaderProps) {
+}: AssetListHeaderProps) {
 	return (
 		<thead>
 			<tr>
-				<th className={`w-0`}></th>
 				<SortableTh
 					sortKey='rank'
 					sort={sort}
 					handleSort={handleSort}
-					textAlignment='center'
-					additionalStyles='text-center'
+					textAlignment='left'
+					additionalStyles='w-0'
 				>
 					#
 				</SortableTh>

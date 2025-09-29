@@ -6,10 +6,10 @@ import CryptoListElement from './CryptoListElement';
 import { useRetrieveCryptosQuery } from '@/app/_redux/features/marketApiSlice';
 import AssetListSkeleton from '../AssetListSkeleton';
 import EmptyList from '../../EmptyList';
-import CryptoListHeader from './CryptoListHeader';
 import { useSearchParams } from 'next/navigation';
 import SearchParamsPagination from '../../SearchParamsPagination';
 import InfoCard from '../../InfoCard';
+import AssetListHeader from '../AssetListHeader';
 
 export default function CryptoList() {
 	const searchParams = useSearchParams();
@@ -37,7 +37,13 @@ export default function CryptoList() {
 	};
 
 	if (isCryptosLoading || isCryptosFetching) {
-		return <AssetListSkeleton />;
+		return (
+			<InfoCard title='Kryptowaluty'>
+				<div className='overflow-x-auto'>
+					<AssetListSkeleton />
+				</div>
+			</InfoCard>
+		);
 	}
 
 	if (!cryptoList || cryptoList?.length === 0)
@@ -47,7 +53,7 @@ export default function CryptoList() {
 		<InfoCard title='Kryptowaluty'>
 			<div className='overflow-x-auto'>
 				<table className='text-right divide-y divide-grayThird text-xs md:text-sm w-full min-w-[700px] bg-white'>
-					<CryptoListHeader handleSort={handleSort} sort={sort} />
+					<AssetListHeader handleSort={handleSort} sort={sort} />
 					<tbody className='divide-y divide-grayThird'>
 						{cryptoList.map((crypto) => (
 							<CryptoListElement key={crypto.name} crypto={crypto} />

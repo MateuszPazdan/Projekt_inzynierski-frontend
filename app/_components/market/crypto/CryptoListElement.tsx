@@ -8,7 +8,6 @@ import {
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { BsArrowDownShort, BsArrowUpShort } from 'react-icons/bs';
-import { PiStar } from 'react-icons/pi';
 import { thStyles } from '../../SortableTh';
 
 interface CryptoListElementProps {
@@ -22,24 +21,11 @@ export default function CryptoListElement({ crypto }: CryptoListElementProps) {
 		router.push(`/market/crypto/${crypto.symbol}`);
 	}
 
-	function hadnleClick(e: React.MouseEvent) {
-		e.stopPropagation();
-		console.log('favorite clicked');
-	}
-
 	return (
 		<tr
 			onClick={() => handleNavigate()}
 			className='hover:bg-grayOne transition-colors duration-300 hover:cursor-pointer'
 		>
-			<td className={`${thStyles} `}>
-				<button
-					onClick={hadnleClick}
-					className='text-xl p-2 hover:bg-graySecond transition-colors duration-300  rounded-lg'
-				>
-					<PiStar />
-				</button>
-			</td>
 			<td className={`${thStyles} text-center`}>{crypto.market_cap_rank}</td>
 			<td className={`${thStyles} flex flex-row items-center gap-2`}>
 				<Image

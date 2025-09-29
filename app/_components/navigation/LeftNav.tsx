@@ -1,19 +1,18 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import Logo from './Logo';
-import NavElement from './NavElement';
 import {
 	FaBitcoin,
 	FaChartArea,
 	FaChartBar,
 	FaCoins,
-	FaEye,
 	FaNewspaper,
 	FaWallet,
 } from 'react-icons/fa';
 import { SiBetfair } from 'react-icons/si';
-import { usePathname } from 'next/navigation';
+import Logo from './Logo';
+import NavElement from './NavElement';
 
 export default function LeftNav() {
 	const [isNavExtended, setIsNavExtented] = useState(false);
@@ -93,14 +92,6 @@ export default function LeftNav() {
 					href='/convert'
 					isExtended={isNavExtended}
 					isFocused={pathname.includes('/convert')}
-				/>
-
-				<NavElement
-					title='Obserwowane'
-					icon={<FaEye />}
-					href='/watchlist'
-					isExtended={isNavExtended}
-					isFocused={pathname.includes('/watchlist')}
 				/>
 			</div>
 		</nav>

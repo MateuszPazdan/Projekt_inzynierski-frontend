@@ -1,10 +1,8 @@
 import { useRetrieveUserQuery } from '@/app/_redux/features/authApiSlice';
-import { PiStar } from 'react-icons/pi';
-import Spinner from '../Spinner';
 import { useRef, useState } from 'react';
+import Spinner from '../Spinner';
 import UserImage from './UserImage';
 import UserNav from './UserNav';
-import Link from 'next/link';
 
 export default function LoggedIn() {
 	const [isAvatarClicked, setIsAvatarClicked] = useState(false);
@@ -12,12 +10,12 @@ export default function LoggedIn() {
 	const buttonRef = useRef<HTMLButtonElement>(null);
 	return (
 		<div className='relative flex flex-row items-center gap-5'>
-			<Link
+			{/* <Link
 				href='/watchlist'
 				className='text-3xl text-grayThird hover:bg-grayOne hover:text-yellow-400 p-1 rounded-lg transition-colors duration-300 cursor-pointer'
 			>
 				<PiStar />
-			</Link>
+			</Link> */}
 			{isLoading ? (
 				<Spinner size='small' />
 			) : (

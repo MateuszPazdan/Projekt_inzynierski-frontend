@@ -6,10 +6,10 @@ import { sortStocks } from '@/app/_utils/sortAssets';
 import { useRetrieveStocksQuery } from '@/app/_redux/features/marketApiSlice';
 import AssetListSkeleton from '../AssetListSkeleton';
 import EmptyList from '../../EmptyList';
-import StockListHeader from './StockListHeader';
 import { useSearchParams } from 'next/navigation';
 import SearchParamsPagination from '../../SearchParamsPagination';
 import InfoCard from '../../InfoCard';
+import AssetListHeader from '../AssetListHeader';
 
 export default function StockList() {
 	const searchParams = useSearchParams();
@@ -37,7 +37,13 @@ export default function StockList() {
 	};
 
 	if (isStocksLoading || isFetching) {
-		return <AssetListSkeleton />;
+		return (
+			<InfoCard title='Akcje'>
+				<div className='overflow-x-auto'>
+					<AssetListSkeleton />
+				</div>
+			</InfoCard>
+		);
 	}
 
 	if (!stockList || stockList?.length === 0)
@@ -47,7 +53,7 @@ export default function StockList() {
 		<InfoCard title='Akcje'>
 			<div className='overflow-x-auto'>
 				<table className='text-right divide-y divide-grayThird text-xs md:text-sm w-full min-w-[700px] bg-white'>
-					<StockListHeader handleSort={handleSort} sort={sort} />
+					<AssetListHeader handleSort={handleSort} sort={sort} />
 					<tbody className='divide-y divide-grayThird'>
 						{stockList?.map((stock) => (
 							<StockListElement stock={stock} key={stock.name} />

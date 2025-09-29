@@ -2,7 +2,6 @@ import { CryptoDetails } from '@/app/_actions/cryptoActions';
 import { useAppSelector } from '@/app/_redux/hooks';
 import Image from 'next/image';
 import { BsPlus } from 'react-icons/bs';
-import { PiStar } from 'react-icons/pi';
 import Button from '../../Button';
 import Modal from '../../Modal';
 import AddAssetToPortfolioModal from '../AddAssetToPortfolioModal';
@@ -15,13 +14,13 @@ export default function CryptoDetailsHeader({
 	const { isAuthenticated } = useAppSelector((state) => state.auth);
 
 	return (
-		<div className='flex flex-col md:flex-row md:justify-between gap-5 md:items-center pb-5'>
-			<div className='flex flex-row gap-2 md:gap-4 items-center'>
+		<div className='flex flex-col sm:flex-row sm:justify-between gap-3 sm:items-center pb-5'>
+			<div className='flex flex-row gap-2 sm:gap-4 items-center'>
 				<Image
 					alt={`${cryptoDetails.name}-logo`}
 					src={`${cryptoDetails.icon}`}
-					width={56}
-					height={56}
+					width={48}
+					height={48}
 				/>
 				<p className='flex flex-col items-start justify-center '>
 					<span className='sm:text-lg md:text-xl font-semibold'>
@@ -37,9 +36,6 @@ export default function CryptoDetailsHeader({
 			</div>
 			{isAuthenticated && (
 				<div className='flex gap-2'>
-					<Button size='icon' color='light' onClick={() => {}}>
-						<PiStar className='text-yellow-500 text-2xl' />
-					</Button>
 					<Modal>
 						<Modal.Open opens='addCryptoToPortfolio'>
 							<Button
