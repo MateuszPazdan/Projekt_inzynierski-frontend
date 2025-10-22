@@ -7,6 +7,7 @@ import {
 	useGenerateCryptoPortfolioReportMutation,
 	useGenerateStockPortfolioReportMutation,
 } from '@/app/_redux/features/portfiolioApiSlice';
+import toast from 'react-hot-toast';
 
 type ReportType = 'crypto' | 'stocks';
 
@@ -23,9 +24,27 @@ export default function RaportContainer() {
 
 	function handleGenerateReport() {
 		if (reportType === 'crypto') {
-			generateCryptoPortfolioReport();
+			generateCryptoPortfolioReport()
+				.unwrap()
+				.then(() => {
+					toast.success('Wygenetowano raport z inwestycji w kryptowaluty. ');
+				})
+				.catch(() => {
+					toast.error(
+						'Wystąpił błąd podczas generowania raportu z inwestycji w kryptowaluty. Spróbuj ponownie później.'
+					);
+				});
 		} else if (reportType === 'stocks') {
-			generateStockoPortfolioReport();
+			generateStockoPortfolioReport()
+				.unwrap()
+				.then(() => {
+					toast.success('Wygenetowano raport z inwestycji w akcje. ');
+				})
+				.catch(() => {
+					toast.error(
+						'Wystąpił błąd podczas generowania raportu z inwestycji w akcje. Spróbuj ponownie później.'
+					);
+				});
 		}
 	}
 
