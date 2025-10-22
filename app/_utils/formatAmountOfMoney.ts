@@ -13,8 +13,8 @@ export function formatShortPrice(amount: number): string {
 export function formatFullPrice(
 	amount: number | undefined,
 	withCurrency: boolean = true
-): string {
-	if (!amount) return withCurrency ? '0 zł' : '0';
+): string | undefined {
+	if (!amount) return undefined;
 
 	const formatter = new Intl.NumberFormat('pl-PL', {
 		minimumSignificantDigits: amount < 1 ? 2 : undefined,

@@ -43,12 +43,11 @@ export default function AssetListCard({
 	return (
 		<div className='grid grid-rows-[auto_1fr] gap-1 rounded-lg border border-gray-300 shadow-md bg-white p-3 px-4'>
 			<p className='text-gray-600 font-medium pb-2'>{title}</p>
-			{!assetList ||
-				(assetList.length === 0 && (
-					<div className='flex xl:justify-center items-center'>
-						<NoData />
-					</div>
-				))}
+			{(!assetList || assetList.length === 0) && (
+				<div className='flex xl:justify-center items-center'>
+					<NoData />
+				</div>
+			)}
 			{assetList?.slice(0, limit).map((asset) => (
 				<Link
 					href={`/market/${assetType === 'crypto' ? 'crypto' : 'stocks'}/${

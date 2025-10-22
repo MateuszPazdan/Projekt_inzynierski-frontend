@@ -10,6 +10,7 @@ export default function CryptoOverview() {
 	const { data: assetsPerformance, isLoading: isAssetsPerformanceLoading } =
 		useRetrieveAssetsPerformanceQuery();
 
+	console.log(assetsPerformance?.global_crypto_data.top_gainers_24h);
 	return (
 		<div className='grid grid-cols-1 xl:grid-cols-3 gap-3'>
 			<div className={`grid grid-row-2 gap-3`}>
@@ -20,7 +21,7 @@ export default function CryptoOverview() {
 					<p>
 						{formatFullPrice(
 							assetsPerformance?.global_crypto_data.total_market_cap
-						)}
+						) ?? ''}
 						{!assetsPerformance && <NoData />}
 					</p>
 				</InfoCard>
