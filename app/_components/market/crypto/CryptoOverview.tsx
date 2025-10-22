@@ -19,9 +19,11 @@ export default function CryptoOverview() {
 					isLoading={isAssetsPerformanceLoading}
 				>
 					<p>
-						{formatFullPrice(
-							assetsPerformance?.global_crypto_data.total_market_cap
-						) ?? ''}
+						{assetsPerformance?.global_crypto_data.total_market_cap
+							? formatFullPrice(
+									assetsPerformance?.global_crypto_data.total_market_cap
+							  )
+							: ''}
 						{!assetsPerformance && <NoData />}
 					</p>
 				</InfoCard>
@@ -30,9 +32,11 @@ export default function CryptoOverview() {
 					isLoading={isAssetsPerformanceLoading}
 				>
 					<p>
-						{formatFullPrice(
-							assetsPerformance?.global_crypto_data.total_volume_24h
-						)}
+						{assetsPerformance?.global_crypto_data.total_volume_24h
+							? formatFullPrice(
+									assetsPerformance?.global_crypto_data.total_volume_24h
+							  )
+							: ''}
 						{!assetsPerformance && <NoData />}
 					</p>
 				</InfoCard>

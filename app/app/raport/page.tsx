@@ -1,9 +1,22 @@
+import SectionHeader from '@/app/_components/SectionHeader';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-	title: 'Raporty z inwestycji',
+	title: 'Raporty z inwestycji ',
+	description:
+		'Analizuj swoje inwestycje dzięki szczegółowym raportom i statystykom dotyczącym Twojego portfela oraz rynku finansowego.',
 };
 
 export default function page() {
-	return <div>raporty</div>;
+	return (
+		<div className='px-2 sm:px-5 lg:px-12 py-10 max-w-[1800px] w-full mx-auto '>
+			<div className='pb-10'>
+				<SectionHeader
+					title='Raporty z inwestycji'
+					description='Analizuj swoje inwestycje dzięki szczegółowym raportom i statystykom dotyczącym Twojego portfela oraz rynku finansowego.'
+				/>
+			</div>
+			<div className='flex flex-col items-center'></div>
+		</div>
+	);
 }
