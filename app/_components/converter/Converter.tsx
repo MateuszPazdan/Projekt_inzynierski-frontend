@@ -28,7 +28,7 @@ export default function Converter() {
 	);
 
 	return (
-		<div className=' flex flex-col gap-5 rounded-lg sm:border border-grayThird sm:shadow-md sm:bg-white sm:p-5 w-full'>
+		<div className='flex flex-col gap-5 rounded-lg sm:border border-grayThird sm:shadow-md sm:bg-white sm:p-5 w-full'>
 			<div className='relative flex flex-col md:flex-row items-center gap-5'>
 				<CoinAndValueInput
 					selectedAsset={selectedAsset}

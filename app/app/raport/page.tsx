@@ -1,3 +1,4 @@
+import RaportContainer from '@/app/_components/raport/RaportContainer';
 import SectionHeader from '@/app/_components/SectionHeader';
 import { Metadata } from 'next';
 
@@ -16,7 +17,7 @@ export default function page() {
 					description='Analizuj swoje inwestycje dzięki szczegółowym raportom i statystykom dotyczącym Twojego portfela oraz rynku finansowego.'
 				/>
 			</div>
-			<div className='flex flex-col items-center'></div>
+			<RaportContainer />
 		</div>
 	);
 }

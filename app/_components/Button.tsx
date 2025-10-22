@@ -50,7 +50,7 @@ function Button({
 			{...rest}
 			ref={ref}
 		>
-			{isLoading ? <Spinner size='small' /> : children}
+			{isLoading ? <Spinner size='small' color='white' /> : children}
 		</button>
 	);
 }

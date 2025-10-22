@@ -354,6 +354,30 @@ const portfolioApiSlice = apiSlice.injectEndpoints({
 			}),
 			providesTags: ['CryptoPortfolios'],
 		}),
+		generateCryptoPortfolioReport: builder.mutation<void, void>({
+			query: () => ({
+				url: `/raport/crypto-portfolio`,
+				method: 'POST',
+				responseHandler: async (response) => {
+					const blob = await response.blob();
+					return blob;
+				},
+			}),
+			transformResponse: (blob: Blob) => {
+				const now = new Date();
+				const formattedDate = `${now.getDate()}.${
+					now.getMonth() + 1
+				}.${now.getFullYear()}_${now.getHours()}:${now.getMinutes()}`;
+				const url = window.URL.createObjectURL(blob);
+				const a = document.createElement('a');
+				a.href = url;
+				a.download = `Asset_Flow_Raport_z_Inwestycji_Kryptowalutowych_${formattedDate}.pdf`;
+				document.body.appendChild(a);
+				a.click();
+				a.remove();
+				window.URL.revokeObjectURL(url);
+			},
+		}),
 
 		retrieveStockPortfoliosSummary: builder.query<PortfolioSummary, void>({
 			query: () => ({
@@ -536,6 +560,30 @@ const portfolioApiSlice = apiSlice.injectEndpoints({
 			}),
 			providesTags: ['StockPortfolios'],
 		}),
+		generateStockPortfolioReport: builder.mutation<void, void>({
+			query: () => ({
+				url: `/raport/stock-portfolio`,
+				method: 'POST',
+				responseHandler: async (response) => {
+					const blob = await response.blob();
+					return blob;
+				},
+			}),
+			transformResponse: (blob: Blob) => {
+				const now = new Date();
+				const formattedDate = `${now.getDate()}.${
+					now.getMonth() + 1
+				}.${now.getFullYear()}_${now.getHours()}:${now.getMinutes()}`;
+				const url = window.URL.createObjectURL(blob);
+				const a = document.createElement('a');
+				a.href = url;
+				a.download = `Asset_Flow_Raport_z_Inwestycji_Akcyjnych_${formattedDate}.pdf`;
+				document.body.appendChild(a);
+				a.click();
+				a.remove();
+				window.URL.revokeObjectURL(url);
+			},
+		}),
 	}),
 });
 
@@ -554,6 +602,7 @@ export const {
 	useUpdateCryptoPortfolioTransactionMutation,
 	useDeleteCurrentCryptoPortfolioTransactionMutationMutation,
 	useRetrievePortfoliosHoldingCryptoQuery,
+	useGenerateCryptoPortfolioReportMutation,
 
 	useRetrieveStockPortfoliosSummaryQuery,
 	useRetrieveStockPortfoliosQuery,
@@ -569,4 +618,5 @@ export const {
 	useUpdateStockPortfolioTransactionMutation,
 	useDeleteCurrentStockPortfolioTransactionMutationMutation,
 	useRetrievePortfoliosHoldingStockQuery,
+	useGenerateStockPortfolioReportMutation,
 } = portfolioApiSlice;
