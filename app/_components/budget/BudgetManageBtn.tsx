@@ -33,7 +33,6 @@ export default function BudgetManageBtn({
 							<DropdownMenuElement
 								icon={<BsFillPencilFill />}
 								text='Modyfikuj budżet'
-								onClick={() => setIsExtended(false)}
 							/>
 						</Modal.Open>
 						<Modal.Window name='modifyBudget'>
@@ -45,11 +44,7 @@ export default function BudgetManageBtn({
 					</Modal>
 					<Modal>
 						<Modal.Open opens='deleteBudget'>
-							<DropdownMenuElement
-								icon={<FaTrashAlt />}
-								text='Usuń budżet'
-								onClick={() => setIsExtended(false)}
-							/>
+							<DropdownMenuElement icon={<FaTrashAlt />} text='Usuń budżet' />
 						</Modal.Open>
 						<Modal.Window name='deleteBudget'>
 							<BudgetDeleteModal
@@ -63,7 +58,6 @@ export default function BudgetManageBtn({
 							<DropdownMenuElement
 								icon={<FaBrush />}
 								text='Wyczyść transakcje'
-								onClick={() => setIsExtended(false)}
 							/>
 						</Modal.Open>
 						<Modal.Window name='deleeteTransactions'>

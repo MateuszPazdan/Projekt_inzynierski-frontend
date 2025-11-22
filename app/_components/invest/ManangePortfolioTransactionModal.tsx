@@ -63,6 +63,9 @@ export default function ManagePortfolioTransactionModal({
 	] = useUpdateStockPortfolioTransactionMutation();
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
+		const date = new Date(data.transaction_date);
+		const isoDate = date.toISOString();
+
 		if (assetType === 'crypto') {
 			if (!transaction) {
 				createCryptoPortfolioTransaction({
@@ -72,7 +75,7 @@ export default function ManagePortfolioTransactionModal({
 						crypto: { symbol: data.symbol.toLowerCase() },
 						description: data.description,
 						price_per_unit: data.price_per_unit,
-						transaction_date: data.transaction_date,
+						transaction_date: isoDate,
 						transaction_type:
 							data.transaction_type === 'Kup'
 								? 'buy'
@@ -102,7 +105,7 @@ export default function ManagePortfolioTransactionModal({
 						crypto: { symbol: data.symbol.toLowerCase() },
 						description: data.description,
 						price_per_unit: data.price_per_unit,
-						transaction_date: data.transaction_date,
+						transaction_date: isoDate,
 						transaction_type:
 							data.transaction_type === 'Kup'
 								? 'buy'
@@ -132,7 +135,7 @@ export default function ManagePortfolioTransactionModal({
 						stock: { symbol: data.symbol.toUpperCase() },
 						description: data.description,
 						price_per_unit: data.price_per_unit,
-						transaction_date: data.transaction_date,
+						transaction_date: isoDate,
 						transaction_type:
 							data.transaction_type === 'Kup'
 								? 'buy'
@@ -161,7 +164,7 @@ export default function ManagePortfolioTransactionModal({
 						stock: { symbol: data.symbol.toUpperCase() },
 						description: data.description,
 						price_per_unit: data.price_per_unit,
-						transaction_date: data.transaction_date,
+						transaction_date: isoDate,
 						transaction_type:
 							data.transaction_type === 'Kup'
 								? 'buy'
